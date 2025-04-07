@@ -1,0 +1,31 @@
+<odoo>
+    <!-- Vista semplice per res.partner -->
+    <record id="view_partner_simple_form" model="ir.ui.view">
+        <field name="name">partner.simple.form</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <label string="Funziona senza modelli personalizzati!" class="o_form_label" for="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Azione per aprire la vista -->
+    <record id="action_simple_partner_view" model="ir.actions.act_window">
+        <field name="name">Vista Semplice</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_partner_simple_form"/>
+    </record>
+
+    <!-- Voce di menu -->
+    <menuitem id="menu_simple_view" 
+              name="Demo Funzionante" 
+              action="action_simple_partner_view"
+              sequence="10"/>
+</odoo>
