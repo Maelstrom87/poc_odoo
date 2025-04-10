@@ -1,0 +1,19 @@
+<odoo>
+    <!-- Vista Kanban -->
+    <record id="view_custom_kanban" model="ir.ui.view">
+        <field name="name">custom.kanban.view</field>
+        <field name="model">your.model.name</field>
+        <field name="arch" type="xml">
+            <kanban default_template="card">
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_global_click">
+                            <!-- Componente OWL -->
+                            <CustomOwlComponent record="record" />
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+</odoo>

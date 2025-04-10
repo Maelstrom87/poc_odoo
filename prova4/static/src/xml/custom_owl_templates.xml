@@ -1,0 +1,8 @@
+<!-- static/src/xml/custom_owl_templates.xml -->
+<templates xml:space="preserve">
+    <t t-name="prova4.CustomOwlComponent">
+        <div class="custom-owl-component">
+            <h3>Nome Record: <t t-esc="recordName" /></h3>
+        </div>
+    </t>
+</templates>
