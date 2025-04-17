@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Create categories first -->
+        <record id="demo_category_olistica" model="lms.category">
+            <field name="name">Olistica</field>
+            <field name="code">OLIS</field>
+            <field name="description">Corsi su benessere olistico, meditazione e crescita personale</field>
+            <field name="active" eval="True"/>
+            <field name="sequence" eval="10"/>
+        </record>
+
+        <record id="demo_category_comunicazione" model="lms.category">
+            <field name="name">Comunicazione</field>
+            <field name="code">COMM</field>
+            <field name="description">Tecniche di comunicazione efficace, public speaking e scrittura</field>
+            <field name="active" eval="True"/>
+            <field name="sequence" eval="20"/>
+        </record>
+
+        <record id="demo_category_vendite" model="lms.category">
+            <field name="name">Vendite</field>
+            <field name="code">VEND</field>
+            <field name="description">Strategie di vendita, negoziazione e gestione clienti</field>
+            <field name="active" eval="True"/>
+            <field name="sequence" eval="30"/>
+        </record>
+
+        <!-- Create demo channels -->
+        <record id="demo_channel_1" model="slide.channel">
+            <field name="name">Corso Olistico Demo</field>
+            <field name="description">Descrizione corso olistico</field>
+            <field name="category_ids" eval="[(4, ref('demo_category_olistica'))]"/>
+        </record>
+
+        <record id="demo_channel_2" model="slide.channel">
+            <field name="name">Corso Comunicazione Demo</field>
+            <field name="description">Descrizione corso comunicazione</field>
+            <field name="category_ids" eval="[(4, ref('demo_category_comunicazione'))]"/>
+        </record>
+
+        <record id="demo_channel_3" model="slide.channel">
+            <field name="name">Corso Vendite Demo</field>
+            <field name="description">Descrizione corso vendite</field>
+            <field name="category_ids" eval="[(4, ref('demo_category_vendite'))]"/>
+        </record>
+    </data>
+</odoo>

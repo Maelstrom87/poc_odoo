@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Template SEMPLICE per lista categorie -->
+    <template id="view_categories_page" name="Categories Page">
+            <div class="container mt-3">
+                <h1>Lista Categorie</h1>
+                <div class="row">
+                    <t t-foreach="website.env['lms.category'].search([])" t-as="cat">
+                        <div class="col-md-4 mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 t-esc="cat.name"/>
+                                    <a t-att-href="'/category/' + str(cat.id)" 
+                                       class="btn btn-primary">
+                                        Dettagli
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+            </div> 
+    </template>
+</odoo>

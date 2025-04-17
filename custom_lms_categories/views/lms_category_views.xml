@@ -3,13 +3,13 @@
         <field name="name">lms.category.list</field>
         <field name="model">lms.category</field>
         <field name="arch" type="xml">
-            <list>
+            <tree>
                 <field name="sequence" widget="handle"/>
                 <field name="code"/>
                 <field name="name"/>
                 <field name="item_limit"/>
                 <field name="active" widget="boolean_toggle"/>
-            </list>
+            </tree>
         </field>
     </record>
 
@@ -34,7 +34,7 @@
 
                     <notebook>
                         <page string="Description">
-                            <field name="note"/>
+                            <field name="description"/>
                         </page>
                         <page string="Relations">
                             <field name="topic_ids" widget="many2many_tags"/>

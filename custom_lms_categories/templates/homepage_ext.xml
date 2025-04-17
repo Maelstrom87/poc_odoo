@@ -1,19 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <template id="homepage_categories" inherit_id="website_slides.homepage_slides">
-        <xpath expr="//div[hasclass('o_wslides_home_container')]" position="before">
+    <!-- Eredita dal template principale dei corsi -->
+    <template id="inherit_courses_home" inherit_id="website_slides.courses_home" name="Courses Home with Categories">
+        <xpath expr="//div[hasclass('o_wslides_home_main')]" position="before">
             <div class="container mt16 mb16">
                 <h2>Browse by Categories</h2>
                 <div class="row">
-                    <t t-foreach="website.get_current_website().lms_category_ids" t-as="category">
+                    <t t-foreach="website.env['lms.category'].search([])" t-as="category">
                         <div class="col-md-3 mb16">
                             <div class="card category-card h-100">
                                 <div class="card-body">
                                     <h5>
-                                        <a t-att-href="'/categories/' + slug(category)">
+                                        <a t-att-href="'/categories/' + str(category.id)">
                                             <t t-esc="category.name"/>
                                         </a>
                                     </h5>
-                                    <p class="text-muted" t-esc="category.note"/>
+                                    <p class="text-muted" t-esc="category.description or ''"/>
                                 </div>
                             </div>
                         </div>
@@ -21,5 +23,35 @@
                 </div>
             </div>
         </xpath>
+    </template>
+
+    <!-- Crea una route per le singole categorie -->
+    <template id="category_page" name="Category Page">
+        <t t-call="website.layout">
+            <div class="container mt16">
+                <h1 t-esc="category.name"/>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div t-esc="category.description" class="mb16"/>
+                        
+                        <h3>Courses in this category</h3>
+                        <div class="row">
+                            <t t-foreach="category.channel_ids" t-as="channel">
+                                <div class="col-md-6 mb16">
+                                    <div class="card">
+                                        <a t-att-href="'/slides/' + str(channel.id)">
+                                            <img t-if="channel.image_1920" t-att-src="'/web/image/slide.channel/' + str(channel.id) + '/image_512'" class="card-img-top"/>
+                                            <div class="card-body">
+                                                <h5 t-esc="channel.name"/>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
     </template>
 </odoo>

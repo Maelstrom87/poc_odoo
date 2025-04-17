@@ -1,0 +1,215 @@
+// File: custom_lms_categories/static/src/scss/categories.scss
+
+/* ============== VARIABLES & MIXINS ============== */
+$primary-color: #a777e3;
+$secondary-color: #6e8efb;
+$text-dark: #333;
+$text-medium: #666;
+$text-light: #f8f9fa;
+$shadow-sm: 0 4px 8px rgba(0, 0, 0, 0.1);
+$shadow-md: 0 6px 12px rgba(0, 0, 0, 0.15);
+$border-radius: 8px;
+
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ============== ANIMATIONS ============== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============== CATEGORY GRID LAYOUT ============== */
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+
+    @media (max-width: 768px) {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+
+    @media (max-width: 480px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ============== CATEGORY CARDS ============== */
+.lms-category-card {
+    border-radius: $border-radius;
+    box-shadow: $shadow-sm;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: white;
+    overflow: hidden;
+    animation: fadeIn 0.5s ease-out forwards;
+    opacity: 0;
+
+    // Sequential animation delays for cards
+    @for $i from 1 through 10 {
+        &:nth-child(#{$i}) {
+            animation-delay: $i * 0.1s;
+        }
+    }
+
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: $shadow-md;
+    }
+
+    .category-image {
+        height: 160px;
+        width: 100%;
+        object-fit: cover;
+    }
+
+    .category-content {
+        padding: 1rem;
+
+        .category-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: $text-dark;
+            margin: 0 0 0.5rem 0;
+        }
+
+        .category-description {
+            color: $text-medium;
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+        }
+    }
+}
+
+/* ============== CATEGORY DETAIL PAGE ============== */
+.category-detail-header {
+    background: linear-gradient(135deg, $secondary-color, $primary-color);
+    color: white;
+    padding: 2rem;
+    border-radius: $border-radius;
+    margin-bottom: 2rem;
+
+    h1 {
+        font-size: 2rem;
+        margin: 0 0 0.5rem 0;
+    }
+
+    .category-meta {
+        @include flex-center;
+        gap: 1rem;
+        font-size: 0.9rem;
+        opacity: 0.9;
+
+        .channel-badge {
+            @include flex-center;
+            padding: 4px 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            
+            i {
+                margin-right: 4px;
+                font-size: 0.7rem;
+            }
+        }
+    }
+}
+
+/* ============== TOPIC TAGS ============== */
+.topic-tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1rem 0;
+}
+
+.topic-tag {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba($primary-color, 0.1);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: $primary-color;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background: rgba($primary-color, 0.2);
+        cursor: pointer;
+    }
+}
+
+/* ============== NAVIGATION & FILTERS ============== */
+.category-nav {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    scrollbar-width: none; /* Firefox */
+
+    &::-webkit-scrollbar {
+        display: none; /* Chrome/Safari */
+    }
+
+    .nav-item {
+        padding: 8px 16px;
+        background: #f8f9fa;
+        border-radius: 20px;
+        white-space: nowrap;
+        font-size: 0.9rem;
+        transition: all 0.2s ease;
+
+        &.active {
+            background: $primary-color;
+            color: white;
+        }
+
+        &:hover:not(.active) {
+            background: #e9ecef;
+        }
+    }
+}
+
+.category-filters {
+    background: #f8f9fa;
+    padding: 1.25rem;
+    border-radius: $border-radius;
+    margin-bottom: 2rem;
+
+    .filter-group {
+        margin-bottom: 1rem;
+
+        h4 {
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+            color: $text-dark;
+        }
+
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+    }
+}
+
+/* ============== UTILITY CLASSES ============== */
+.text-muted {
+    color: $text-medium !important;
+}
+
+.badge-channel {
+    @include flex-center;
+    padding: 4px 8px;
+    background: rgba($secondary-color, 0.1);
+    border-radius: 4px;
+    color: $secondary-color;
+    font-size: 0.8rem;
+    
+    i {
+        margin-right: 4px;
+        font-size: 0.7rem;
+    }
+}
