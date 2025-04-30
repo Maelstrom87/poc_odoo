@@ -5,7 +5,13 @@
         <field name="inherit_id" ref="website_slides.view_slide_channel_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='description']" position="after">
-                <field name="category_ids" widget="many2many_tags"/>
+                <div class="oe_title">
+                    <h2>Categories</h2>
+                    <field name="category_ids" 
+                           widget="many2many_tags" 
+                           options="{'color_field': 'color'}" 
+                           class="oe_inline"/>
+                </div>
             </xpath>
         </field>
     </record>

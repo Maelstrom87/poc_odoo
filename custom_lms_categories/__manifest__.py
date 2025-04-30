@@ -1,3 +1,5 @@
+
+
 # -*- coding: utf-8 -*-
 {
     'name': 'Custom LMS Categories',
@@ -25,12 +27,22 @@
     ],
     'assets': {
         'web.assets_frontend': [
+            'web/static/lib/jquery/jquery.js',
             'custom_lms_categories/static/src/scss/categories.scss',
+            'custom_lms_categories/static/lib/owlcarousel/assets/owl.carousel.min.css',
+            'custom_lms_categories/static/lib/owlcarousel/assets/owl.theme.default.min.css',
+            'custom_lms_categories/static/lib/owlcarousel/owl.carousel.min.js',
+            'custom_lms_categories/static/src/js/slider_init.js',
+            'custom_lms_categories/static/src/scss/slider_styles.scss',
         ],
     },
     'demo': ['data/demo_data.xml'],
     'images': ['static/description/icon.png'],
+    'application': True,
     'license': 'LGPL-3',
     'installable': True,
-    'application': True,
+    "auto_install": False,
 }
+
+
+

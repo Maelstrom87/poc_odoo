@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <!-- Eredita dal template principale dei corsi -->
-    <template id="inherit_courses_home" inherit_id="website_slides.courses_home" name="Courses Home with Categories">
+    <template id="inherit_courses_home" inherit_id="website_slides.courses_home" name="Courses Home with Categories Sliders">
         <xpath expr="//div[hasclass('o_wslides_home_main')]" position="before">
-            <div class="container mt16 mb16">
-                <h2>Browse by Categories</h2>
+            <div class="container mt-4 mb-4">
+                <h2 class="text-center mb-4">Browse by Categories</h2>
+            
+                <!-- Toolbar Categories List -->
                 <div class="row">
                     <t t-foreach="website.env['lms.category'].search([])" t-as="category">
                         <div class="col-md-3 mb16">
@@ -21,7 +23,166 @@
                         </div>
                     </t>
                 </div>
+
+                <!-- Sliders for Each Categories -->
+                <div class="category-sliders">
+                    <t t-foreach="website.env['lms.category'].search([])" t-as="category">
+                        <t t-if="category.channel_ids and len(category.channel_ids) > 0">
+                            <div class="category-slider-section mb-5">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h3 class="mb-0">
+                                        <a t-att-href="'/categories/' + str(category.id)" t-esc="category.name"/>
+                                    </h3>
+                                    <a t-att-href="'/categories/' + str(category.id)" class="btn btn-sm btn-outline-primary">View All</a>
+                                </div>
+                                
+                                <div class="owl-carousel owl-theme" t-att-id="'carousel-' + str(category.id)">
+                                    <t t-foreach="category.channel_ids" t-as="channel">
+                                        <div class="item">
+                                            <div class="card h-100">
+                                                <a t-att-href="'/slides/' + str(channel.id)">
+                                                    <img t-if="channel.image_1920" 
+                                                         t-att-src="'/web/image/slide.channel/' + str(channel.id) + '/image_512'" 
+                                                         class="card-img-top" 
+                                                         style="height: 160px; object-fit: cover;"/>
+                                                    <div t-if="not channel.image_1920" class="card-img-top bg-secondary d-flex align-items-center justify-content-center" style="height: 160px;">
+                                                        <i class="fa fa-book fa-3x text-white"/>
+                                                    </div>
+                                                </a>
+                                                <div class="card-body">
+                                                    <h5 class="card-title">
+                                                        <a t-att-href="'/slides/' + str(channel.id)" t-esc="channel.name"/>
+                                                    </h5>
+                                                    <div class="course-tags mb-2">
+                                                        <t t-foreach="channel.tag_ids" t-as="tag">
+                                                            <span class="badge bg-info me-1" t-esc="tag.name"/>
+                                                        </t>
+                                                    </div>
+                                                    <p class="card-text text-muted small" t-esc="channel.description and channel.description[:100] + '...' or ''"/>
+                                                </div>
+                                                <div class="card-footer bg-white">
+                                                    <a t-att-href="'/slides/' + str(channel.id)" class="btn btn-sm btn-primary w-100">View Course</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>
+                        </t>
+                    </t>
+                </div>
             </div>
+
+            <!-- Caricamento sicuro delle dipendenze -->
+            <t t-if="not 'jquery_loaded' in request.env">
+                <script src="/web/static/lib/jquery/jquery.js"/>
+                <t t-set="jquery_loaded" t-value="True"/>
+            </t>
+            <link rel="stylesheet" href="/custom_lms_categories/static/lib/owlcarousel/assets/owl.carousel.min.css"/>
+            <link rel="stylesheet" href="/custom_lms_categories/static/lib/owlcarousel/assets/owl.theme.default.min.css"/>
+            <script src="/custom_lms_categories/static/lib/owlcarousel/owl.carousel.min.js"/>
+            
+            <script>
+            (function() {
+                function waitForElement(selector, callback) {
+                    if (document.querySelector(selector)) {
+                        callback();
+                    } else {
+                        setTimeout(function() {
+                            waitForElement(selector, callback);
+                        }, 100);
+                    }
+                }
+                
+                function initializeCarousels() {
+                    var carousels = document.querySelectorAll('.owl-carousel');
+                    console.log('Trovati caroselli:', carousels.length);
+                    
+                    carousels.forEach(function(carousel) {
+                        var items = carousel.querySelectorAll('.item');
+                        console.log('Elementi nel carosello', carousel.id, ':', items.length);
+                        
+                        if (items.length > 0) {
+                            $(carousel).owlCarousel({
+                                loop: false,
+                                margin: 20,
+                                nav: true,
+                                dots: false,
+                                responsive: {
+                                    0: { items: 1 },
+                                    576: { items: 2 },
+                                    768: { items: 3 },
+                                    992: { items: 4 }
+                                }
+                            });
+                        }
+                    });
+                }
+                
+                // Attende che tutto il DOM sia caricato
+                document.addEventListener('DOMContentLoaded', function() {
+                    // Verifica che jQuery e OwlCarousel siano disponibili
+                    if (typeof jQuery === 'undefined' || typeof jQuery.fn.owlCarousel === 'undefined') {
+                        console.log('In attesa delle dipendenze...');
+                        setTimeout(arguments.callee, 100);
+                        return;
+                    }
+                    
+                    // Attende che gli elementi del carosello siano renderizzati
+                    waitForElement('.owl-carousel .item', function() {
+                        console.log('Elementi del carosello trovati, inizializzo...');
+                        initializeCarousels();
+                    });
+                });
+            })();
+            </script>
+
+            <style>
+                .owl-carousel {
+                    position: relative;
+                }
+                .owl-carousel .owl-stage-outer {
+                    padding: 10px;
+                    margin: -10px;
+                }
+                .owl-carousel .item {
+                    padding: 10px;
+                }
+                .owl-carousel .card {
+                    transition: all 0.3s ease;
+                    height: 100%;
+                    border: 1px solid #eee;
+                }
+                .owl-carousel .card:hover {
+                    transform: translateY(-5px);
+                    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+                }
+                .owl-nav button {
+                    position: absolute;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    background: rgba(0,0,0,0.5) !important;
+                    color: white !important;
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+                .owl-nav button.owl-prev {
+                    left: -20px;
+                }
+                .owl-nav button.owl-next {
+                    right: -20px;
+                }
+                .owl-nav button:hover {
+                    background: rgba(0,0,0,0.8) !important;
+                }
+                .category-slider-section {
+                    margin-bottom: 2rem;
+                }
+            </style>
         </xpath>
     </template>
 
