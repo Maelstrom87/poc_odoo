@@ -4,13 +4,13 @@
     <record id="action_cat_list" model="ir.actions.act_window">
         <field name="name">Categorie</field>
         <field name="res_model">lms.category</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
 
     <record id="action_topics_list" model="ir.actions.act_window">
         <field name="name">Topics</field>
         <field name="res_model">lms.topic</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
 
   <!-- Menu Principale -->
