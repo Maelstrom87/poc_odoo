@@ -1,16 +1,16 @@
 <odoo>
-    <record id="view_lms_category_tree" model="ir.ui.view">
+    <record id="view_lms_category_list" model="ir.ui.view">
         <field name="name">lms.category.list</field>
         <field name="model">lms.category</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="sequence" widget="handle"/>
                 <field name="code"/>
                 <field name="name"/>
                 <field name="channel_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                 <field name="item_limit"/>
                 <field name="active" widget="boolean_toggle"/>
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -44,12 +44,12 @@
                             <field name="tag_ids" widget="many2many_tags"/>
                             
                             <!-- Sezione migliorata per i corsi associati -->
-                            <field name="channel_ids" context="{'tree_view_ref': 'website_slides.slide_channel_view_tree'}">
-                                <tree>
+                            <field name="channel_ids" context="{'list_view_ref': 'website_slides.slide_channel_view_list'}">
+                                <list>
                                     <field name="name"/>
                                     <field name="website_published" widget="boolean_button"/>
                                     <field name="total_slides" string="Slides"/>
-                                    </tree>
+                                    </list>
                                 <form>
                                     <group>
                                         <field name="name"/>
@@ -69,7 +69,7 @@
     <record id="action_lms_category" model="ir.actions.act_window">
         <field name="name">LMS Categories</field>
         <field name="res_model">lms.category</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="context">{'default_active': True}</field>
     </record>
 </odoo>
