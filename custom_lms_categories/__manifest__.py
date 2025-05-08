@@ -13,6 +13,7 @@
     'website': 'https://quickstart2.com',
     'category': 'eLearning',
     'depends': [
+        'web',
         'website',
         'website_slides',
     ],
@@ -27,14 +28,15 @@
     ],
     'assets': {
         'web.assets_frontend': [
-            'web/static/lib/jquery/jquery.js',
+            
             'custom_lms_categories/static/src/scss/categories.scss',
             'custom_lms_categories/static/lib/owlcarousel/assets/owl.carousel.min.css',
             'custom_lms_categories/static/lib/owlcarousel/assets/owl.theme.default.min.css',
             'custom_lms_categories/static/lib/owlcarousel/owl.carousel.min.js',
-            'custom_lms_categories/static/src/js/slider_init.js',
-            'custom_lms_categories/static/src/scss/slider_styles.scss',
+            'custom_lms_categories/static/src/js/owl_carousel_init.js',
+
         ],
+
     },
     'demo': ['data/demo_data.xml'],
     'images': ['static/description/icon.png'],
