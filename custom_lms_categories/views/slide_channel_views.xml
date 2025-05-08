@@ -7,9 +7,19 @@
             <xpath expr="//field[@name='description']" position="after">
                 <div class="oe_title">
                     <h2>Categories</h2>
+                    <p>Associa il corso alle categorie</p>
                     <field name="category_ids" 
                            widget="many2many_tags" 
                            options="{'color_field': 'color'}" 
+                           class="oe_inline"/>
+                </div>
+
+                <div class="oe_title">
+                    <h2>Tags</h2>
+                    <p>Assegna dei tag al corso</p>
+                    <field name="tag_ids"
+                           widget="many2many_tags"
+                           options="{'color_field': 'color'}"
                            class="oe_inline"/>
                 </div>
             </xpath>

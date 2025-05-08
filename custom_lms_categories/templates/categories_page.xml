@@ -2,6 +2,7 @@
 <odoo>
     <!-- Template SEMPLICE per lista categorie -->
     <template id="view_categories_page" name="Categories Page">
+        <t t-call="website.layout">
             <div class="container mt-3">
                 <h1>Lista Categorie</h1>
                 <div class="row">
@@ -19,6 +20,7 @@
                         </div>
                     </t>
                 </div>
-            </div> 
+            </div>
+        </t>
     </template>
 </odoo>

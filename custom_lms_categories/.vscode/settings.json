@@ -1,6 +1,22 @@
 {
-  "python.analysis.extraPaths": ["B:/IT/Odoo 18.0.20250403/server"],
-  "python.pythonPath": "C:/Program Files/Odoo 18.0.20250403/python/python.exe",
-  //Da usare come parametro per launch.json da refactorare,
-  "odooconfig.odooHome": "C:/Program Files/Odoo 18.0.20250403"
+    "python.analysis.extraPaths": [
+        "${config:odoo.serverPath}",
+        "${config:odoo.serverPath}/odoo",
+        "${config:odoo.addonsPath}"
+    ],
+    
+    // Configurazione Odoo
+    "odoo.odooHome": "C:/Program Files/Odoo 16.0.20250105",
+    "odoo.serverPath": "${config:odoo.odooHome}/server",
+    "odoo.pythonPath": "${config:odoo.odooHome}/python/python.exe",
+    "odoo.odooBin": "${config:odoo.serverPath}/odoo-bin",
+    "odoo.odooConf": "${config:odoo.serverPath}/odoo.conf",
+    "odoo.addonsPath": "${config:odoo.serverPath}/odoo/addons",
+    "odoo.logsPath": "${config:odoo.serverPath}/logs",
+    "odoo.database": "OdooLocaleDB",
+    "odoo.httpInterface": "0.0.0.0",
+    "odoo.httpPort": "8069",
+    
+    // Configurazione Python
+    "python.pythonPath": "${config:odoo.pythonPath}"
 }
