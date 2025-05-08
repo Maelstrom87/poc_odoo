@@ -1,8 +1,6 @@
 {
-    "python.analysis.extraPaths": [
-        "C:/Program Files/Odoo 16.0.20250105/server"
-    ],
-    "python.pythonPath": "C:/Program Files/Odoo 16.0.20250105/python/python.exe",
-    //Da usare come parametro per launch.json da refactorare,        
-    "odooconfig.odooHome": "C:/Program Files/Odoo 16.0.20250105"
+  "python.analysis.extraPaths": ["B:/IT/Odoo 18.0.20250403/server"],
+  "python.pythonPath": "C:/Program Files/Odoo 18.0.20250403/python/python.exe",
+  //Da usare come parametro per launch.json da refactorare,
+  "odooconfig.odooHome": "C:/Program Files/Odoo 18.0.20250403"
 }
