@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Azioni -->
+    <record id="action_cat_list" model="ir.actions.act_window">
+        <field name="name">Categorie</field>
+        <field name="res_model">lms.category</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_topics_list" model="ir.actions.act_window">
+        <field name="name">Topics</field>
+        <field name="res_model">lms.topic</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+  <!-- Menu Principale -->
+    <menuitem id="menu_lms_cat_root" name="Gestione Categorie" sequence="10"/>
+
+    <!-- Sotto-menu per Listini e Articoli -->
+    <menuitem id="menu_pricelist" name="Categorie" parent="menu_lms_cat_root" sequence="10" action="action_cat_list"/>
+    <menuitem id="menu_pricelist_article" name="Topics" parent="menu_lms_cat_root" sequence="20" action="action_topics_list"/>
+</odoo>

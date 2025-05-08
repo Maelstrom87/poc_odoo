@@ -1,0 +1,79 @@
+/*{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Odoo 16 Debug",
+            "type": "debugpy",
+            //"type": "python",
+            "request": "launch",
+            "program": "${config:odooconfig.odooBin}",
+            "args": [
+                "-c", "${config:odooconfig.odooConf}",
+                //"--dev=all",
+                "--without-demo=all",
+                "--addons-path", "${config:odooconfig.addonsPath}",
+                "-d", "OdooLocaleDB",
+                "--logfile=${config:odooconfig.logsPath}/odoo.log",
+                "--log-level=debug",
+                "--http-interface=0.0.0.0",
+                "--http-port=8069"
+                 //"--workers=0" // da testare su odoo 18
+            ],
+            "console": "integratedTerminal",
+            //"console": "externalTerminal",
+            "cwd": "${config:odooconfig.serverPath}", //Current working directory
+            "justMyCode": false, //
+            "env": {
+                "PYTHONPATH": "${config:odooconfig.pythonPath}",
+                "ODOO_DISABLE_DEV_MODE": "1", // Disabilita il dev mode di Odoo
+                "ODOO_RELOAD": "1" // Forza il reload di Odoo
+            },
+            "gevent": false // Se true, Odoo non si avvia in modalità gevent (non supportato da Odoo 16)
+            // "envFile": "${workspaceFolder}/.env", // File di ambiente per le variabili d'ambiente
+        }
+    ]
+}
+
+*/
+
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387    
+    "version": "0.2.0",
+       "configurations": [
+           {
+               "name": "Odoo 16 Debug",
+               "type": "debugpy",
+               //"type": "python",
+               "request": "launch",
+               "program": "C:/Program Files/Odoo 16.0.20250105/server/odoo-bin",
+               "args": [
+                   "-c", "C:/Program Files/Odoo 16.0.20250105/server/odoo.conf",
+                   //"--dev=all",
+                   "--without-demo=all",
+                   "--addons-path", "C:/Program Files/Odoo 16.0.20250105/server/odoo/addons",
+                   "-d", "OdooLocaleDB",
+                   "--logfile=C:/Program Files/Odoo 16.0.20250105/server/logs/odoo.log",
+                   "--log-level=debug",
+                   "--http-interface=0.0.0.0",
+                   "--http-port=8069"
+                   //"--workers=0"
+                ],
+               "console": "integratedTerminal",
+               //"console": "externalTerminal",
+               "cwd": "C:/Program Files/Odoo 16.0.20250105/server",
+               "justMyCode": false,
+               "env": {
+                   //"PYTHONPATH": "C:/Program Files/Odoo 16.0.20250105/server"
+                   "PYTHONPATH": "C:/Program Files/Odoo 16.0.20250105/python",
+                   "ODOO_DISABLE_DEV_MODE": "1",
+                   "ODOO_RELOAD": "1"
+               },
+               "gevent": false
+           }
+       ]
+  }
+
+
+
