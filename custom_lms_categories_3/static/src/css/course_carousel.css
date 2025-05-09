@@ -1,0 +1,236 @@
+/* Container principale del carosello - versione migliorata */
+.course-carousel-container {
+    position: relative;
+    margin: 0 auto;
+    overflow: visible;
+    background-color: #1a1a1a;
+    padding: 40px 20px;
+    border-radius: 0;
+    min-height: 400px; /* Cambiato da height a min-height per maggiore flessibilità */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Titolo del carosello - versione migliorata */
+.carousel-title {
+    text-align: center;
+    color: white;
+    font-size: 28px;
+    margin-bottom: 30px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Contenitore delle card del carosello - versione migliorata */
+.course-carousel {
+    display: flex;
+    gap: 20px;
+    padding: 20px 10px; /* Più padding verticale */
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    height: 100%;
+    width: 100%;
+    flex-wrap: nowrap;
+    scrollbar-width: none; /* Nasconde la scrollbar su Firefox */
+    -ms-overflow-style: none; /* Nasconde la scrollbar su IE/Edge */
+}
+
+/* Nasconde la scrollbar su Chrome/Safari */
+.course-carousel::-webkit-scrollbar {
+    display: none;
+}
+
+/* Stile delle singole card - versione migliorata con rapporto 16:9 */
+.course-card {
+    position: relative;
+    flex: 0 0 calc(230px * 1.77); /* 230 * 16/9 ≈ 407px */
+    height: 230px; /* Altezza basata sulla larghezza per 16:9 */
+    overflow: hidden;
+    border-radius: 4px; /* Bordi leggermente arrotondati */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    margin: 0;
+    background: #000; /* Sfondo nero per eventuali spazi vuoti */
+}
+
+/* Effetto hover sulle card con sottile bordo rosso */
+.course-card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+    outline: 1px solid rgba(255, 0, 0, 1.2); /* Sottile bordo rosso */
+    transform: translateY(-5px); /* Leggero sollevamento */
+}
+
+/* Contenitore dell'immagine della card - adattato per 16:9 */
+.course-image-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 4px;
+    aspect-ratio: 16/9; /* Garantisce il rapporto 16:9 */
+}
+
+/* Immagine della card - adattata per 16:9 */
+.course-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+    object-position: center;
+}
+
+/* Effetto hover sull'immagine - più fluido */
+.course-card:hover .course-image {
+    transform: scale(1.05); /* Zoom più sottile */
+}
+
+/* Overlay delle informazioni della card - migliorato */
+.course-info-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+    color: white;
+    padding: 20px 15px 15px;
+    text-align: center;
+}
+
+/* Titolo della card - migliorato */
+.course-title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+/* Overlay aggiuntivo per dettagli - migliorato */
+.course-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.95);
+    color: white;
+    padding: 15px;
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    border-top: 1px solid rgba(255, 0, 0, 0.5); /* Bordo rosso sottile */
+}
+
+/* Mostra l'overlay al passaggio del mouse - più fluido */
+.course-card:hover .course-overlay {
+    transform: translateY(0);
+}
+
+/* Stile del titolo nell'overlay - migliorato */
+.course-overlay h3 {
+    margin: 0 0 10px 0;
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+}
+
+/* Stile del paragrafo nell'overlay - migliorato */
+.course-overlay p {
+    margin: 10px 0;
+    font-size: 14px;
+    line-height: 1.4;
+    color: #ddd;
+}
+
+/* Bottone rosso - migliorato */
+.btn-red {
+    background-color: rgba(255, 0, 0, 0.8);
+    color: white;
+    padding: 8px 15px;
+    text-decoration: none;
+    border-radius: 4px;
+    display: inline-block;
+    margin-top: 10px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Effetto hover sul bottone - migliorato */
+.btn-red:hover {
+    background-color: rgba(200, 0, 0, 0.9);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Controlli del carosello (frecce) - migliorati */
+.carousel-control {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 12px;
+    border-radius: 50%;
+    z-index: 100;
+    transition: all 0.3s ease;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Hover sui controlli - migliorato */
+.carousel-control:hover {
+    background-color: rgba(255, 0, 0, 0.8);
+    transform: translateY(-50%) scale(1.1);
+}
+
+/* Posizionamento della freccia sinistra - migliorato */
+.carousel-control.prev {
+    left: -24px; /* Posiziona fuori dal contenitore */
+}
+
+/* Posizionamento della freccia destra - migliorato */
+.carousel-control.next {
+    right: -24px; /* Posiziona fuori dal contenitore */
+}
+
+/* Media Query per dispositivi mobili */
+@media (max-width: 768px) {
+    .course-carousel-container {
+        padding: 30px 10px;
+        min-height: 350px;
+    }
+    
+    .carousel-title {
+        font-size: 22px;
+        margin-bottom: 20px;
+    }
+    
+    .course-card {
+        flex: 0 0 calc(180px * 1.77); /* Card più piccole su mobile */
+        height: 180px;
+    }
+    
+    .carousel-control {
+        width: 36px;
+        height: 36px;
+        font-size: 18px;
+    }
+    
+    .carousel-control.prev {
+        left: -18px;
+    }
+    
+    .carousel-control.next {
+        right: -18px;
+    }
+}

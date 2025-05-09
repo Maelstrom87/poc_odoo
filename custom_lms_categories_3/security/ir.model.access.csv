@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_lms_category_admin,lms.category.admin,model_lms_category,base.group_system,1,1,1,1
+access_lms_category_user,lms.category.user,model_lms_category,base.group_user,1,0,0,0
+access_lms_category_manager,lms.category.manager,model_lms_category,website.group_website_designer,1,1,1,0
