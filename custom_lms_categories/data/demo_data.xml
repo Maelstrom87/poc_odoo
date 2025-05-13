@@ -1,294 +1,156 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<odoo noupdate="1">
-
-    <!-- ====================== -->
-    <!-- GROUP FOR TAGS         -->
-    <!-- ====================== -->
-
-    <record id="demo_tag_group" model="slide.channel.tag.group">
-        <field name="name">Gruppo Demo Tag</field>
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Prima crea un gruppo per i tag -->
+    <record id="group_lms_tags" model="slide.channel.tag.group">
+        <field name="name">Generale</field>
     </record>
 
-    <!-- ====================== -->
-    <!-- CATEGORIES DEMO DATA   -->
-    <!-- ====================== -->
-
-    <record id="demo_category_olistica" model="lms.category">
-        <field name="name">Olistica</field>
-        <field name="code">OLIS</field>
-        <field name="description">Corsi su benessere olistico, meditazione e crescita personale</field>
-        <field name="active" eval="True"/>
-        <field name="sequence" eval="10"/>
-        <field name="website_published" eval="True"/>
-        <field name="promote_on_home" eval="True"/>
-        <field name="emoji">🧘</field>
-        <field name="color" eval="2"/>
+    <!-- Tag dei Corsi -->
+    <record id="tag_base" model="slide.channel.tag">
+        <field name="name">Base</field>
+        <field name="color">1</field>
+        <field name="group_id" ref="group_lms_tags"/>
     </record>
-
-    <record id="demo_category_comunicazione" model="lms.category">
-        <field name="name">Comunicazione</field>
-        <field name="code">COMM</field>
-        <field name="description">Tecniche di comunicazione efficace, public speaking e scrittura</field>
-        <field name="active" eval="True"/>
-        <field name="sequence" eval="20"/>
-        <field name="website_published" eval="True"/>
-        <field name="promote_on_home" eval="False"/>
-        <field name="emoji">💬</field>
-        <field name="color" eval="4"/>
+    <record id="tag_avanzato" model="slide.channel.tag">
+        <field name="name">Avanzato</field>
+        <field name="color">2</field>
+        <field name="group_id" ref="group_lms_tags"/>
     </record>
-
-    <record id="demo_category_vendite" model="lms.category">
-        <field name="name">Vendite</field>
-        <field name="code">VEND</field>
-        <field name="description">Strategie di vendita, negoziazione e gestione clienti</field>
-        <field name="active" eval="True"/>
-        <field name="sequence" eval="30"/>
-        <field name="website_published" eval="True"/>
-        <field name="promote_on_home" eval="True"/>
-        <field name="emoji">📈</field>
-        <field name="color" eval="6"/>
+    <record id="tag_intermedio" model="slide.channel.tag">
+        <field name="name">Intermedio</field>
+        <field name="color">3</field>
+        <field name="group_id" ref="group_lms_tags"/>
     </record>
-
-    <!-- ====================== -->
-    <!-- TAGS DEMO DATA         -->
-    <!-- ====================== -->
-
-    <!-- Olistica -->
-    <record id="demo_tag_meditazione" model="slide.channel.tag">
-        <field name="name">Meditazione</field>
-        <field name="color" eval="1"/>
-        <field name="group_id" ref="demo_tag_group"/>
+    <record id="tag_certificato" model="slide.channel.tag">
+        <field name="name">Certificato</field>
+        <field name="color">4</field>
+        <field name="group_id" ref="group_lms_tags"/>
     </record>
-    <record id="demo_tag_benessere" model="slide.channel.tag">
+    <record id="tag_benessere" model="slide.channel.tag">
         <field name="name">Benessere</field>
-        <field name="color" eval="2"/>
-        <field name="group_id" ref="demo_tag_group"/>
+        <field name="color">5</field>
+        <field name="group_id" ref="group_lms_tags"/>
     </record>
-    <record id="demo_tag_crescita_personale" model="slide.channel.tag">
-        <field name="name">Crescita Personale</field>
-        <field name="color" eval="3"/>
-        <field name="group_id" ref="demo_tag_group"/>
+    <record id="tag_salute" model="slide.channel.tag">
+        <field name="name">Salute</field>
+        <field name="color">6</field>
+        <field name="group_id" ref="group_lms_tags"/>
     </record>
-
-    <!-- Comunicazione -->
-    <record id="demo_tag_public_speaking" model="slide.channel.tag">
-        <field name="name">Public Speaking</field>
-        <field name="color" eval="4"/>
-        <field name="group_id" ref="demo_tag_group"/>
+    <record id="tag_spiritualita" model="slide.channel.tag">
+        <field name="name">Spiritualità</field>
+        <field name="color">7</field>
+        <field name="group_id" ref="group_lms_tags"/>
     </record>
-    <record id="demo_tag_scrittura" model="slide.channel.tag">
-        <field name="name">Scrittura</field>
-        <field name="color" eval="5"/>
-        <field name="group_id" ref="demo_tag_group"/>
-    </record>
-    <record id="demo_tag_comunicazione_non_verbale" model="slide.channel.tag">
-        <field name="name">Comunicazione Non Verbale</field>
-        <field name="color" eval="6"/>
-        <field name="group_id" ref="demo_tag_group"/>
+    <record id="tag_autoguarigione" model="slide.channel.tag">
+        <field name="name">Autoguarigione</field>
+        <field name="color">8</field>
+        <field name="group_id" ref="group_lms_tags"/>
     </record>
 
-    <!-- Vendite -->
-    <record id="demo_tag_negoziazione" model="slide.channel.tag">
-        <field name="name">Negoziazione</field>
-        <field name="color" eval="7"/>
-        <field name="group_id" ref="demo_tag_group"/>
+    <record id="tag_terapie" model="slide.channel.tag">
+        <field name="name">Terapie</field>
+        <field name="color">9</field>
+        <field name="group_id" ref="group_lms_tags"/>
     </record>
-    <record id="demo_tag_prospettive" model="slide.channel.tag">
-        <field name="name">Prospettive</field>
-        <field name="color" eval="8"/>
-        <field name="group_id" ref="demo_tag_group"/>
+    
+    <!-- Categorie -->
+    <record id="category_yoga" model="lms.category">
+        <field name="name">Yoga e Meditazione</field>
+        <field name="code">CAT-YOGA</field>
+        <field name="description">Corsi per migliorare la pratica dello yoga e della meditazione</field>
+        <field name="emoji">🧘</field>
+        <field name="promote_on_home">True</field>
+        <field name="website_published">True</field>
+        <field name="color">1</field>
     </record>
-    <record id="demo_tag_gestione_clienti" model="slide.channel.tag">
-        <field name="name">Gestione Clienti</field>
-        <field name="color" eval="9"/>
-        <field name="group_id" ref="demo_tag_group"/>
+    <record id="category_food" model="lms.category">
+        <field name="name">Alimentazione Naturale</field>
+        <field name="code">CAT-FOOD</field>
+        <field name="description">Corsi su nutrizione e cucina naturale</field>
+        <field name="emoji">🍏</field>
+        <field name="promote_on_home">True</field>
+        <field name="website_published">True</field>
+        <field name="color">2</field>
     </record>
-
-    <!-- ====================== -->
-    <!-- COURSES DEMO DATA      -->
-    <!-- ====================== -->
-
-    <!-- Corsi esistenti -->
-    <record id="demo_channel_1" model="slide.channel">
-        <field name="name">Corso Olistico Demo</field>
-        <field name="description">Descrizione corso olistico</field>
-        <field name="website_published" eval="True"/>
-        <field name="category_ids" eval="[(4, ref('demo_category_olistica'))]"/>
-        <field name="tag_ids" eval="[
-            (4, ref('demo_tag_meditazione')),
-            (4, ref('demo_tag_benessere')),
-            (4, ref('demo_tag_crescita_personale'))
-        ]"/>
-    </record>
-
-    <record id="demo_channel_2" model="slide.channel">
-        <field name="name">Corso Comunicazione Demo</field>
-        <field name="description">Descrizione corso comunicazione</field>
-        <field name="website_published" eval="True"/>
-        <field name="category_ids" eval="[(4, ref('demo_category_comunicazione'))]"/>
-        <field name="tag_ids" eval="[
-            (4, ref('demo_tag_public_speaking')),
-            (4, ref('demo_tag_scrittura')),
-            (4, ref('demo_tag_comunicazione_non_verbale'))
-        ]"/>
+    <record id="category_energy" model="lms.category">
+        <field name="name">Terapie Energetiche</field>
+        <field name="code">CAT-ENERGY</field>
+        <field name="description">Tecniche di guarigione energetica e reiki</field>
+        <field name="emoji">✨</field>
+        <field name="promote_on_home">False</field>
+        <field name="website_published">True</field>
+        <field name="color">3</field>
     </record>
 
-    <record id="demo_channel_3" model="slide.channel">
-        <field name="name">Corso Vendite Demo</field>
-        <field name="description">Descrizione corso vendite</field>
-        <field name="website_published" eval="True"/>
-        <field name="category_ids" eval="[(4, ref('demo_category_vendite'))]"/>
-        <field name="tag_ids" eval="[
-            (4, ref('demo_tag_negoziazione')),
-            (4, ref('demo_tag_prospettive')),
-            (4, ref('demo_tag_gestione_clienti'))
-        ]"/>
+    <!-- Corsi -->
+    <record id="course_yoga_base" model="slide.channel">
+        <field name="name">Yoga per Principianti</field>
+        <field name="description">Impara le basi dello yoga in 30 giorni</field>
+        <field name="enable_rating">True</field>
+        <field name="rating_avg">4.5</field>
+        <field name="rating_count">128</field>
+        <field name="website_published">True</field>
+        <field name="category_ids" eval="[(6, 0, [ref('category_yoga')])]"/>
+        <field name="tag_ids" eval="[(6, 0, [ref('tag_base'), ref('tag_benessere')])]"/>
+    </record>
+    <record id="course_meditazione_avanzata" model="slide.channel">
+        <field name="name">Meditazione Guidata Avanzata</field>
+        <field name="description">Tecniche avanzate di meditazione per la crescita spirituale</field>
+        <field name="enable_rating">True</field>
+        <field name="rating_avg">4.8</field>
+        <field name="rating_count">95</field>
+        <field name="website_published">True</field>
+        <field name="category_ids" eval="[(6, 0, [ref('category_yoga')])]"/>
+        <field name="tag_ids" eval="[(6, 0, [ref('tag_avanzato'), ref('tag_benessere')])]"/>
+    </record>
+    <record id="course_alimentazione_ayurvedica" model="slide.channel">
+        <field name="name">Alimentazione Ayurvedica</field>
+        <field name="description">Principi della dieta ayurvedica per l'equilibrio</field>
+        <field name="enable_rating">True</field>
+        <field name="rating_avg">4.3</field>
+        <field name="rating_count">76</field>
+        <field name="website_published">True</field>
+        <field name="category_ids" eval="[(6, 0, [ref('category_food')])]"/>
+        <field name="tag_ids" eval="[(6, 0, [ref('tag_intermedio'), ref('tag_salute')])]"/>
     </record>
 
-    <record id="demo_channel_4" model="slide.channel">
-        <field name="name">DIEGO E BELLO</field>
-        <field name="description">Troppo bello</field>
-        <field name="website_published" eval="True"/>
-        <field name="category_ids" eval="[(4, ref('demo_category_vendite'))]"/>
-        <field name="tag_ids" eval="[
-            (4, ref('demo_tag_negoziazione')),
-            (4, ref('demo_tag_prospettive')),
-            (4, ref('demo_tag_gestione_clienti'))
-        ]"/>
+    <!-- Lezioni -->
+    <record id="lesson_yoga_intro" model="slide.slide">
+        <field name="name">Introduzione allo Yoga</field>
+        <field name="channel_id" ref="course_yoga_base"/>
+        <field name="slide_type">doc</field>
+        <field name="completion_time">15</field>
+        <field name="sequence">1</field>
+    </record>
+    <record id="lesson_yoga_posizioni" model="slide.slide">
+        <field name="name">Posizioni Base</field>
+        <field name="channel_id" ref="course_yoga_base"/>
+        <field name="slide_type">youtube_video</field>
+        <field name="completion_time">25</field>
+        <field name="sequence">2</field>
+    </record>
+    <record id="lesson_meditazione_preparazione" model="slide.slide">
+        <field name="name">Preparazione alla Meditazione</field>
+        <field name="channel_id" ref="course_meditazione_avanzata"/>
+        <field name="slide_type">doc</field>
+        <field name="completion_time">10</field>
+        <field name="sequence">1</field>
+    </record>
+    <record id="lesson_meditazione_respiro" model="slide.slide">
+        <field name="name">Tecnica del Respiro</field>
+        <field name="channel_id" ref="course_meditazione_avanzata"/>
+        <field name="slide_type">youtube_video</field>
+        <field name="completion_time">35</field>
+        <field name="sequence">2</field>
     </record>
 
-    <!-- ====================== -->
-    <!-- 10 CORSI NELLA CATEGORIA OLISTICA -->
-    <!-- ====================== -->
 
-    <!-- Corso 5 -->
-    <record id="demo_channel_5" model="slide.channel">
-        <field name="name">Corso Olistico 1 - Yoga Base</field>
-        <field name="description">Introduzione allo yoga per principianti</field>
-        <field name="website_published" eval="True"/>
-        <field name="category_ids" eval="[(4, ref('demo_category_olistica'))]"/>
-        <field name="tag_ids" eval="[
-            (4, ref('demo_tag_meditazione')),
-            (4, ref('demo_tag_benessere')),
-            (4, ref('demo_tag_crescita_personale'))
-        ]"/>
-    </record>
-
-    <!-- Corso 6 -->
-    <record id="demo_channel_6" model="slide.channel">
-        <field name="name">Corso Olistico 2 - Meditazione Guidata</field>
-        <field name="description">Impara a meditare con esercizi guidati</field>
-        <field name="website_published" eval="True"/>
-        <field name="category_ids" eval="[(4, ref('demo_category_olistica'))]"/>
-        <field name="tag_ids" eval="[
-            (4, ref('demo_tag_meditazione')),
-            (4, ref('demo_tag_benessere')),
-            (4, ref('demo_tag_crescita_personale'))
-        ]"/>
-    </record>
-
-    <!-- Corso 7 -->
-    <record id="demo_channel_7" model="slide.channel">
-        <field name="name">Corso Olistico 3 - Alimentazione Naturale</field>
-        <field name="description">Guida all'alimentazione naturale e consapevole</field>
-        <field name="website_published" eval="True"/>
-        <field name="category_ids" eval="[(4, ref('demo_category_olistica'))]"/>
-        <field name="tag_ids" eval="[
-            (4, ref('demo_tag_benessere')),
-            (4, ref('demo_tag_crescita_personale')),
-            (4, ref('demo_tag_meditazione'))
-        ]"/>
-    </record>
-
-    <!-- Corso 8 -->
-    <record id="demo_channel_8" model="slide.channel">
-        <field name="name">Corso Olistico 4 - Risveglio Spirituale</field>
-        <field name="description">Percorso per risvegliare la tua energia interiore</field>
-        <field name="website_published" eval="True"/>
-        <field name="category_ids" eval="[(4, ref('demo_category_olistica'))]"/>
-        <field name="tag_ids" eval="[
-            (4, ref('demo_tag_crescita_personale')),
-            (4, ref('demo_tag_benessere')),
-            (4, ref('demo_tag_meditazione'))
-        ]"/>
-    </record>
-
-    <!-- Corso 9 -->
-    <record id="demo_channel_9" model="slide.channel">
-        <field name="name">Corso Olistico 5 - Respirazione Consapevole</field>
-        <field name="description">Tecniche di respirazione per rilassamento e concentrazione</field>
-        <field name="website_published" eval="True"/>
-        <field name="category_ids" eval="[(4, ref('demo_category_olistica'))]"/>
-        <field name="tag_ids" eval="[
-            (4, ref('demo_tag_meditazione')),
-            (4, ref('demo_tag_benessere')),
-            (4, ref('demo_tag_crescita_personale'))
-        ]"/>
-    </record>
-
-    <!-- Corso 10 -->
-    <record id="demo_channel_10" model="slide.channel">
-        <field name="name">Corso Olistico 6 - Energia Femminile</field>
-        <field name="description">Riconnettersi con l'energia femminile dentro di te</field>
-        <field name="website_published" eval="True"/>
-        <field name="category_ids" eval="[(4, ref('demo_category_olistica'))]"/>
-        <field name="tag_ids" eval="[
-            (4, ref('demo_tag_benessere')),
-            (4, ref('demo_tag_crescita_personale')),
-            (4, ref('demo_tag_meditazione'))
-        ]"/>
-    </record>
-
-    <!-- Corso 11 -->
-    <record id="demo_channel_11" model="slide.channel">
-        <field name="name">Corso Olistico 7 - Guarigione Emotiva</field>
-        <field name="description">Come guarire emozioni bloccate e trovare pace interiore</field>
-        <field name="website_published" eval="True"/>
-        <field name="category_ids" eval="[(4, ref('demo_category_olistica'))]"/>
-        <field name="tag_ids" eval="[
-            (4, ref('demo_tag_crescita_personale')),
-            (4, ref('demo_tag_benessere')),
-            (4, ref('demo_tag_meditazione'))
-        ]"/>
-    </record>
-
-    <!-- Corso 12 -->
-    <record id="demo_channel_12" model="slide.channel">
-        <field name="name">Corso Olistico 8 - Aromaterapia</field>
-        <field name="description">Utilizzo degli oli essenziali per il benessere quotidiano</field>
-        <field name="website_published" eval="True"/>
-        <field name="category_ids" eval="[(4, ref('demo_category_olistica'))]"/>
-        <field name="tag_ids" eval="[
-            (4, ref('demo_tag_benessere')),
-            (4, ref('demo_tag_meditazione')),
-            (4, ref('demo_tag_crescita_personale'))
-        ]"/>
-    </record>
-
-    <!-- Corso 13 -->
-    <record id="demo_channel_13" model="slide.channel">
-        <field name="name">Corso Olistico 9 - Cristalli e Guarigione</field>
-        <field name="description">Uso dei cristalli per bilanciare l’energia</field>
-        <field name="website_published" eval="True"/>
-        <field name="category_ids" eval="[(4, ref('demo_category_olistica'))]"/>
-        <field name="tag_ids" eval="[
-            (4, ref('demo_tag_crescita_personale')),
-            (4, ref('demo_tag_benessere')),
-            (4, ref('demo_tag_meditazione'))
-        ]"/>
-    </record>
-
-    <!-- Corso 14 -->
-    <record id="demo_channel_14" model="slide.channel">
-        <field name="name">Corso Olistico 10 - Vita Conscia</field>
-        <field name="description">Come vivere una vita più conscia e in armonia</field>
-        <field name="website_published" eval="True"/>
-        <field name="category_ids" eval="[(4, ref('demo_category_olistica'))]"/>
-        <field name="tag_ids" eval="[
-            (4, ref('demo_tag_crescita_personale')),
-            (4, ref('demo_tag_benessere')),
-            (4, ref('demo_tag_meditazione'))
-        ]"/>
+    <!-- Creazione utente demo per i rating -->
+    <record id="user_demo" model="res.users">
+        <field name="login">demo@example.com</field>
+        <field name="password">demo</field>
+        <field name="name">Demo User</field>
+        <field name="partner_id" ref="base.partner_demo"/>
     </record>
 
 </odoo>

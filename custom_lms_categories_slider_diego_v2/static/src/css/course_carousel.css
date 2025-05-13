@@ -36,91 +36,6 @@
     -ms-overflow-style: none; /* Nasconde la scrollbar su IE/Edge */
 }
 
-/* Versione rafforzata (aggiungi .course-card come contesto) */
-.course-card .course-tags .badge.bg-gold {
-    background-color: #FBB900 !important; /* Forza l'override */
-    color: #000000 !important;
-    font-weight: 600;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.course-card .course-tags .badge.bg-gold:hover {
-    background-color: #E0A800 !important;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-
-/* Stile per i badge info */
-.course-badge-info {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    z-index: 2;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-}
-
-/* Badge obliquo - VERSIONE CORRETTA */
-.simple-oblique-badge {
-    position: absolute;
-    top: 15px;
-    right: -30px;
-    width: 120px;
-    background: #E0A800;
-    color: black;
-    padding: 3px 0;
-    transform: rotate(45deg);
-    z-index: 1000;
-    font-weight: bold;
-    font-size: 12px;
-    text-align: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    border: none;
-    pointer-events: none; /* Previene interferenze con i click */
-}
-
-/* Sovrascrivi eventuali stili conflittuali */
-.course-card .simple-oblique-badge {
-    display: block !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-}
-
-/* Stile per il rating */
-.course-rating {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.stars {
-    unicode-bidi: bidi-override;
-    direction: ltr;
-}
-
-.stars .fa-star {
-    font-size: 14px;
-    margin-right: 2px;
-}
-
-/* Miglioramenti responsive */
-@media (max-width: 768px) {
-    .course-badge-info {
-        flex-direction: column;
-        gap: 3px;
-    }
-    
-    .course-badge-info .badge {
-        font-size: 10px;
-        padding: 3px 5px;
-    }
-}
-
 /* Nasconde la scrollbar su Chrome/Safari */
 .course-carousel::-webkit-scrollbar {
     display: none;
@@ -142,20 +57,19 @@
 /* Effetto hover sulle card con sottile bordo rosso */
 .course-card:hover {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
-    outline: 1px solid #FBB900; /* Sottile bordo rosso > gold mindle */
+    outline: 1px solid rgba(255, 0, 0, 1.2); /* Sottile bordo rosso */
     transform: translateY(-5px); /* Leggero sollevamento */
 }
 
 /* Contenitore dell'immagine della card - adattato per 16:9 */
 .course-image-container {
-    position: relative !important; /* Forza il posizionamento relativo */
+    position: relative;
     width: 100%;
     height: 100%;
-    /* overflow: hidden; */
+    overflow: hidden;
     border-radius: 4px;
     aspect-ratio: 16/9; /* Garantisce il rapporto 16:9 */
 }
-
 
 /* Immagine della card - adattata per 16:9 */
 .course-image {
@@ -177,7 +91,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background: rgba(0, 0, 0, 0.9);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
     color: white;
     padding: 20px 15px 15px;
     text-align: center;
@@ -203,8 +117,7 @@
     padding: 15px;
     transform: translateY(100%);
     transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-    /*border-top: 1px solid rgba(255, 0, 0, 0.5);*/ /* Bordo rosso sottile */
-    border-top: 1px solid #FBB900; /* Bordo Gold mindle sottile */
+    border-top: 1px solid rgba(255, 0, 0, 0.5); /* Bordo rosso sottile */
 }
 
 /* Mostra l'overlay al passaggio del mouse - più fluido */
@@ -276,18 +189,18 @@
 
 /* Hover sui controlli - migliorato */
 .carousel-control:hover {
-    background-color: #FBB900;
+    background-color: rgba(255, 0, 0, 0.8);
     transform: translateY(-50%) scale(1.1);
 }
 
 /* Posizionamento della freccia sinistra - migliorato */
 .carousel-control.prev {
-    left: -18px !important; /* Posiziona fuori dal contenitore */
+    left: -24px; /* Posiziona fuori dal contenitore */
 }
 
 /* Posizionamento della freccia destra - migliorato */
 .carousel-control.next {
-    right: -18px !important; /* Posiziona fuori dal contenitore */
+    right: -24px; /* Posiziona fuori dal contenitore */
 }
 
 /* Media Query per dispositivi mobili */
@@ -300,7 +213,6 @@
     .carousel-title {
         font-size: 22px;
         margin-bottom: 20px;
-        color:#FBB900;
     }
     
     .course-card {

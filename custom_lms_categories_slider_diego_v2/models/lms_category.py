@@ -58,26 +58,12 @@ class LMSCategory(models.Model):
             if not 1 <= record.item_limit <= 100:
                 raise ValidationError(_('Item limit must be between 1 and 100!'))
 
-    #deprecato in odoo 18
-    # @api.model
-    # def create(self, vals):
-    #     if not vals.get('code'):
-    #         seq = self.env['ir.sequence'].next_by_code('lms.category.code') or '000'
-    #         vals['code'] = f'CAT-{fields.Date.today().year}-{seq[-3:]}'
-    #     return super().create(vals)
-
-    @api.model_create_multi
-    def create(self, vals_list):
-        """
-        Override create method to handle batch operations
-        and auto-generate codes when not provided
-        """
-        for vals in vals_list:
-            if not vals.get('code'):
-                seq = self.env['ir.sequence'].next_by_code('lms.category.code') or '000'
-                vals['code'] = f'CAT-{fields.Date.today().year}-{seq[-3:]}'
-        return super().create(vals_list)
-
+    @api.model
+    def create(self, vals):
+        if not vals.get('code'):
+            seq = self.env['ir.sequence'].next_by_code('lms.category.code') or '000'
+            vals['code'] = f'CAT-{fields.Date.today().year}-{seq[-3:]}'
+        return super().create(vals)
 
     def write(self, vals):
         return super().write(vals)
@@ -135,21 +121,3 @@ class SlideChannel(models.Model):
                 record.short_description = record.description[:100] + '...' if len(record.description) > 100 else record.description
             else:
                 record.short_description = ""
-
-    total_slides = fields.Integer(compute='_compute_slides_count', string="Numero Lezioni")
-    total_time = fields.Integer(compute='_compute_total_time', string="Durata Totale (minuti)")
-    enable_rating = fields.Boolean(string="Abilita Rating", default=True)
-    rating_avg = fields.Float(string="Valutazione Media", digits=(2,1))
-    # rating_avg_stars = fields.Float("Rating Average (Stars)", compute='_compute_rating_stats', digits=(16, 1), compute_sudo=True)
-    rating_count = fields.Integer(string="Numero Recensioni")
-
-    def _compute_slides_count(self):
-        for channel in self:
-            channel.total_slides = self.env['slide.slide'].search_count([('channel_id', '=', channel.id)])
-
-    def _compute_total_time(self):
-        for channel in self:
-            channel.total_time = sum(self.env['slide.slide'].search([
-                ('channel_id', '=', channel.id)
-            ]).mapped('completion_time'))
-                

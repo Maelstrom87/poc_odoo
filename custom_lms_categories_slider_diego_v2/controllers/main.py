@@ -59,3 +59,34 @@ class LMSCategoryController(http.Controller):
         return http.request.render(f'{MODULE_NAME}.online_course_carousel_view', {
             'channels': channels
         })
+
+    # # carousels netflix style
+    # @http.route('/lms/netflix/v2', type='http', auth="public", website=True)
+    # def lms_nf_carousel_v2(self):
+    #     channels = http.request.env['slide.channel'].sudo().search([])
+    #     return http.request.render(f'{MODULE_NAME}.inherit_courses_home', {
+    #         'channels': channels
+    #     })
+    # Netflix-style carousel route
+    @http.route('/lms/netflix/v2', type='http', auth="public", website=True)
+    def lms_nf_carousel_v2(self):
+        _logger.info("Entering lms_nf_carousel_v2 route")
+        
+        try:
+            _logger.info("Fetching all slide channels from the database")
+            channels = request.env['slide.channel'].sudo().search([])
+            
+            _logger.info("Found %d channels", len(channels))
+            _logger.info("Channels IDs: %s", channels.ids)
+
+            template_name = f'{MODULE_NAME}.slider_v2_view'
+            _logger.info(f"Rendering template: {template_name}")
+
+            return request.render(template_name, {
+                'channels': channels,
+                #'debug': True  # Puoi attivare il debug nel template se necessario
+            })
+
+        except Exception as e:
+            _logger.error("Error in lms_nf_carousel_v2: %s", str(e), exc_info=True)
+            raise

@@ -1,0 +1,40 @@
+.course-carousel {
+    .owl-stage {
+        display: flex;
+        padding: 10px 0;
+    }
+    
+    .item {
+        margin: 0 10px;
+    }
+    
+    .card {
+        transition: transform 0.3s;
+        height: 100%;
+        
+        &:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+    }
+    
+    .owl-nav {
+        button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5) !important;
+            color: white !important;
+            border: none !important;
+            font-size: 1.5rem !important;
+            
+            &.owl-prev {
+                left: -30px;
+            }
+            
+            &.owl-next {
+                right: -30px;
+            }
+        }
+    }
+}

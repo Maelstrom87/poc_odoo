@@ -1,5 +1,5 @@
 <odoo>
-    <record id="view_lms_category_list" model="ir.ui.view">
+    <record id="view_lms_category_tree" model="ir.ui.view">
         <field name="name">lms.category.list</field>
         <field name="model">lms.category</field>
         <field name="arch" type="xml">
@@ -25,10 +25,12 @@
                             <field name="sequence"/>
                             <field name="code"/>
                             <field name="name"/>
-                            <!--<field name="website_id"/>-->
+                            <field name="website_id"/>
                             <field name="active"/>
+                        </group>
+                        <group>
                             <field name="item_limit"/>
-                            <!--<field name="color"/>-->
+                            <field name="color"/>
                         </group>
                     </group>
 
@@ -42,12 +44,12 @@
                             <field name="tag_ids" widget="many2many_tags"/>
                             
                             <!-- Sezione migliorata per i corsi associati -->
-                            <field name="channel_ids" context="{'list_view_ref': 'website_slides.slide_channel_view_list'}">
+                            <field name="channel_ids" context="{'list_view_ref': 'website_slides.slide_channel_view_tree'}">
                                 <list>
                                     <field name="name"/>
                                     <field name="website_published" widget="boolean_button"/>
                                     <field name="total_slides" string="Slides"/>
-                                    </list>
+                                </list>
                                 <form>
                                     <group>
                                         <field name="name"/>

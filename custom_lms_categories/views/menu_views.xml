@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Azioni -->
+    <!-- Azioni (rimangono invariate) -->
     <record id="action_cat_list" model="ir.actions.act_window">
         <field name="name">Categorie</field>
         <field name="res_model">lms.category</field>
@@ -13,10 +13,11 @@
         <field name="view_mode">list,form</field>
     </record>
 
-  <!-- Menu Principale -->
-    <menuitem id="menu_lms_cat_root" name="Gestione Categorie" sequence="10"/>
+    <!-- Modifica qui: cambia il parent da menu_lms_cat_root a website_slides_menu_configuration -->
+    <menuitem id="menu_lms_cat_root" name="Gestione Categorie" 
+              parent="website_slides.website_slides_menu_courses" sequence="10"/>
 
-    <!-- Sotto-menu per Listini e Articoli -->
-    <menuitem id="menu_pricelist" name="Categorie" parent="menu_lms_cat_root" sequence="10" action="action_cat_list"/>
-    <menuitem id="menu_pricelist_article" name="Topics" parent="menu_lms_cat_root" sequence="20" action="action_topics_list"/>
+    <!-- Sotto-menu per Cat e Topics (rimangono invariati) -->
+    <menuitem id="menu_categories" name="Categorie" parent="menu_lms_cat_root" sequence="10" action="action_cat_list"/>
+    <menuitem id="menu_topics" name="Topics" parent="menu_lms_cat_root" sequence="20" action="action_topics_list"/>
 </odoo>
