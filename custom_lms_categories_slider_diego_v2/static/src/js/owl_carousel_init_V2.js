@@ -22,7 +22,7 @@
       if ($carousel.hasClass("owl-carousel") && !$carousel.hasClass("owl-loaded")) {
         $carousel.owlCarousel({
           loop: false,
-          margin: 20,
+          // margin: 5,
           nav: true,
           dots: false,
           responsive: {

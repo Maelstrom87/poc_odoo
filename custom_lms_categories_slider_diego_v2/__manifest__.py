@@ -2,9 +2,9 @@
 
 # -*- coding: utf-8 -*-
 {
-    'name': 'Custom LMS Categories',
+    'name': 'Custom LMS Categories Diego V2',
     'version': '18.0.1.0.0',
-    'summary': 'Manage Learning Categories with Topics and Channels',
+    'summary': 'V2 - Manage Learning Categories with Topics and Channels',
     'description': """
         Advanced category management for LMS with topic classification,
         tagging and channel association.
@@ -15,6 +15,8 @@
     'depends': [
         'website',
         'website_slides',
+        'rating',
+        'mail',
     ],
     'data': [
         'security/ir.model.access.csv',
@@ -30,7 +32,7 @@
     # 'assets': {
     #     'web.assets_frontend': [
     #         'web/static/lib/jquery/jquery.js',
-    #         'custom_lms_categories/static/src/scss/categories.scss',
+            # 'custom_lms_categories/static/src/scss/categories.scss',
     #         # file built-in owl carousel
     #         # 'custom_lms_categories/static/lib/owlcarousel/assets/owl.carousel.min.css',
     #         # 'custom_lms_categories/static/lib/owlcarousel/assets/owl.theme.default.min.css',
@@ -40,9 +42,9 @@
     #         'custom_lms_categories/static/src/scss/slider_styles.scss',
     #         'custom_lms_categories/static/src/js/course_carousel.js',
     #         # Versione 2   
-    #         'custom_lms_categories/static/src/css/course_carousel.css',
-    #         'custom_lms_categories/static/src/js/owl_carousel_init_V2.js',
-    #         'custom_lms_categories/static/lib/owlcarousel/assets/owl.carouselV2.min.css',
+    #         'custom_lms_categories_diego/static/src/css/course_carousel.css',
+    #         'custom_lms_categories_diego/static/src/js/owl_carousel_init_V2.js',
+    #         'custom_lms_categories_diego/static/lib/owlcarousel/assets/owl.carouselV2.min.css',
     #     ],
     # },
     'demo': ['data/demo_data.xml'],

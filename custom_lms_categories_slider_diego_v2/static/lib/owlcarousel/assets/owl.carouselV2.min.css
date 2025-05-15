@@ -282,7 +282,7 @@ img {
 }
 
 .view-all:hover {
-  color: white;
+  color: #fbb900; /* Cambia il colore del link "view all" in hover */
 }
 
 .view-all svg {
@@ -325,29 +325,16 @@ img {
   flex-shrink: 0;
   width: 288px; /* w-72 = 18rem */
   background-color: #1f2937;
-  border-radius: 0.75rem;
   overflow: hidden;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
   border: 1px solid #374151;
   transition: all 0.3s ease;
-  /* height: 450px; */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between; /* Spazia verticalmente i componenti */
-}
-
-.course-card .relative {
-  /* height: 200px;  */
-}
-
-.course-card .card-content {
-  flex-grow: 1;
 }
 
 .course-card:hover {
   transform: scale(1.05);
-  box-shadow: 0 5px 15px rgba(239, 68, 68, 0.3);
-  border-color: #ef4444;
+  box-shadow: 0 5px 15px rgba(251, 185, 0, 0.3); /* Usa il giallo dorato per l'ombra */
+  border-color: #fbb900; /* Mantieni il bordo giallo dorato */
 }
 
 .course-image {
@@ -387,7 +374,7 @@ img {
 }
 
 .course-title:hover {
-  color: #ef4444;
+  color: #fbb900; /* Cambia il colore del titolo in hover al giallo dorato */
 }
 
 .course-details {
@@ -410,16 +397,17 @@ img {
 }
 
 .add-button {
-  background-color: #374151;
-  color: white;
+  background-color: #fbb900; /* Colore di sfondo giallo dorato */
+  color: black; /* Testo nero per contrasto */
   padding: 0.25rem 1rem;
   border-radius: 9999px;
   font-size: 0.75rem;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .add-button:hover {
-  background-color: #1f2937;
+  background-color: #e0a800; /* Colore leggermente più scuro per hover */
+  color: white; /* Testo bianco per maggiore enfasi */
 }
 
 /* CAROUSEL CONTAINER */
@@ -614,4 +602,74 @@ img {
   overflow: hidden;
   text-overflow: ellipsis;
   width: 100%;
+}
+
+/* Badge obliquo - VERSIONE CORRETTA */
+.simple-oblique-badge {
+  position: absolute;
+  top: 15px;
+  right: -30px;
+  width: 120px;
+  background: #e0a800;
+  color: black;
+  padding: 3px 0;
+  transform: rotate(45deg);
+  z-index: 1000;
+  font-weight: bold;
+  font-size: 12px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  border: none;
+  pointer-events: none; /* Previene interferenze con i click */
+}
+
+/* Sovrascrivi eventuali stili conflittuali */
+.course-card .simple-oblique-badge {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Testo di categoria */
+.text-gold {
+  color: #fbb900; /* Cambia il colore del testo al giallo dorato */
+}
+
+.palette-gold {
+  color: #fbb900;
+}
+.palette-petrol {
+  color: #385652;
+}
+.palette-sand {
+  color: #ffe3aa;
+}
+.palette-grey {
+  color: #6c757d;
+}
+.palette-dark-petrol {
+  color: #1d2f2b;
+}
+
+.bg-dark-petrol {
+  background-color: #1d2f2b;
+}
+
+.bg-petrol {
+  background-color: #385652;
+}
+
+/* Stile di base per il testo */
+.text-scroll {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Scorrimento al passaggio del mouse */
+.text-scroll:hover {
+  overflow: visible;
+  white-space: normal;
+  text-overflow: unset;
 }
