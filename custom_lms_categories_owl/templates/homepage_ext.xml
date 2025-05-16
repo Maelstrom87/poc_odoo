@@ -78,9 +78,9 @@
                 <script src="/web/static/lib/jquery/jquery.js"/>
                 <t t-set="jquery_loaded" t-value="True"/>
             </t>
-            <link rel="stylesheet" href="/custom_lms_categories/static/lib/owlcarousel/assets/owl.carousel.min.css"/>
-            <link rel="stylesheet" href="/custom_lms_categories/static/lib/owlcarousel/assets/owl.theme.default.min.css"/>
-            <script src="/custom_lms_categories/static/lib/owlcarousel/owl.carousel.min.js"/>
+            <link rel="stylesheet" href="/custom_lms_categories_owl/static/lib/owlcarousel/assets/owl.carousel.min.css"/>
+            <link rel="stylesheet" href="/custom_lms_categories_owl/static/lib/owlcarousel/assets/owl.theme.default.min.css"/>
+            <script src="/custom_lms_categories_owl/static/lib/owlcarousel/owl.carousel.min.js"/>
             
             <script>
             (function() {

@@ -146,8 +146,8 @@
     </record>
 
     <record id="demo_channel_4" model="slide.channel">
-        <field name="name">DIEGO E BELLO</field>
-        <field name="description">Troppo bello</field>
+        <field name="name">Corso Fantastico</field>
+        <field name="description">super Corso Fantastico e favoloso</field>
         <field name="website_published" eval="True"/>
         <field name="category_ids" eval="[(4, ref('demo_category_vendite'))]"/>
         <field name="tag_ids" eval="[

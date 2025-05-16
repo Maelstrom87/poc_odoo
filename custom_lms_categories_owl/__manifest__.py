@@ -2,7 +2,7 @@
 
 # -*- coding: utf-8 -*-
 {
-    'name': 'Custom LMS Categories Diego V2',
+    'name': 'Custom LMS Categories OWL V2',
     'version': '18.0.1.0.0',
     'summary': 'V2 - Manage Learning Categories with Topics and Channels',
     'description': """
@@ -42,9 +42,9 @@
     #         'custom_lms_categories/static/src/scss/slider_styles.scss',
     #         'custom_lms_categories/static/src/js/course_carousel.js',
     #         # Versione 2   
-    #         'custom_lms_categories_diego/static/src/css/course_carousel.css',
-    #         'custom_lms_categories_diego/static/src/js/owl_carousel_init_V2.js',
-    #         'custom_lms_categories_diego/static/lib/owlcarousel/assets/owl.carouselV2.min.css',
+    #         'custom_lms_categories/static/src/css/course_carousel.css',
+    #         'custom_lms_categories/static/src/js/owl_carousel_init_V2.js',
+    #         'custom_lms_categories/static/lib/owlcarousel/assets/owl.carouselV2.min.css',
     #     ],
     # },
     'demo': ['data/demo_data.xml'],

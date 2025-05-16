@@ -2,7 +2,7 @@
     <template id="online_course_carousel_view" name="Online Course Carousel">
         <t t-call="website.layout">
           <!-- Includi il file JavaScript -->
-            <script type="text/javascript" src="/custom_lms_categories/static/src/js/course_carousel.js"></script>
+            <script type="text/javascript" src="/custom_lms_categories_owl/static/src/js/course_carousel.js"></script>
 
                 <section class="course-carousel-container">
                     <h2 class="carousel-title">Scopri i Nostri Corsi (<t t-esc="len(channels)"/>)</h2>

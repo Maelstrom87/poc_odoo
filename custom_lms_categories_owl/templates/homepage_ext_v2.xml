@@ -194,9 +194,9 @@
                 <t t-set="jquery_loaded" t-value="True"/>
             </t>
             <!-- Script Owl Carousel -->
-            <link rel="stylesheet" href="/custom_lms_categories_diego/static/lib/owlcarousel/assets/owl.carouselV2.min.css"/>
-            <script src="/custom_lms_categories_diego/static/lib/owlcarousel/owl.carousel.min.js"/>
-            <script type="text/javascript" src="/custom_lms_categories_diego/static/src/js/owl_carousel_init_V2.js"/>
+            <link rel="stylesheet" href="/custom_lms_categories_owl/static/lib/owlcarousel/assets/owl.carouselV2.min.css"/>
+            <script src="/custom_lms_categories_owl/static/lib/owlcarousel/owl.carousel.min.js"/>
+            <script type="text/javascript" src="/custom_lms_categories_owl/static/src/js/owl_carousel_init_V2.js"/>
             <!-- </xpath> -->
         </t>
     </template>

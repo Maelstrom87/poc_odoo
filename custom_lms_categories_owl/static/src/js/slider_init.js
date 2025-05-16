@@ -1,4 +1,4 @@
-odoo.define('custom_lms_categories.slider', function (require) {
+odoo.define('custom_lms_categories_owl.slider', function (require) {
     'use strict';
     
     var publicWidget = require('web.public.widget');
