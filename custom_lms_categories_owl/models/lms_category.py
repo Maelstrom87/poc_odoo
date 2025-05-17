@@ -121,3 +121,9 @@ class SlideChannel(models.Model):
                 record.short_description = record.description[:100] + '...' if len(record.description) > 100 else record.description
             else:
                 record.short_description = ""
+
+                    
+    teaser_video_url = fields.Char(
+        'Video Teaser URL',
+        help="URL del video teaser (max 10 secondi) da mostrare come anteprima. Supporta YouTube e Vimeo."
+    )

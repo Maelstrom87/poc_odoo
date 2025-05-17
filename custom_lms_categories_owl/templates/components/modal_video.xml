@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="modal_video" name="Video Modal">
+        <div id="videoModal" class="video-modal">
+            <div class="modal-container">
+                <div class="modal-actions">
+                    <button class="modal-btn back-btn">
+                        <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                        </svg>
+                        Torna indietro
+                    </button>
+                    <button class="modal-btn close-btn">
+                        <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                        Chiudi
+                    </button>
+                </div>
+                <div class="video-container">
+                    <iframe id="teaserVideoFrame" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </template>
+</odoo>

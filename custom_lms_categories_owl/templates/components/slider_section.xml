@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="slider_section" name="Slider Section">
+        <div class="category-slider-section mb-8">
+            <!-- Titolo + Link alla categoria -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3 class="mb-0 font-bold text-xl">
+                    <a t-att-href="'/categories/' + str(category.id)" t-esc="category.name"/>
+                </h3>
+                <a t-att-href="'/categories/' + str(category.id)" class="btn btn-sm btn-outline-primary">Vedi tutti</a>
+            </div>
+
+            <!-- Owl Carousel -->
+            <div class="owl-carousel owl-theme course-slider" t-att-id="'carousel-' + str(category.id)">
+                <t t-foreach="category.channel_ids" t-as="channel">
+                    <t t-call="custom_lms_categories_owl.course_card" t-channel="channel"/>
+                </t>
+            </div>
+        </div>
+    </template>
+</odoo>
