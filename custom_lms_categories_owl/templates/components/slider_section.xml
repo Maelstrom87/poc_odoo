@@ -12,8 +12,13 @@
 
             <!-- Owl Carousel -->
             <div class="owl-carousel owl-theme course-slider" t-att-id="'carousel-' + str(category.id)">
+
                 <t t-foreach="category.channel_ids" t-as="channel">
-                    <t t-call="custom_lms_categories_owl.course_card" t-channel="channel"/>
+
+                    <t t-call="custom_lms_categories_owl.course_card" t-channel="channel">
+                        <t t-set="course_index" t-value="channel_index"/>
+                    </t>
+
                 </t>
             </div>
         </div>

@@ -28,6 +28,10 @@
         'templates/course_templates.xml',
         'data/demo_data.xml',
         'templates/homepage_ext_V2.xml',
+        'templates/components/category_card.xml',
+        'templates/components/slider_section.xml',
+        'templates/components/course_card.xml',
+        'templates/components/modal_video.xml',
     ],
     # 'assets': {
     #     'web.assets_frontend': [
