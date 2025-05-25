@@ -53,12 +53,12 @@ class LMSCategoryController(http.Controller):
 
 
     # carousels netflix style
-    # @http.route('/lms/netflix', type='http', auth="public", website=True)
-    # def lms_nf_carousel(self):
-    #     channels = http.request.env['slide.channel'].sudo().search([])
-    #     return http.request.render(f'{MODULE_NAME}.online_course_carousel_view', {
-    #         'channels': channels
-    #     })
+    @http.route('/lms/netflix', type='http', auth="public", website=True)
+    def lms_nf_carousel(self):
+         channels = http.request.env['slide.channel'].sudo().search([])
+         return http.request.render(f'{MODULE_NAME}.online_course_carousel_view', {
+             'channels': channels
+         })
 
     # # carousels netflix style
     # @http.route('/lms/netflix/v2', type='http', auth="public", website=True)

@@ -1,0 +1,53 @@
+<odoo>
+  <template id="user_info_extended_template" name="User Extended Info">
+    <t t-call="website.layout">
+      <div class="container mt-5">
+        <h2>Profilo Utente</h2>
+        <ul>
+          <li><strong>Nome Utente:</strong> <t t-esc="user.name"/></li>
+          <li><strong>Email Login:</strong> <t t-esc="user.email"/></li>
+          <li><strong>ID Utente:</strong> <t t-esc="user.id"/></li>
+        </ul>
+
+        <h3>Dati Partner Associato</h3>
+        <ul>
+          <li><strong>Nome:</strong> <t t-esc="user.partner_id.name"/></li>
+          <li><strong>Email:</strong> <t t-esc="user.partner_id.email"/></li>
+          <li><strong>Telefono:</strong> <t t-esc="user.partner_id.phone"/></li>
+          <li><strong>Città:</strong> <t t-esc="user.partner_id.city"/></li>
+          <li><strong>Paese:</strong> <t t-esc="user.partner_id.country_id.name"/></li>
+        </ul>
+
+        <t t-if="enrolled_courses">
+          <h3>Corsi a cui sei iscritto</h3>
+          <ul>
+            <t t-foreach="enrolled_courses" t-as="course">
+              <li>
+                <a t-att-href="'/slides/%s' % course.id">
+                  <t t-esc="course.name"/>
+                </a> – <t t-esc="course.description"/>
+              </li>
+            </t>
+          </ul>
+        </t>
+
+        <t t-if="purchased_courses">
+          <h3>Corsi acquistati</h3>
+          <ul>
+            <t t-foreach="purchased_courses" t-as="course">
+              <li>
+                <a t-att-href="'/slides/%s' % course.id">
+                  <t t-esc="course.name"/>
+                </a> – <t t-esc="course.description"/>
+              </li>
+            </t>
+          </ul>
+        </t>
+
+        <t t-if="not enrolled_courses and not purchased_courses">
+          <p>Non sei ancora iscritto o non hai acquistato alcun corso.</p>
+        </t>
+      </div>
+    </t>
+  </template>
+</odoo>

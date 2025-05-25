@@ -49,6 +49,23 @@
             </div>
         </div> -->
 
+<!-- 
+
+    test 1
+iframe.src = "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1 "; 
+
+    test 2
+
+                            // Resetta il src
+                            iframe.src = "";
+
+                            // Imposta autoplay con 3 secondi di ritardo
+                            setTimeout(() => {
+                                iframe.src = "https://www.youtube.com/embed/hWL_tX3R-hg?autoplay=1";
+                            }, 3000);
+
+-->
+
             <!-- Script per la logica della modale -->
             <script>
                 <![CDATA[
@@ -65,17 +82,21 @@
                             videoModal.classList.add('active');
                             document.body.style.overflow = 'hidden';
                             const iframe = document.querySelector('.video-container iframe');
-                            iframe.src = "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1 ";
+                    
+                            // Resetta il src
+                            iframe.src = "";
+                            iframe.src = "https://www.youtube.com/embed/hWL_tX3R-hg?autoplay=1";
+                    
                         });
                     }
-
-                    // Chiudi modale
+    
+                    // Chiudi modale e ferma il video
                     if (closeModal) {
                         closeModal.addEventListener('click', function() {
                             videoModal.classList.remove('active');
                             document.body.style.overflow = 'auto';
                             const iframe = document.querySelector('.video-container iframe');
-                            iframe.src = '';
+                            iframe.src = ""; // Ferma il video
                         });
                     }
 

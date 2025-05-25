@@ -15,7 +15,7 @@
 
                     <!-- Pulsante Play -->
                     <div class="absolute inset-0 flex items-center justify-center z-10">
-                        <button t-if="course_index == 1" class="play-button w-12 h-12 bg-transparent border-none p-0 m-0">
+                        <button  class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-red-600 bg-opacity-80 hover:bg-opacity-100 rounded-full w-12 h-12 flex items-center justify-center transition-all duration-300 z-100">
                             <svg class="w-full h-full text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
                             </svg>
