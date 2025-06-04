@@ -47,6 +47,56 @@
         <t t-if="not enrolled_courses and not purchased_courses">
           <p>Non sei ancora iscritto o non hai acquistato alcun corso.</p>
         </t>
+
+        <!-- Sezione CTA -->
+        <div class="mt-5">
+          <h3>CTA – Azione sul Corso</h3>
+          <form id="cta-form">
+            <label for="course-select">Scegli un corso:</label>
+            <select id="course-select" class="form-control">
+              <option value="">-- Seleziona un corso --</option>
+              <t t-foreach="all_courses" t-as="course">
+                <option t-att-value="course.id">
+                  <t t-esc="course.name"/>
+                </option>
+              </t>
+            </select>
+          </form>
+
+          <div id="cta-status" class="mt-3"></div>
+        </div>
+
+        <!-- JS dinamico -->
+        <script type="text/javascript">
+          document.addEventListener("DOMContentLoaded", function () {
+            <!-- const enrolledCourseIds = new Set([
+              <t t-foreach="enrolled_courses" t-as="c" t-separator=",">
+                <t t-esc="c.id"/>
+              </t>
+            ]); -->
+
+            const enrolledCourseIds = new Set(
+                  JSON.parse("<t t-esc='json.dumps([c.id for c in enrolled_courses])'/>")
+        );
+
+
+            const select = document.getElementById("course-select");
+            const status = document.getElementById("cta-status");
+
+            select.addEventListener("change", function () {
+              const selectedId = parseInt(this.value);
+              status.innerHTML = "";
+              if (!selectedId) return;
+
+              if (enrolledCourseIds.has(selectedId)) {
+                status.innerHTML = '<span style="color: green; font-weight: bold;">✔ Vai al corso</span>';
+              } else {
+                status.innerHTML = '<span style="color: blue; font-weight: bold;">ℹ Scopri il corso</span>';
+              }
+            });
+          });
+        </script>
+
       </div>
     </t>
   </template>

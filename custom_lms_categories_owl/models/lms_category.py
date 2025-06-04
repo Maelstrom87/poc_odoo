@@ -1,6 +1,7 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
 
+
 class LMSCategory(models.Model):
     _name = 'lms.category'
     _description = 'Learning Management System Category'
@@ -93,9 +94,38 @@ class LMSCategory(models.Model):
         ], order='sequence ASC')
     
 
+
+class SlideChannelBadge(models.Model):
+    _name = 'slide.channel.badge'
+    _description = 'Corso Badge'
+
+    code = fields.Char(string='Codice', required=True)
+    name = fields.Char(string='Etichetta', required=True)
+    #color = fields.Char(string='Colore Sfondo', default='#000000')
+    color = fields.Integer(string="Colore Sfondo", default=0)
+    description = fields.Text(string='Descrizione')
+    main_badge = fields.Boolean(string='Principale', default=False)
+    channel_id = fields.Many2one('slide.channel', string='Corso', ondelete='cascade')
+
+    @api.constrains('main_badge')
+    def _check_single_main_badge(self):
+        for badge in self:
+            if badge.main_badge:
+                existing = self.search([
+                    ('channel_id', '=', badge.channel_id.id),
+                    ('main_badge', '=', True),
+                    ('id', '!=', badge.id)
+                ])
+                if existing:
+                    raise ValidationError(
+                        _("Esiste già un badge principale per questo corso. Deseleziona l'altro o conferma la modifica.")
+                    )
+
+
+
 class SlideChannel(models.Model):
     _inherit = 'slide.channel'
-    
+
     # to refactor
     category_ids = fields.Many2many(
         'lms.category',
@@ -126,4 +156,17 @@ class SlideChannel(models.Model):
     teaser_video_url = fields.Char(
         'Video Teaser URL',
         help="URL del video teaser (max 10 secondi) da mostrare come anteprima. Supporta YouTube e Vimeo."
+    )
+
+    
+    landing_url = fields.Char(
+        'URL Landing Page'
+        help="URL della landing page esterna o interna."
+    )
+
+    # Relazione badge
+    badge_ids = fields.One2many(
+        'slide.channel.badge',
+        'channel_id',
+        string='Badge del corso'
     )
