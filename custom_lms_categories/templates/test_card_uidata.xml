@@ -1,0 +1,50 @@
+<odoo>
+  <template id="test_card_uidata_template" name="Test Card UI Data">
+    <t t-call="website.layout">
+      <div class="container mt-5">
+        <h2 class="text-center mb-4">Tutti i corsi</h2>
+        <div class="row">
+          <t t-foreach="course_cards" t-as="course">
+            <div class="col-md-4 mb-4">
+              <div class="card border shadow-sm p-3">
+                <img t-att-src="course['image']" class="card-img-top mb-2" t-att-alt="course['name']"/>
+                <div class="card-body">
+                  <h5 class="card-title"><t t-esc="course['name']"/></h5>
+
+                  <!-- Badge principale -->
+                  <t t-if="course['main_badge']">
+                    <span t-att-style="'background-color: #%s; color: white;' % course['main_badge']['color']"
+                          class="badge me-1">
+                      <t t-esc="course['main_badge']['name']"/>
+                    </span>
+                  </t>
+
+                  <!-- Altri badge -->
+                  <t t-foreach="course['other_badges']" t-as="badge">
+                    <span t-att-style="'background-color: #%s; color: white;' % badge['color']"
+                          class="badge me-1">
+                      <t t-esc="badge['name']"/>
+                    </span>
+                  </t>
+
+                  <p class="mt-2">
+                    Durata: <t t-esc="course['total_time_hours']"/>h <t t-esc="course['total_time_minutes']"/>m<br/>
+                    Slide: <t t-esc="course['total_slides']"/><br/>
+                    Rating: <t t-esc="course['rating']"/><br/>
+                    Prezzo: <t t-esc="course['price']"/>
+                  </p>
+
+                  <a t-att-href="course.get('cta_url', '#')" 
+                     t-att-class="course['cta_class'] + ' btn text-white mt-2'">
+                    <t t-esc="course['cta_caption']"/>
+                  </a>
+
+                </div>
+              </div>
+            </div>
+          </t>
+        </div>
+      </div>
+    </t>
+  </template>
+</odoo>

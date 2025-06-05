@@ -1,3 +1,4 @@
+import re
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
 
@@ -102,8 +103,8 @@ class SlideChannelBadge(models.Model):
 
     code = fields.Char(string='Codice', required=True)
     name = fields.Char(string='Etichetta', required=True)
-    #color = fields.Char(string='Colore Sfondo', default='#000000')
-    color = fields.Integer(string="Colore Sfondo", default=0)
+    color = fields.Char(string='Colore Sfondo', default='#FFFFFF', help="Hex color code for badge background")
+    #color = fields.Integer(string="Colore Sfondo", default=0)
     description = fields.Text(string='Descrizione')
     main_badge = fields.Boolean(string='Principale', default=False)
     channel_id = fields.Many2one('slide.channel', string='Corso', ondelete='cascade')
@@ -161,7 +162,6 @@ class SlideChannel(models.Model):
         help="URL del video teaser (max 10 secondi) da mostrare come anteprima. Supporta YouTube e Vimeo."
     )
 
-    
     landing_url = fields.Char(
         'URL Landing Page',
         help="URL della landing page esterna o interna."
@@ -175,3 +175,12 @@ class SlideChannel(models.Model):
     )
 
     tag_ids = fields.Many2many('slide.channel.tag', string='Tags')
+
+    @api.constrains('teaser_video_url')
+    def _check_teaser_video_url(self):
+        youtube_regex = re.compile(
+            r'(https?://)?(www\.)?(youtube|youtu|vimeo)\.(com|be|org)/'
+        )
+        for channel in self:
+            if channel.teaser_video_url and not youtube_regex.match(channel.teaser_video_url):
+                raise ValidationError("L'URL del teaser deve essere un link a YouTube o Vimeo.")

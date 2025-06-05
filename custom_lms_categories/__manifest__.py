@@ -23,6 +23,8 @@
         'views/slide_channel_views.xml',
         'views/menu_views.xml',
         'data/demo_data.xml',
+        'templates/test_card_uidata.xml',
+        'templates/test.xml',
         'templates/homepage_ext_swiper.xml',
         'templates/components/category_card.xml',
         'templates/components/slider_section_swiper.xml',
