@@ -101,8 +101,8 @@ class SlideChannelBadge(models.Model):
 
     code = fields.Char(string='Codice', required=True)
     name = fields.Char(string='Etichetta', required=True)
-    #color = fields.Char(string='Colore Sfondo', default='#000000')
-    color = fields.Integer(string="Colore Sfondo", default=0)
+    color = fields.Char(string='Colore Sfondo', default='#FFFFFF', help="Hex color code for badge background")
+    #color = fields.Integer(string="Colore Sfondo", default=0)
     description = fields.Text(string='Descrizione')
     main_badge = fields.Boolean(string='Principale', default=False)
     channel_id = fields.Many2one('slide.channel', string='Corso', ondelete='cascade')
@@ -160,7 +160,7 @@ class SlideChannel(models.Model):
 
     
     landing_url = fields.Char(
-        'URL Landing Page'
+        'URL Landing Page',
         help="URL della landing page esterna o interna."
     )
 
