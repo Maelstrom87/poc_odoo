@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mindle - Home Page</title>
+    <style>
+      :root {
+        --primary-color: #ce2e26;
+        --secondary-color: #333333;
+        --accent-color: #fbb900;
+        --background-dark: #121212;
+        --text-color: #ffffff;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Arial", sans-serif;
+      }
+
+      body {
+        background-color: var(--background-dark);
+        color: var(--text-color);
+      }
+
+      header {
+        background-color: rgba(0, 0, 0, 0.8);
+        padding: 20px;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        border-bottom: 1px solid #333;
+      }
+
+      .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .logo {
+        font-size: 24px;
+        font-weight: bold;
+        color: var(--accent-color);
+      }
+
+      nav ul {
+        display: flex;
+        list-style: none;
+      }
+
+      nav ul li {
+        margin-left: 20px;
+      }
+
+      nav ul li a {
+        color: var(--text-color);
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      /* Video Modal Styles */
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.85);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+      }
+
+      .modal-overlay.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .video-modal {
+        position: relative;
+        width: 80%;
+        max-width: 900px;
+        background-color: #1a1a1a;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        border: 1px solid var(--accent-color);
+        animation: modalAppear 0.5s ease forwards;
+      }
+
+      @keyframes modalAppear {
+        0% {
+          transform: scale(0.8);
+          opacity: 0;
+        }
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+        border-bottom: 1px solid #333;
+      }
+
+      .modal-title {
+        font-size: 18px;
+        font-weight: bold;
+        color: var(--accent-color);
+      }
+
+      .close-modal {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background-color: var(--primary-color);
+        border: none;
+        color: var(--text-color);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        font-size: 18px;
+        transition: background-color 0.3s ease;
+      }
+
+      .close-modal:hover {
+        background-color: #b22621;
+      }
+
+      .video-container {
+        position: relative;
+        padding-top: 56.25%; /* 16:9 Aspect Ratio */
+        width: 100%;
+      }
+
+      .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+
+      .modal-info {
+        padding: 15px 20px;
+      }
+
+      .modal-description {
+        margin-bottom: 15px;
+        font-size: 14px;
+        line-height: 1.5;
+        color: #ccc;
+      }
+
+      .modal-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 15px;
+      }
+
+      .modal-tag {
+        background-color: transparent;
+        color: var(--accent-color);
+        padding: 3px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 500;
+        border: 1px solid var(--accent-color);
+      }
+
+      .modal-cta {
+        display: inline-block;
+        background-color: var(--primary-color);
+        color: var(--text-color);
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        text-decoration: none;
+      }
+
+      .modal-cta:hover {
+        background-color: #b22621;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="header-content">
+        <div class="logo">MINDLE</div>
+        <nav>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Corsi</a></li>
+            <li><a href="#">Account</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <div class="container">
+      <!-- Contenuto della pagina -->
+      <h1>Benvenuto in Mindle</h1>
+      <p>Esplora i nostri corsi di formazione.</p>
+
+      <!-- Bottone per aprire la modale -->
+      <button
+        id="openTeaserBtn"
+        style="
+          margin-top: 20px;
+          padding: 10px 20px;
+          background-color: var(--accent-color);
+          color: var(--background-dark);
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+        "
+      >
+        Guarda il video teaser
+      </button>
+    </div>
+
+    <!-- Modal Video Teaser -->
+    <div class="modal-overlay" id="videoModal">
+      <div class="video-modal">
+        <div class="modal-header">
+          <h3 class="modal-title">Scopri Mindle</h3>
+          <button class="close-modal" id="closeModal">✕</button>
+        </div>
+        <div class="video-container">
+          <iframe src="about:blank" allowfullscreen></iframe>
+        </div>
+        <div class="modal-info">
+          <p class="modal-description">
+            Benvenuto in Mindle! Scopri il nostro approccio unico all'insegnamento delle discipline olistiche e della
+            mindfulness. Questo video ti presenta la nostra filosofia e le opportunità di apprendimento disponibili
+            sulla nostra piattaforma.
+          </p>
+          <div class="modal-meta">
+            <span class="modal-tag">Video Introduttivo</span>
+            <span class="modal-tag">2:45 min</span>
+          </div>
+          <a href="#" class="modal-cta">Esplora i Corsi</a>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const videoModal = document.getElementById("videoModal");
+        const closeModal = document.getElementById("closeModal");
+        const openTeaserBtn = document.getElementById("openTeaserBtn");
+
+        // Apri modale al click del bottone
+        openTeaserBtn.addEventListener("click", function () {
+          videoModal.classList.add("active");
+          document.body.style.overflow = "hidden";
+          const iframe = document.querySelector(".video-container iframe");
+          iframe.src = "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1";
+        });
+
+        // Chiudi modale
+        closeModal.addEventListener("click", function () {
+          videoModal.classList.remove("active");
+          document.body.style.overflow = "auto";
+          const iframe = document.querySelector(".video-container iframe");
+          iframe.src = iframe.src.replace("autoplay=1", "autoplay=0");
+        });
+
+        // Chiudi cliccando fuori
+        videoModal.addEventListener("click", function (e) {
+          if (e.target === videoModal) {
+            videoModal.classList.remove("active");
+            document.body.style.overflow = "auto";
+            const iframe = document.querySelector(".video-container iframe");
+            iframe.src = iframe.src.replace("autoplay=1", "autoplay=0");
+          }
+        });
+
+        // Chiudi con ESC
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape" && videoModal.classList.contains("active")) {
+            videoModal.classList.remove("active");
+            document.body.style.overflow = "auto";
+            const iframe = document.querySelector(".video-container iframe");
+            iframe.src = iframe.src.replace("autoplay=1", "autoplay=0");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

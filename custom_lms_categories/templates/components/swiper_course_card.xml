@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="swiper_course_card" name="Swiper Course Card">
+        <div class="course-card with-video">
+            <div class="course-image-container">
+                <img t-att-src="'/web/image/slide.channel/' + str(channel.id) + '/image_512'" class="course-image"/>
+                <div class="course-overlay"/>
+                <!-- <div class="course-badge badge-new">Novità</div> -->
+                <div class="course-badge badge-popular">Più ricercato</div>
+                <div class="mindle-logo">M</div>
+                <div class="play-icon">
+                    <div class="play-icon-triangle"/>
+                </div>
+            </div>
+            <div class="course-info">
+                <h3 class="course-title" t-esc="channel.name"/>
+                <div class="course-meta">
+                    <t t-foreach="channel.tag_ids" t-as="tag">
+                        <span class="course-tag" t-esc="tag.name"/>
+                    </t>
+                </div>
+                <div class="course-stats">
+                    <span><t t-esc="channel.total_slides"/> lezioni</span>
+                    <span><t t-esc="int(channel.total_time/60)"/>h <t t-esc="int(channel.total_time%60)"/>m</span>
+                    <span class="rating">★★★★★</span>
+                </div>
+                <div class="course-price-action">
+                    <a t-att-href="'/slides/' + str(channel.id)" class="course-cta green">
+                        Vai al Corso
+                    </a>
+                </div>
+            </div>
+        </div>
+    </template>
+</odoo> 

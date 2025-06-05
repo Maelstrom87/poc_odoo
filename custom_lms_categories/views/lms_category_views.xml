@@ -8,7 +8,6 @@
                 <field name="code"/>
                 <field name="name"/>
                 <field name="channel_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
-                <field name="item_limit"/>
                 <field name="active" widget="boolean_toggle"/>
             </list>
         </field>
@@ -25,10 +24,10 @@
                             <field name="sequence"/>
                             <field name="code"/>
                             <field name="name"/>
-                            <!--<field name="website_id"/>-->
                             <field name="active"/>
-                            <field name="item_limit"/>
-                            <!--<field name="color"/>-->
+                            <!-- <field name="is_popular"/>
+                            <field name="is_new"/>
+                            <field name="badge_text"/> -->
                         </group>
                     </group>
 
@@ -37,20 +36,21 @@
                             <field name="description"/>
                             <field name="image_1920" widget="image" class="oe_avatar"/>
                         </page>
-                        <page string="Relations">
-                            <field name="topic_ids" widget="many2many_tags"/>
-                            <field name="tag_ids" widget="many2many_tags"/>
+                        <page string="Corsi">
+                      
                             
                             <!-- Sezione migliorata per i corsi associati -->
                             <field name="channel_ids" context="{'list_view_ref': 'website_slides.slide_channel_view_list'}">
                                 <list>
                                     <field name="name"/>
+                                    <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                                     <field name="website_published" widget="boolean_button"/>
                                     <field name="total_slides" string="Slides"/>
                                     </list>
                                 <form>
                                     <group>
                                         <field name="name"/>
+                                        <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                                         <field name="website_published"/>
                                         <field name="description"/>
                                         <field name="image_1920" widget="image"/>

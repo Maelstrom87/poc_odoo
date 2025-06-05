@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Template della modale -->
+        <template id="modal_video" name="Video Modal">
+            <!-- Modal Video Teaser -->
+            <div class="modal-overlay" id="videoModal">
+                <div class="video-modal">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Scopri Mindle</h3>
+                        <button class="close-modal" id="closeModal">✕</button>
+                    </div>
+                    <div class="video-container">
+                        <iframe src="about:blank" allowfullscreen="true"></iframe>
+                    </div>
+                    <div class="modal-info">
+                        <p class="modal-description">
+                            Benvenuto in Mindle! Scopri il nostro approccio unico all'insegnamento delle discipline olistiche e della mindfulness.
+                            Questo video ti presenta la nostra filosofia e le opportunità di apprendimento disponibili sulla nostra piattaforma.
+                        </p>
+                        <div class="modal-meta">
+                            <span class="modal-tag">Video Introduttivo</span>
+                            <span class="modal-tag">2:45 min</span>
+                        </div>
+                        <a href="#" class="modal-cta">Esplora i Corsi</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div id="videoModal" class="video-modal">
+            <div class="modal-container">
+                <div class="modal-actions">
+                    <button class="modal-btn back-btn">
+                        <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                        </svg>
+                        Torna indietro
+                    </button>
+                    <button class="modal-btn close-btn">
+                        <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                        Chiudi
+                    </button>
+                </div>
+                <div class="video-container">
+                    <iframe id="teaserVideoFrame" allowfullscreen="true"></iframe>
+                </div>
+            </div>
+        </div> -->
+
+<!-- 
+
+    test 1
+iframe.src = "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1 "; 
+
+    test 2
+
+                            // Resetta il src
+                            iframe.src = "";
+
+                            // Imposta autoplay con 3 secondi di ritardo
+                            setTimeout(() => {
+                                iframe.src = "https://www.youtube.com/embed/hWL_tX3R-hg?autoplay=1";
+                            }, 3000);
+
+-->
+
+            <!-- Script per la logica della modale -->
+            <script>
+                <![CDATA[
+                document.addEventListener('DOMContentLoaded', function() {
+                    const videoModal = document.getElementById('videoModal');
+                    const closeModal = document.getElementById('closeModal');
+                    const openTeaserBtn = document.getElementById('openTeaserBtn');
+                    console.log("BTN", openTeaserBtn);
+                    // Apri modale al click del bottone
+                    if (openTeaserBtn) {
+                        openTeaserBtn.addEventListener('click', function() {
+                                            console.log("cliccoo", openTeaserBtn);
+
+                            videoModal.classList.add('active');
+                            document.body.style.overflow = 'hidden';
+                            const iframe = document.querySelector('.video-container iframe');
+                    
+                            // Resetta il src
+                            iframe.src = "";
+                            iframe.src = "https://www.youtube.com/embed/hWL_tX3R-hg?autoplay=1";
+                    
+                        });
+                    }
+    
+                    // Chiudi modale e ferma il video
+                    if (closeModal) {
+                        closeModal.addEventListener('click', function() {
+                            videoModal.classList.remove('active');
+                            document.body.style.overflow = 'auto';
+                            const iframe = document.querySelector('.video-container iframe');
+                            iframe.src = ""; // Ferma il video
+                        });
+                    }
+
+                    // Chiudi cliccando fuori
+                    if (videoModal) {
+                        videoModal.addEventListener('click', function(e) {
+                            if (e.target === videoModal) {
+                                videoModal.classList.remove('active');
+                                document.body.style.overflow = 'auto';
+                                const iframe = document.querySelector('.video-container iframe');
+                                iframe.src = '';
+                            }
+                        });
+                    }
+
+                    // Chiudi con ESC
+                    document.addEventListener('keydown', function(e) {
+                        if (e.key === 'Escape' && videoModal.classList.contains('active')) {
+                            videoModal.classList.remove('active');
+                            document.body.style.overflow = 'auto';
+                            const iframe = document.querySelector('.video-container iframe');
+                            iframe.src = '';
+                        }
+                    });
+                });
+            ]]>
+            </script>
+
+            <!-- Stili CSS per la modale -->
+            <style>
+            :root {
+                --primary-color: #CE2E26;
+                --secondary-color: #333333;
+                --accent-color: #FBB900;
+                --background-dark: #121212;
+                --text-color: #FFFFFF;
+            }
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: 'Arial', sans-serif;
+            }
+
+            body {
+                background-color: var(--background-dark);
+                color: var(--text-color);
+            }
+
+            /* Video Modal Styles */
+            .modal-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.85);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 1000;
+                opacity: 0;
+                visibility: hidden;
+                transition: opacity 0.3s ease, visibility 0.3s ease;
+            }
+
+            .modal-overlay.active {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .video-modal {
+                position: relative;
+                width: 80%;
+                max-width: 900px;
+                background-color: #1a1a1a;
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+                border: 1px solid var(--accent-color);
+                animation: modalAppear 0.5s ease forwards;
+            }
+
+            @keyframes modalAppear {
+                0% {
+                    transform: scale(0.8);
+                    opacity: 0;
+                }
+                100% {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+            }
+
+            .modal-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 15px 20px;
+                border-bottom: 1px solid #333;
+            }
+
+            .modal-title {
+                font-size: 18px;
+                font-weight: bold;
+                color: var(--accent-color);
+            }
+
+            .close-modal {
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                background-color: var(--primary-color);
+                border: none;
+                color: var(--text-color);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                font-size: 18px;
+                transition: background-color 0.3s ease;
+            }
+
+            .close-modal:hover {
+                background-color: #b22621;
+            }
+
+            .video-container {
+                position: relative;
+                padding-top: 56.25%; /* 16:9 Aspect Ratio */
+                width: 100%;
+            }
+
+            .video-container iframe {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                border: none;
+            }
+
+            .modal-info {
+                padding: 15px 20px;
+            }
+
+            .modal-description {
+                margin-bottom: 15px;
+                font-size: 14px;
+                line-height: 1.5;
+                color: #ccc;
+            }
+
+            .modal-meta {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                margin-bottom: 15px;
+            }
+
+            .modal-tag {
+                background-color: transparent;
+                color: var(--accent-color);
+                padding: 3px 8px;
+                border-radius: 4px;
+                font-size: 12px;
+                font-weight: 500;
+                border: 1px solid var(--accent-color);
+            }
+
+            .modal-cta {
+                display: inline-block;
+                background-color: var(--primary-color);
+                color: var(--text-color);
+                border: none;
+                padding: 10px 20px;
+                border-radius: 4px;
+                font-weight: bold;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+                text-decoration: none;
+            }
+
+            .modal-cta:hover {
+                background-color: #b22621;
+            }
+            </style>
+        </template>
+    </data>
+</odoo>

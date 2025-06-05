@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <!-- Eredita dal template principale dei corsi -->
-    <template id="inherit_courses_home" inherit_id="website_slides.courses_home" name="Courses Home with Categories Sliders">
+    <!-- <template id="inherit_courses_home" inherit_id="website_slides.courses_home" name="Courses Home with Categories Sliders"> -->
+    <template  name="Courses Home with Categories Sliders">
         <xpath expr="//div[hasclass('o_wslides_home_main')]" position="before">
             <div class="container mt-4 mb-4">
                 <h2 class="text-center mb-4">Browse by Categories</h2>
@@ -24,53 +25,43 @@
                     </t>
                 </div>
 
-                <!-- Sliders for Each Categories -->
-                <div class="category-sliders">
+       <t t-call="website.layout">
+
+            <!-- Categories Grid -->
+            <div class="container mt-4 mb-4">
+                <h2 class="text-center mb-4">Browse by Categories</h2>
+                <div class="row">
+                    <t t-foreach="website.env['lms.category'].search([])" t-as="category">
+                        <t t-call="custom_lms_categories.category_card" t-category="category"/>
+                    </t>
+                </div>
+            </div>
+
+            <!-- Carousel Sections -->
+            <div class="carousel-wrapper bg-gray-900 py-8">
+                <div class="container mt-4 mb-4">
                     <t t-foreach="website.env['lms.category'].search([])" t-as="category">
                         <t t-if="category.channel_ids and len(category.channel_ids) > 0">
-                            <div class="category-slider-section mb-5">
-                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <h3 class="mb-0">
-                                        <a t-att-href="'/categories/' + str(category.id)" t-esc="category.name"/>
-                                    </h3>
-                                    <a t-att-href="'/categories/' + str(category.id)" class="btn btn-sm btn-outline-primary">View All</a>
-                                </div>
-                                
-                                <div class="owl-carousel owl-theme" t-att-id="'carousel-' + str(category.id)">
-                                    <t t-foreach="category.channel_ids" t-as="channel">
-                                        <div class="item">
-                                            <div class="card h-100">
-                                                <a t-att-href="'/slides/' + str(channel.id)">
-                                                    <img t-if="channel.image_1920" 
-                                                         t-att-src="'/web/image/slide.channel/' + str(channel.id) + '/image_512'" 
-                                                         class="card-img-top" 
-                                                         style="height: 160px; object-fit: cover;"/>
-                                                    <div t-if="not channel.image_1920" class="card-img-top bg-secondary d-flex align-items-center justify-content-center" style="height: 160px;">
-                                                        <i class="fa fa-book fa-3x text-white"/>
-                                                    </div>
-                                                </a>
-                                                <div class="card-body">
-                                                    <h5 class="card-title">
-                                                        <a t-att-href="'/slides/' + str(channel.id)" t-esc="channel.name"/>
-                                                    </h5>
-                                                    <div class="course-tags mb-2">
-                                                        <t t-foreach="channel.tag_ids" t-as="tag">
-                                                            <span class="badge bg-info me-1" t-esc="tag.name"/>
-                                                        </t>
-                                                    </div>
-                                                    <p class="card-text text-muted small" t-esc="channel.description and channel.description[:100] + '...' or ''"/>
-                                                </div>
-                                                <div class="card-footer bg-white">
-                                                    <a t-att-href="'/slides/' + str(channel.id)" class="btn btn-sm btn-primary w-100">View Course</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </t>
-                                </div>
-                            </div>
+                            <t t-call="custom_lms_categories.slider_section" t-category="category"/>
                         </t>
                     </t>
                 </div>
+            </div>
+
+            <!-- Video Modal -->
+            <t t-call="custom_lms_categories.modal_video"/>
+
+
+            <!-- Scripts -->
+            <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+            <t t-if="not 'jquery_loaded' in request.env">
+                <script src="/web/static/lib/jquery/jquery.js"/>
+                <t t-set="jquery_loaded" t-value="True"/>
+            </t>
+            <!-- <link rel="stylesheet" href="/custom_lms_categories/static/lib/owlcarousel/assets/owl.carouselV2.min.css"/>
+            <script src="/custom_lms_categories/static/lib/owlcarousel/owl.carousel.min.js"/>
+            <script type="text/javascript" src="/custom_lms_categories/static/src/js/owl_carousel_init.js"/> -->
+        </t>
             </div>
 
             <!-- Caricamento sicuro delle dipendenze -->
@@ -78,9 +69,9 @@
                 <script src="/web/static/lib/jquery/jquery.js"/>
                 <t t-set="jquery_loaded" t-value="True"/>
             </t>
-            <link rel="stylesheet" href="/custom_lms_categories/static/lib/owlcarousel/assets/owl.carousel.min.css"/>
+            <!-- <link rel="stylesheet" href="/custom_lms_categories/static/lib/owlcarousel/assets/owl.carousel.min.css"/>
             <link rel="stylesheet" href="/custom_lms_categories/static/lib/owlcarousel/assets/owl.theme.default.min.css"/>
-            <script src="/custom_lms_categories/static/lib/owlcarousel/owl.carousel.min.js"/>
+            <script src="/custom_lms_categories/static/lib/owlcarousel/owl.carousel.min.js"/> -->
             
             <script>
             (function() {

@@ -1,0 +1,760 @@
+Nessun elemento selezionato
+
+Vai ai contenuti
+Utilizzo di Gmail con gli screen reader
+
+
+8 di 16.165
+layout target
+Posta in arrivo
+
+Maurizio Mattioli
+Allegati
+4 giu 2025, 19:28 (14 ore fa)
+a me
+
+guarda se ti può aiutare questo codice, per avere un idea di layout
+
+togliere totale corsi >categorie
+togliere prezzo
+solo un bottone (colore e caption dinamica)
+isotypo a destra
+badge a sinistra
+per qls dubbio sentiamoci
+ Un allegato
+  •  Scansione eseguita da Gmail
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mindle - Home Page</title>
+    <style>
+        :root {
+            --primary-color: #CE2E26; /* CTA rosso */
+            --secondary-color: #333333; /* Sfondo secondario */
+            --accent-color: #FBB900; /* Gold */
+            --background-dark: #121212; /* Sfondo scuro */
+            --text-color: #FFFFFF; /* Testo bianco */
+            --blue-accent: #3498db; /* Celeste per badge */
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: var(--background-dark);
+            color: var(--text-color);
+        }
+        
+        header {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #333;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+        }
+        
+        nav ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Categoria section */
+        .category-section {
+            margin-bottom: 40px;
+        }
+        
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .category-title {
+            color: var(--accent-color);
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .category-count {
+            color: var(--accent-color);
+            font-size: 16px;
+        }
+        
+        /* Course Slider - FIX: Rimosso overflow hidden per permettere il zoom */
+        .slider-container {
+            position: relative;
+            padding: 20px 0; /* Aggiunto padding per dare spazio al zoom */
+        }
+        
+        .slider {
+            display: flex;
+            transition: transform 0.3s ease;
+            gap: 20px;
+            overflow: visible; /* Cambiato da hidden a visible */
+        }
+        
+        .slider-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+        }
+        
+        .slider-nav.prev {
+            left: 10px;
+        }
+        
+        .slider-nav.next {
+            right: 10px;
+        }
+        
+        /* Course Card - FIX: Aggiunto z-index per il hover */
+        .course-card {
+            flex: 0 0 calc(25% - 20px);
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0s ease;
+            background-color: #1a1a1a;
+            z-index: 1; /* Z-index base */
+        }
+        
+        .course-card:hover {
+            transform: scale(1.07);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7); /* Ombra più pronunciata */
+            border: 1px solid var(--accent-color);
+            z-index: 50; /* Z-index più alto durante l'hover */
+        }
+        
+        .course-image-container {
+            position: relative;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            overflow: hidden;
+        }
+        
+        .course-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .course-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+            opacity: 0.8;
+            transition: opacity 0.3s ease, height 0.3s ease;
+        }
+        
+        .course-card:hover .course-overlay {
+            height: 100%;
+            opacity: 0.9;
+        }
+        
+        .play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .course-card.with-video:hover .play-icon {
+            opacity: 1;
+        }
+        
+        .play-icon-triangle {
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 8px 0 8px 16px;
+            border-color: transparent transparent transparent var(--text-color);
+            margin-left: 3px;
+        }
+        
+        .course-info {
+            padding: 15px;
+        }
+        
+        .course-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: var(--text-color);
+        }
+        
+        .course-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .course-tag {
+            background-color: transparent;
+            color: var(--accent-color);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            border: 1px solid var(--accent-color);
+        }
+        
+        .course-stats {
+            display: flex;
+            gap: 10px;
+            font-size: 12px;
+            color: #aaa;
+            margin-bottom: 10px;
+        }
+        
+        .rating {
+            color: var(--accent-color);
+        }
+        
+        .course-price-action {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .course-price {
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .course-cta {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .course-cta:hover {
+            background-color: #b22621;
+        }
+        
+        .course-cta.blue {
+            background-color: #1e88e5;
+        }
+        
+        .course-cta.blue:hover {
+            background-color: #1565c0;
+        }
+        
+        .course-cta.green {
+            background-color: #2e7d32; /* Verde principale */
+        }
+
+        .course-cta.green:hover {
+            background-color: #43a047; /* Verde più chiaro per hover */
+        }
+
+        /* Hidden info that shows on hover */
+        .course-hidden-info {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        
+        .course-card:hover .course-hidden-info {
+            opacity: 1;
+        }
+        
+        .course-description {
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        
+        /* Logo Mindle e Badge */
+        .mindle-logo {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 30px; /* Ridotto da 40px */
+            height: 30px; /* Ridotto da 40px */
+            z-index: 5;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 16px; /* Ridotto da 20px */
+            color: white;
+        }
+        
+        .course-badge {
+            position: absolute;
+            top: 10px; /* Cambiato da 30px */
+            right: 10px; /* Cambiato da -30px */
+            transform: none; /* Rimosso rotate(45deg) */
+            padding: 3px 8px; /* Ridotto da 5px 25px */
+            font-size: 10px; /* Ridotto da 12px */
+            font-weight: bold;
+            text-transform: uppercase;
+            z-index: 5;
+            border-radius: 3px;
+        }
+        
+        .badge-new {
+            background-color: var(--accent-color);
+            color: #000;
+        }
+        
+        .badge-popular {
+            background-color: var(--blue-accent);
+            color: white;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .course-card {
+                flex: 0 0 calc(33.33% - 20px);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .course-card {
+                flex: 0 0 calc(50% - 20px);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .course-card {
+                flex: 0 0 calc(100% - 20px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">MINDLE</div>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Corsi</a></li>
+                    <li><a href="#">Account</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <div class="container">
+        <!-- Categoria 1 - Olistica -->
+        <section class="category-section">
+            <div class="category-header">
+                <h2 class="category-title">Olistica</h2>
+                <div class="category-count">20 corsi</div>
+            </div>
+            
+            <div class="slider-container">
+                <div class="slider">
+                    <!-- Card 1 - Guest User -->
+                    <div class="course-card">
+                        <div class="course-image-container">
+                            <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80" alt="Introduzione alla Medicina Ayurvedica" class="course-image">
+                            <div class="course-overlay"></div>
+                            <div class="mindle-logo">M</div>
+                            <div class="course-badge badge-new">Novità</div>
+                        </div>
+                        <div class="course-info">
+                            <h3 class="course-title">Introduzione alla Medicina Ayurvedica</h3>
+                            <div class="course-meta">
+                                <span class="course-tag">Ayurveda</span>
+                                <span class="course-tag">Principiante</span>
+                            </div>
+                            <div class="course-stats">
+                                <span>12 lezioni</span>
+                                <span>3h 45m</span>
+                                <span class="rating">★★★★☆</span>
+                            </div>
+                            <div class="course-price-action">
+                                <div class="course-price"></div>
+                                <button class="course-cta blue">Scopri</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 2 - Registered User (with price) -->
+                    <div class="course-card">
+                        <div class="course-image-container">
+                            <img src="https://images.unsplash.com/photo-1546842931-886c185b4c8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80" alt="Naturopatia Applicata" class="course-image">
+                            <div class="course-overlay"></div>
+                            <div class="mindle-logo">M</div>
+                            <div class="course-badge badge-popular">Più ricercato</div>
+                        </div>
+                        <div class="course-info">
+                            <h3 class="course-title">Naturopatia Applicata</h3>
+                            <div class="course-meta">
+                                <span class="course-tag">Naturopatia</span>
+                                <span class="course-tag">Intermedio</span>
+                            </div>
+                            <div class="course-stats">
+                                <span>18 lezioni</span>
+                                <span>5h 20m</span>
+                                <span class="rating">★★★★★</span>
+                            </div>
+                            <div class="course-price-action">
+                                <div class="course-price"></div>
+                                <button class="course-cta blue">Scopri</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 3 - Purchased Course -->
+                    <div class="course-card">
+                        <div class="course-image-container">
+                            <img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80" alt="Cristalloterapia Base" class="course-image">
+                            <div class="course-overlay"></div>
+                            <div class="mindle-logo">M</div>
+                        </div>
+                        <div class="course-info">
+                            <h3 class="course-title">Cristalloterapia Base</h3>
+                            <div class="course-meta">
+                                <span class="course-tag">Cristalli</span>
+                                <span class="course-tag">Principiante</span>
+                            </div>
+                            <div class="course-stats">
+                                <span>15 lezioni</span>
+                                <span>4h 30m</span>
+                                <span class="rating">★★★★★</span>
+                            </div>
+                            <div class="course-price-action">
+                                <div class="course-price">€279.99</div>
+                                <button class="course-cta blue">Scopri</button>
+                                <button class="course-cta">Acquista</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 4 - With Video -->
+                    <div class="course-card with-video">
+                        <div class="course-image-container">
+                            <img src="https://images.unsplash.com/photo-1519415510236-718bdfcd89c8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80" alt="Aromaterapia per il Benessere" class="course-image">
+                            <div class="course-overlay"></div>
+                            <div class="mindle-logo">M</div>
+                            <div class="course-badge badge-new">Novità</div>
+                            <div class="play-icon">
+                                <div class="play-icon-triangle"></div>
+                            </div>
+                        </div>
+                        <div class="course-info">
+                            <h3 class="course-title">Aromaterapia per il Benessere</h3>
+                            <div class="course-meta">
+                                <span class="course-tag">Oli Essenziali</span>
+                                <span class="course-tag">Principiante</span>
+                            </div>
+                            <div class="course-stats">
+                                <span>14 lezioni</span>
+                                <span>4h 15m</span>
+                                <span class="rating">★★★★☆</span>
+                            </div>
+                            <div class="course-price-action">
+                                <div class="course-price">€369.99</div>
+                                <button class="course-cta">Acquista</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 5 -->
+                    <div class="course-card">
+                        <div class="course-image-container">
+                            <img src="https://images.unsplash.com/photo-1554244933-d876deb6b2ff?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80" alt="Riflessologia Plantare Avanzata" class="course-image">
+                            <div class="course-overlay"></div>
+                            <div class="mindle-logo">M</div>
+                            <div class="course-badge badge-popular">Più ricercato</div>
+                        </div>
+                        <div class="course-info">
+                            <h3 class="course-title">Riflessologia Plantare Avanzata</h3>
+                            <div class="course-meta">
+                                <span class="course-tag">Riflessologia</span>
+                                <span class="course-tag">Avanzato</span>
+                            </div>
+                            <div class="course-stats">
+                                <span>22 lezioni</span>
+                                <span>6h 40m</span>
+                                <span class="rating">★★★★★</span>
+                            </div>
+                            <div class="course-price-action">
+                                <div class="course-price">€289.99</div>
+                                <button class="course-cta">Acquista</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slider-nav prev">❮</div>
+                <div class="slider-nav next">❯</div>
+            </div>
+        </section>
+        
+        <!-- Categoria 2 - Mindfulness -->
+        <section class="category-section">
+            <div class="category-header">
+                <h2 class="category-title">Mindfulness</h2>
+                <div class="category-count">15 corsi</div>
+            </div>
+            
+            <div class="slider-container">
+                <div class="slider">
+                    <!-- Card 1 -->
+                    <div class="course-card">
+                        <div class="course-image-container">
+                            <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80" alt="Meditazione per Principianti" class="course-image">
+                            <div class="course-overlay"></div>
+                            <div class="mindle-logo">M</div>
+                            <div class="course-badge badge-new">Novità</div>
+                        </div>
+                        <div class="course-info">
+                            <h3 class="course-title">Meditazione per Principianti</h3>
+                            <div class="course-meta">
+                                <span class="course-tag">Meditazione</span>
+                                <span class="course-tag">Principiante</span>
+                            </div>
+                            <div class="course-stats">
+                                <span>16 lezioni</span>
+                                <span>5h 10m</span>
+                                <span class="rating">★★★★★</span>
+                            </div>
+                            <div class="course-price-action">
+                                <div class="course-price"></div>
+                                <button class="course-cta green">Vai al Corso</button>
+                             </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 2 - With Video -->
+                    <div class="course-card with-video">
+                        <div class="course-image-container">
+                            <img src="https://images.unsplash.com/photo-1470319149473-af271634cecf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80" alt="Mindfulness Based Stress Reduction" class="course-image">
+                            <div class="course-overlay"></div>
+                            <div class="mindle-logo">M</div>
+                            <div class="course-badge badge-popular">Più ricercato</div>
+                            <div class="play-icon">
+                                <div class="play-icon-triangle"></div>
+                            </div>
+                        </div>
+                        <div class="course-info">
+                            <h3 class="course-title">Mindfulness Based Stress Reduction</h3>
+                            <div class="course-meta">
+                                <span class="course-tag">MBSR</span>
+                                <span class="course-tag">Avanzato</span>
+                            </div>
+                            <div class="course-stats">
+                                <span>20 lezioni</span>
+                                <span>7h 30m</span>
+                                <span class="rating">★★★★★</span>
+                            </div>
+                            <div class="course-price-action">
+                                <div class="course-price">€299.99</div>
+                                <button class="course-cta">Acquista</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 3 -->
+                    <div class="course-card">
+                        <div class="course-image-container">
+                            <img src="https://images.unsplash.com/photo-1499209974431-9dddcece7f88?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80" alt="Pratiche di Presenza Consapevole" class="course-image">
+                            <div class="course-overlay"></div>
+                            <div class="mindle-logo">M</div>
+                        </div>
+                        <div class="course-info">
+                            <h3 class="course-title">Pratiche di Presenza Consapevole</h3>
+                            <div class="course-meta">
+                                <span class="course-tag">Presenza</span>
+                                <span class="course-tag">Intermedio</span>
+                            </div>
+                            <div class="course-stats">
+                                <span>18 lezioni</span>
+                                <span>6h 15m</span>
+                                <span class="rating">★★★★☆</span>
+                            </div>
+                            <div class="course-price-action">
+                                <div class="course-price">€289.99</div>
+                                <button class="course-cta">Acquista</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 4 - Purchased -->
+                    <div class="course-card">
+                        <div class="course-image-container">
+                            <img src="https://images.unsplash.com/photo-1494390248081-4e521a5940db?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80" alt="Mindful Eating" class="course-image">
+                            <div class="course-overlay"></div>
+                            <div class="mindle-logo">M</div>
+                            <div class="course-badge badge-new">Novità</div>
+                        </div>
+                        <div class="course-info">
+                            <h3 class="course-title">Mindful Eating</h3>
+                            <div class="course-meta">
+                                <span class="course-tag">Alimentazione</span>
+                                <span class="course-tag">Intermedio</span>
+                            </div>
+                            <div class="course-stats">
+                                <span>14 lezioni</span>
+                                <span>4h 45m</span>
+                                <span class="rating">★★★★☆</span>
+                            </div>
+                            <div class="course-price-action">
+                                <div class="course-price"></div>
+                                  <button class="course-cta green">Vai al Corso</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slider-nav prev">❮</div>
+                <div class="slider-nav next">❯</div>
+            </div>
+        </section>
+        
+        <!-- Categoria 3 - Coaching -->
+        <section class="category-section">
+            <div class="category-header">
+                <h2 class="category-title">Coaching, Vendite e Comunicazione</h2>
+                <div class="category-count">24 corsi</div>
+            </div>
+            
+            <div class="slider-container">
+                <div class="slider">
+                    <!-- Card 1 -->
+                    <div class="course-card with-video">
+                        <div class="course-image-container">
+                            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80" alt="Life Coaching Professionale" class="course-image">
+                            <div class="course-overlay"></div>
+                            <div class="mindle-logo">M</div>
+                            <div class="course-badge badge-popular">Più ricercato</div>
+                            <div class="play-icon">
+                                <div class="play-icon-triangle"></div>
+                            </div>
+                        </div>
+                        <div class="course-info">
+                            <h3 class="course-title">Life Coaching Professionale</h3>
+                            <div class="course-meta">
+                                <span class="course-tag">Life Coaching</span>
+                                <span class="course-tag">Avanzato</span>
+                            </div>
+                            <div class="course-stats">
+                                <span>16 lezioni</span>
+                                <span>5h 30m</span>
+                                <span class="rating">★★★★★</span>
+                            </div>
+                            <div class="course-price-action">
+                                <div class="course-price">€279.99</div>
+                                <button class="course-cta">Acquista</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 2 -->
+                    <div class="course-card">
+                        <div class="course-image-container">
+                            <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80" alt="Tecniche di Business Coaching" class="course-image">
+                            <div class="course-overlay"></div>
+                            <div class="mindle-logo">M</div>
+                            <div class="course-badge badge-new">Novità</div>
+                        </div>
+                        <div class="course-info">
+                            <h3 class="course-title">Tecniche di Business Coaching</h3>
+                            <div class="course-meta">
+                                <span class="course-tag">Business</span>
+                                <span class="course-tag">Avanzato</span>
+                            </div>
+                            <div class="course-stats">
+                                <span>15 lezioni</span>
+                                <span>5h 15m</span>
+                                <span class="rating">★★★★☆</span>
+                            </div>
+                            <div class="course-price-action">
+                                <div class="course-price">€489.99</div>
+                                <button class="course-cta">Acquista</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 3 - Guest -->
+                    <div class="course-card">
+                        <div class="course-image-container">
+                            <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80" alt="Coaching per la Crescita Personale" class
+mindle-homepage-fixed.html
+Visualizzazione di mindle-homepage-fixed.html. 

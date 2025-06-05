@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Eredita dal template principale dei corsi -->
+    <template id="inherit_courses_home" inherit_id="website_slides.courses_home" name="Courses Home with Categories Sliders">
+
+        <xpath expr="//div[hasclass('o_wslides_home_main')]" position="before">
+            <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+            <!-- <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/dist/tailwind.min.css" rel="stylesheet"/> -->
+            <!-- Swiper CSS -->
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+            
+            <!-- Categories Grid -->
+            <div class="container mt-4 mb-4">
+                <h2 class="text-center mb-4">Browse by Categories</h2>
+                <div class="row">
+                    <t t-foreach="website.env['lms.category'].search([])" t-as="category">
+                        <t t-call="custom_lms_categories.category_card" t-category="category"/>
+                    </t>
+                </div>
+            </div>
+
+            <!-- Swiper Sections -->
+            <div class="carousel-wrapper bg-gray-900 py-8">
+                <div class="container mt-4 mb-4">
+                    <t t-call="custom_lms_categories.slider_section_swiper"/>
+                </div>
+            </div>
+
+            <!-- Swiper JS -->
+            <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"/>
+        </xpath>
+    </template>
+
+
+</odoo>

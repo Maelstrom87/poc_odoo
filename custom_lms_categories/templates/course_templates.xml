@@ -1,147 +1,82 @@
 <odoo>
     <template id="online_course_carousel_view" name="Online Course Carousel">
         <t t-call="website.layout">
-            <t t-set="title" t-value="'Corsi Online'"/>
-            <t t-set="page_title" t-value="'Corsi Online'"/>
-            <t t-set="meta_description" t-value="'Scopri i nostri corsi online'"/>
-            <t t-set="canonical" t-value="'/courses'"/>
-        <script type="text/javascript" src="/custom_lms_categories/static/src/js/course_carousel.js"/>
-        <section class="course-carousel-container">
-            <h2 class="carousel-title">Scopri i Nostri Corsi (<t t-esc="len(channels)"/>)</h2>
-            <t t-if="channels">
-                <div class="carousel-control prev">&#10094;</div>
-                <div class="course-carousel">
-                    <t t-foreach="channels" t-as="channel">
-                        <div class="course-card">
-                            <div class="course-image-container">
-                                <img t-att-src="'/web/image/slide.channel/%s/image_1920' % channel.id"
-                                    class="course-image"
-                                    alt="Course Image"/>
-                                <div class="course-info-overlay">
-                                    <h4 class="course-title"><t t-esc="channel.name"/></h4>
-                                </div>
-                            </div>
-                            <div class="course-overlay">
-                                <h3><t t-esc="channel.name"/></h3>
-                                <a t-att-href="'/slides/%s' % channel.id" class="btn btn-red">Vai al Corso</a>
-                            </div>
-                        </div>
-                    </t>
-                </div>
-                <div class="carousel-control next">&#10095;</div>
-            </t>
-            <t t-else="">
-                <p class="text-center">Nessun corso disponibile.</p>
-            </t>
-        </section>
+          <!-- Includi il file JavaScript -->
+            <script type="text/javascript" src="/custom_lms_categories/static/src/js/course_carousel.js"></script>
 
-        <!-- Categorie con lo stesso stile del carosello principale -->
-        <t t-foreach="website.env['lms.category'].search([])" t-as="category">
-            <t t-if="category.channel_ids and len(category.channel_ids) > 0">
                 <section class="course-carousel-container">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h2 class="carousel-title">
-                            <t t-esc="category.name"/>
-                            <span class="badge bg-secondary ms-2" t-esc="len(category.channel_ids)"/>
-                        </h2>
-                        <a t-att-href="'/categories/' + str(category.id)" class="btn btn-sm btn-outline-primary">Vedi Tutti</a>
-                    </div>
-                    
-                    <div class="carousel-control prev">&#10094;</div>
-                    <div class="course-carousel">
-                        <t t-foreach="category.channel_ids" t-as="channel">
-                            <div class="course-card">
-            
-                               <div class="course-image-container" style="position: relative;">  <!-- Aggiunto style="position: relative" per il posizionamento assoluto del badge -->
-                    
-                                <!--<widget name="web_ribbon" title="Published" bg_color="text-bg-success" invisible="not website_published or not active"/>-->
-                                    
-                                    <!-- Badge obliquo "New" -->
-                                    <!--<div t-if="new or active" class="simple-oblique-badge">-->
-                                    <div t-if="1" class="simple-oblique-badge">
-                                        New
-                                    </div>
-                    
-                                    <img t-if="channel.image_1920"
-                                        t-att-src="'/web/image/slide.channel/' + str(channel.id) + '/image_1920'"
-                                        class="course-image"
-                                        alt="Course Image"/>
-                                    <div t-if="not channel.image_1920" class="course-image bg-secondary d-flex align-items-center justify-content-center">
-                                        <i class="fa fa-book fa-3x text-white"/>
-                                    </div>
-                                    
-                                    <!-- Badge con info lezioni e durata -->
-                                    <!--<div class="course-badge-info">
-                                        <span class="badge bg-dark me-1">
-                                            <i class="fa fa-file-text-o me-1"/> 
-                                            <span t-esc="channel.total_slides"/> lezioni
-                                        </span>
-                                        <span t-if="channel.total_time and channel.total_time > 0" class="badge bg-dark">
-                                            <i class="fa fa-clock-o me-1"/> 
-                                            <span t-esc="int(channel.total_time/60)"/>h <span t-esc="int(channel.total_time%60)"/>m
-                                        </span>
-                                    </div>-->
-                                    
-                                    <div class="course-info-overlay">
-                                        <h4 class="course-title"><t t-esc="channel.name"/></h4>
-                                        
-                                        <!-- Rating (solo se abilitato) -->
-                                        <div t-if="channel.enable_rating and channel.rating_avg > 0" class="course-rating mt-1">
-                                            <div class="stars">
-                                                <i class="fa fa-star" t-att-class="'text-warning' if channel.rating_avg >= 1 else 'text-light'"/>
-                                                <i class="fa fa-star" t-att-class="'text-warning' if channel.rating_avg >= 2 else 'text-light'"/>
-                                                <i class="fa fa-star" t-att-class="'text-warning' if channel.rating_avg >= 3 else 'text-light'"/>
-                                                <i class="fa fa-star" t-att-class="'text-warning' if channel.rating_avg >= 4 else 'text-light'"/>
-                                                <i class="fa fa-star" t-att-class="'text-warning' if channel.rating_avg >= 5 else 'text-light'"/>
-                                            </div>
-                                            <small class="text-light ms-1" t-esc="'%.1f' % channel.rating_avg"/>
+                    <h2 class="carousel-title">Scopri i Nostri Corsi (<t t-esc="len(channels)"/>)</h2>
+                    <t t-if="channels">
+                        <div class="carousel-control prev">&#10094;</div>
+                        <div class="course-carousel">
+                            <t t-foreach="channels" t-as="channel">
+                                <div class="course-card">
+                                    <div class="course-image-container">
+                                        <img t-att-src="'/web/image/slide.channel/%s/image_1920' % channel.id"
+                                            class="course-image"
+                                            alt="Course Image"/>
+                                        <div class="course-info-overlay">
+                                            <h4 class="course-title"><t t-esc="channel.name"/></h4>
                                         </div>
                                     </div>
-                                </div>
-                                
-                                <div class="course-overlay">
-                                    <h3><t t-esc="channel.name"/></h3>
-                                    
-                                    <div class="course-tags mb-2">
-                                        <t t-foreach="channel.tag_ids" t-as="tag">
-                                            <span class="badge bg-gold me-1" t-esc="tag.name"/>
-                                        </t>
+                                    <div class="course-overlay">
+                                        <h3><t t-esc="channel.name"/></h3>
+                                        <a t-att-href="'/slides/%s' % channel.id" class="btn btn-red">Vai al Corso</a>
                                     </div>
-                                    
-                                    <div class="d-flex justify-content-between align-items-center mb-3">
-                                        <div>
-                                            <span class="badge bg-dark me-1">
-                                                <i class="fa fa-file-text-o me-1"/> 
-                                                <span t-esc="channel.total_slides"/> lezioni
-                                            </span>
-                                            <span t-if="channel.total_time and channel.total_time > 0" class="badge bg-dark">
-                                                <i class="fa fa-clock-o me-1"/> 
-                                                <span t-esc="int(channel.total_time/60)"/>h <span t-esc="int(channel.total_time%60)"/>m
-                                            </span>
-                                        </div>
-                                        
-                                        <t t-if="channel.enable_rating and channel.rating_avg > 0">
-                                            <div class="text-end">
-                                                <div class="stars">
-                                                    <i class="fa fa-star text-warning"/>
-                                                    <span t-esc="'%.1f' % channel.rating_avg"/>
-                                                </div>
-                                                <small class="text-muted">
-                                                    <t t-esc="channel.rating_count"/> recensioni
-                                                </small>
-                                            </div>
-                                        </t>
-                                    </div>
-                                    
-                                    <a t-att-href="'/slides/' + str(channel.id)" class="btn btn-red">Vai al Corso</a>
                                 </div>
-                            </div>
-                        </t>
-                    </div>
-                    <div class="carousel-control next">&#10095;</div>
+                            </t>
+                        </div>
+                        <div class="carousel-control next">&#10095;</div>
+                    </t>
+                    <t t-else="">
+                        <p class="text-center">Nessun corso disponibile.</p>
+                    </t>
                 </section>
-            </t>
-        </t>
+
+                <!-- Categorie con lo stesso stile del carosello principale -->
+                <t t-foreach="website.env['lms.category'].search([])" t-as="category">
+                    <t t-if="category.channel_ids and len(category.channel_ids) > 0">
+                        <section class="course-carousel-container">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h2 class="carousel-title">
+                                    <a t-att-href="'/categories/' + str(category.id)" t-esc="category.name"/>
+                                </h2>
+                                <a t-att-href="'/categories/' + str(category.id)" class="btn btn-sm btn-outline-primary">Vedi Tutti</a>
+                            </div>
+                            
+                            <div class="carousel-control prev">&#10094;</div>
+                            <div class="course-carousel">
+                                <t t-foreach="category.channel_ids" t-as="channel">
+                                    <div class="course-card">
+                                        <div class="course-image-container">
+                                            <img t-if="channel.image_1920"
+                                                t-att-src="'/web/image/slide.channel/' + str(channel.id) + '/image_1920'"
+                                                class="course-image"
+                                                alt="Course Image"/>
+                                            <div t-if="not channel.image_1920" class="course-image bg-secondary d-flex align-items-center justify-content-center">
+                                                <i class="fa fa-book fa-3x text-white"/>
+                                            </div>
+                                            <div class="course-info-overlay">
+                                                <h4 class="course-title"><t t-esc="channel.name"/></h4>
+                                            </div>
+                                        </div>
+                                        <div class="course-overlay">
+                                            <h3><t t-esc="channel.name"/></h3>
+                                            <div class="course-tags mb-2">
+                                                <t t-foreach="channel.tag_ids" t-as="tag">
+                                                    <span class="badge bg-info me-1" t-esc="tag.name"/>
+                                                </t>
+                                            </div>
+                                            <a t-att-href="'/slides/' + str(channel.id)" class="btn btn-red">Vai al Corso</a>
+                                        </div>
+                                    </div>
+                                </t>
+                            </div>
+                            <div class="carousel-control next">&#10095;</div>
+                        </section>
+                    </t>
+                </t>
+            <!--Fine sezione website Layout-->
         </t>
     </template>
 </odoo>

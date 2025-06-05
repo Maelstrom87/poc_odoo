@@ -1,10 +1,8 @@
-
-
 # -*- coding: utf-8 -*-
 {
-    'name': 'Custom LMS Categories',
+    'name': 'Custom LMS Categories OWL V2',
     'version': '18.0.1.0.0',
-    'summary': 'Manage Learning Categories with Topics and Channels',
+    'summary': 'V2 - Manage Learning Categories with Topics and Channels',
     'description': """
         Advanced category management for LMS with topic classification,
         tagging and channel association.
@@ -17,36 +15,31 @@
         'website_slides',
         'rating',
         'mail',
+        'web',
     ],
     'data': [
         'security/ir.model.access.csv',
         'views/lms_category_views.xml',
         'views/slide_channel_views.xml',
         'views/menu_views.xml',
-        'templates/categories_page.xml',
-        'templates/homepage_ext.xml',
-        'templates/course_templates.xml',
         'data/demo_data.xml',
+        'templates/homepage_ext_swiper.xml',
+        'templates/components/category_card.xml',
+        'templates/components/slider_section_swiper.xml',
+        'templates/components/swiper_course_card.xml',
+        'templates/components/modal_video.xml',
     ],
     'assets': {
         'web.assets_frontend': [
-            'web/static/lib/jquery/jquery.js',
-            'custom_lms_categories/static/src/scss/categories.scss',
-            'custom_lms_categories/static/lib/owlcarousel/assets/owl.carousel.min.css',
-            'custom_lms_categories/static/lib/owlcarousel/assets/owl.theme.default.min.css',
-            'custom_lms_categories/static/lib/owlcarousel/owl.carousel.min.js',
-            'custom_lms_categories/static/src/js/slider_init.js',
-            'custom_lms_categories/static/src/scss/slider_styles.scss',
-            'custom_lms_categories/static/src/js/course_carousel.js',   
-            'custom_lms_categories/static/src/css/course_carousel.css',
+            'custom_lms_categories/static/src/css/lms_swiper.css',
+            'custom_lms_categories/static/src/js/swiper_init.js',
         ],
     },
     'demo': ['data/demo_data.xml'],
-     # 'images': ['static/description/icon.png'],
     'application': True,
     'license': 'LGPL-3',
     'installable': True,
-    "auto_install": False,
+    'auto_install': False,
 }
 
 

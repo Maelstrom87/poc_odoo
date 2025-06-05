@@ -1,6 +1,7 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
 
+
 class LMSCategory(models.Model):
     _name = 'lms.category'
     _description = 'Learning Management System Category'
@@ -58,26 +59,13 @@ class LMSCategory(models.Model):
             if not 1 <= record.item_limit <= 100:
                 raise ValidationError(_('Item limit must be between 1 and 100!'))
 
-    #deprecato in odoo 18
-    # @api.model
-    # def create(self, vals):
-    #     if not vals.get('code'):
-    #         seq = self.env['ir.sequence'].next_by_code('lms.category.code') or '000'
-    #         vals['code'] = f'CAT-{fields.Date.today().year}-{seq[-3:]}'
-    #     return super().create(vals)
-
     @api.model_create_multi
     def create(self, vals_list):
-        """
-        Override create method to handle batch operations
-        and auto-generate codes when not provided
-        """
         for vals in vals_list:
             if not vals.get('code'):
                 seq = self.env['ir.sequence'].next_by_code('lms.category.code') or '000'
                 vals['code'] = f'CAT-{fields.Date.today().year}-{seq[-3:]}'
         return super().create(vals_list)
-
 
     def write(self, vals):
         return super().write(vals)
@@ -107,9 +95,40 @@ class LMSCategory(models.Model):
         ], order='sequence ASC')
     
 
+
+class SlideChannelBadge(models.Model):
+    _name = 'slide.channel.badge'
+    _description = 'Corso Badge'
+
+    code = fields.Char(string='Codice', required=True)
+    name = fields.Char(string='Etichetta', required=True)
+    #color = fields.Char(string='Colore Sfondo', default='#000000')
+    color = fields.Integer(string="Colore Sfondo", default=0)
+    description = fields.Text(string='Descrizione')
+    main_badge = fields.Boolean(string='Principale', default=False)
+    channel_id = fields.Many2one('slide.channel', string='Corso', ondelete='cascade')
+
+    @api.constrains('main_badge')
+    def _check_single_main_badge(self):
+        for badge in self:
+            if badge.main_badge:
+                existing = self.search([
+                    ('channel_id', '=', badge.channel_id.id),
+                    ('main_badge', '=', True),
+                    ('id', '!=', badge.id)
+                ])
+                if existing:
+                    raise ValidationError(
+                        _("Esiste già un badge principale per questo corso. Deseleziona l'altro o conferma la modifica.")
+                    )
+
+
+
 class SlideChannel(models.Model):
     _inherit = 'slide.channel'
+
     
+
     # to refactor
     category_ids = fields.Many2many(
         'lms.category',
@@ -136,20 +155,23 @@ class SlideChannel(models.Model):
             else:
                 record.short_description = ""
 
-    total_slides = fields.Integer(compute='_compute_slides_count', string="Numero Lezioni")
-    total_time = fields.Integer(compute='_compute_total_time', string="Durata Totale (minuti)")
-    enable_rating = fields.Boolean(string="Abilita Rating", default=True)
-    rating_avg = fields.Float(string="Valutazione Media", digits=(2,1))
-    # rating_avg_stars = fields.Float("Rating Average (Stars)", compute='_compute_rating_stats', digits=(16, 1), compute_sudo=True)
-    rating_count = fields.Integer(string="Numero Recensioni")
+                    
+    teaser_video_url = fields.Char(
+        'Video Teaser URL',
+        help="URL del video teaser (max 10 secondi) da mostrare come anteprima. Supporta YouTube e Vimeo."
+    )
 
-    def _compute_slides_count(self):
-        for channel in self:
-            channel.total_slides = self.env['slide.slide'].search_count([('channel_id', '=', channel.id)])
+    
+    landing_url = fields.Char(
+        'URL Landing Page',
+        help="URL della landing page esterna o interna."
+    )
 
-    def _compute_total_time(self):
-        for channel in self:
-            channel.total_time = sum(self.env['slide.slide'].search([
-                ('channel_id', '=', channel.id)
-            ]).mapped('completion_time'))
-                
+    # Relazione badge
+    badge_ids = fields.One2many(
+        'slide.channel.badge',
+        'channel_id',
+        string='Badge del corso'
+    )
+
+    tag_ids = fields.Many2many('slide.channel.tag', string='Tags')
