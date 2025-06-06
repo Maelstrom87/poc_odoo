@@ -157,7 +157,7 @@
   flex-wrap: wrap;
   gap: 8px;
   margin-bottom: 10px;
-  height: 4.2em; /* Fixed height for exactly 2 tags */
+  /*height: 4.2em;*/ /* Fixed height for exactly 2 tags */
   overflow: hidden;
 }
 
@@ -227,8 +227,9 @@
 
 /* Course CTA Button */
 .course-cta {
-  background-color: var(--accent-color);
-  color: var(--background-dark);
+  /* background-color: var(--accent-color);
+  color: var(--background-dark); */
+  color: #ffffff;
   border: none;
   padding: 8px 20px;
   border-radius: 4px;

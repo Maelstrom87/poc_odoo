@@ -137,12 +137,13 @@ class SlideChannelBadge(models.Model):
 
 
 
+from odoo import api, fields, models, _
+from odoo.exceptions import ValidationError
+import re
+
 class SlideChannel(models.Model):
     _inherit = 'slide.channel'
 
-    
-
-    # to refactor
     category_ids = fields.Many2many(
         'lms.category',
         relation='slide_channel_category_rel',
@@ -152,23 +153,12 @@ class SlideChannel(models.Model):
         help="Categories this course belongs to"
     )
 
-    # to refactor
-    # Add fields for better display
     short_description = fields.Char(
         string='Short Description',
         compute='_compute_short_description',
         store=True
     )
     
-    @api.depends('description')
-    def _compute_short_description(self):
-        for record in self:
-            if record.description:
-                record.short_description = record.description[:100] + '...' if len(record.description) > 100 else record.description
-            else:
-                record.short_description = ""
-
-                    
     teaser_video_url = fields.Char(
         'Video Teaser URL',
         help="URL del video teaser (max 10 secondi) da mostrare come anteprima. Supporta YouTube e Vimeo."
@@ -179,7 +169,6 @@ class SlideChannel(models.Model):
         help="URL della landing page esterna o interna."
     )
 
-    # Relazione badge
     badge_ids = fields.One2many(
         'slide.channel.badge',
         'channel_id',
@@ -188,6 +177,14 @@ class SlideChannel(models.Model):
 
     tag_ids = fields.Many2many('slide.channel.tag', string='Tags')
 
+    @api.depends('description')
+    def _compute_short_description(self):
+        for record in self:
+            if record.description:
+                record.short_description = record.description[:100] + '...' if len(record.description) > 100 else record.description
+            else:
+                record.short_description = ""
+
     @api.constrains('teaser_video_url')
     def _check_teaser_video_url(self):
         youtube_regex = re.compile(
@@ -195,12 +192,81 @@ class SlideChannel(models.Model):
         )
         for channel in self:
             if channel.teaser_video_url and not youtube_regex.match(channel.teaser_video_url):
-                raise ValidationError("L'URL del teaser deve essere un link a YouTube o Vimeo.")
+                raise ValidationError(_("L'URL del teaser deve essere un link a YouTube o Vimeo."))
 
 
-# class LmsCategoryCourseRel(models.Model):
-#     _name = 'lms.category.course.rel'
-#     _description = 'Relation between LMS Category and Course'
+class SlideChannel(models.Model):
+    _inherit = 'slide.channel'
 
-#     category_id = fields.Many2one('lms.category', required=True)
-#     course_id = fields.Many2one('slide.channel', required=True)
+    # Metodi per la gestione della UI
+    #@api.model # metodo "statico" che non dipende da record specifici
+    def get_course_ui_data(self, user=None):
+        """Versione migliorata che può essere chiamata anche da contesti non-web"""
+        self.ensure_one()
+        user = user or self.env.user
+        return {
+            **self._get_course_base_data(),
+            **self._get_user_specific_data(user)
+        }
+
+    # metodo privato prefixato con "_" per indicare che è interno alla classe
+    def _get_course_base_data(self):
+        """Dati indipendenti dall'utente"""
+        self.ensure_one()
+        main_badge = self.badge_ids.filtered(lambda b: b.main_badge)
+        other_badges = self.badge_ids.filtered(lambda b: not b.main_badge)
+
+        return {
+            "id": self.id,
+            "name": self.name,
+            "image": f"/web/image/slide.channel/{self.id}/image_512" if self.image_1920 else "/path/to/placeholder.jpg",
+            "price": "€49.99",
+            "total_slides": self.total_slides,
+            "total_time_hours": int(self.total_time / 60) if self.total_time else 0,
+            "total_time_minutes": int(self.total_time % 60) if self.total_time else 0,
+            "tags": self.tag_ids.mapped('name'),
+            "rating": round(self.rating_avg or 4.7, 1),
+            "is_new": self.create_date and (fields.Datetime.now() - self.create_date).days < 30,
+            "main_badge": {
+                "name": main_badge.name,
+                "color": main_badge.color,
+                "description": main_badge.description
+            } if main_badge else None,
+            "other_badges": [{
+                "name": b.name,
+                "color": b.color,
+                "description": b.description
+            } for b in other_badges],
+            "card_hover_class": "hover:border-yellow-500",
+            "icon_theme": "gold-on-black",
+        }
+
+    # metodo privato prefixato con "_" per indicare che è interno alla classe
+    def _get_user_specific_data(self, user):
+        """Dati dipendenti dall'utente"""
+        self.ensure_one()
+        return {
+            "cta": self._get_cta_label(user)
+        }
+
+    # metodo privato prefixato con "_" per indicare che è interno alla classe
+    def _get_cta_label(self, user):
+        """Genera il CTA in base allo stato dell'utente"""
+        self.ensure_one()
+        is_subscribed = self._is_user_subscribed(user)
+        
+        return {
+            "caption": _("Vai al Corso") if is_subscribed else _("Scopri il corso"),
+            "color": "text-white bg-green-600 hover:bg-green-500" if is_subscribed else "bg-blue-700 hover:bg-blue-600",
+            # "color": "text-white bg-green-600 hover:bg-green-500" if is_subscribed else "text-white bg-[var(--accent-color)] hover:bg-[var(--background-dark)]",
+            "url": f"/slides/channel/{self.id}" if is_subscribed else (self.landing_url or "#")
+            # '/slides/' + str(channel.id)
+        }
+
+    def _is_user_subscribed(self, user):
+        """Verifica se l'utente è iscritto al corso"""
+        self.ensure_one()
+        return bool(self.env['slide.channel.partner'].search_count([
+            ('partner_id', '=', user.partner_id.id),
+            ('channel_id', '=', self.id)
+        ]))
