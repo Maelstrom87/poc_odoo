@@ -1,0 +1,115 @@
+<odoo noupdate="1">
+    <!-- Categorie -->
+    <record id="lms_category_olistico" model="lms.category">
+        <field name="name">Olistico</field>
+        <field name="code">CAT-2025-001</field>
+    </record>
+    <record id="lms_category_coaching" model="lms.category">
+        <field name="name">Coaching</field>
+        <field name="code">CAT-2025-002</field> 
+    </record>
+    <record id="lms_category_vendita" model="lms.category">
+        <field name="name">Vendita</field>
+        <field name="code">CAT-2025-003</field>
+    </record>
+    <record id="lms_category_mindfulness" model="lms.category">
+        <field name="name">Mindfulness</field>
+        <field name="code">CAT-2025-004</field>                                             
+    </record>
+    <record id="lms_category_comunicazione" model="lms.category">
+        <field name="name">Comunicazione</field>
+        <field name="code">CAT-2025-005</field>    
+    </record>
+
+    <!-- Tag -->
+    <record id="tag_novita" model="slide.channel.tag">
+        <field name="name">Novità</field>
+    </record>
+    <record id="tag_best_seller" model="slide.channel.tag">
+        <field name="name">Best Seller</field>
+    </record>
+    <record id="tag_base" model="slide.channel.tag">
+        <field name="name">Livello Base</field>
+    </record>
+    <record id="tag_avanzato" model="slide.channel.tag">
+        <field name="name">Livello Avanzato</field>
+    </record>
+
+    <!-- Corsi -->
+    <record id="slide_channel_olistico_demo" model="slide.channel">
+        <field name="name">Corso Olistico Demo</field>
+        <field name="description">Percorso introduttivo al benessere olistico integrato con Mindle On Demand.</field>
+        <field name="teaser_video_url">https://www.youtube.com/embed/wRk2exmStvk</field>
+        <field name="landing_url">https://www.mindle.me/it/cyt</field>
+        <field name="category_ids" eval="[(6, 0, [ref('lms_category_olistico')])]"/>
+        <field name="tag_ids" eval="[(6, 0, [ref('tag_novita'), ref('tag_base')])]"/>
+    </record>
+
+    <record id="slide_channel_coaching_vendita" model="slide.channel">
+        <field name="name">Corso Coaching Vendita</field>
+        <field name="description">Strategie e tecniche di vendita etica per professionisti e coach commerciali.</field>
+        <field name="teaser_video_url">https://www.youtube.com/embed/ZhYcIxnQR-Q</field>
+        <field name="landing_url">https://www.mindle.me/it/coaching-vendita</field>
+        <field name="category_ids" eval="[(6, 0, [ref('lms_category_coaching'), ref('lms_category_vendita')])]"/>
+        <field name="tag_ids" eval="[(6, 0, [ref('tag_best_seller'), ref('tag_avanzato')])]"/>
+    </record>
+
+    <record id="slide_channel_coaching_evolutivo" model="slide.channel">
+        <field name="name">Corso Coaching Evolutivo</field>
+        <field name="description">Un percorso per scoprire e sviluppare il proprio potenziale evolutivo e spirituale.</field>
+        <field name="teaser_video_url">https://vimeo.com/987654321</field>
+        <field name="landing_url">https://www.mindle.me/it/coaching-evolutivo</field>
+        <field name="category_ids" eval="[(6, 0, [ref('lms_category_coaching')])]"/>
+        <field name="tag_ids" eval="[(6, 0, [ref('tag_base')])]"/>
+    </record>
+
+    <record id="slide_channel_comunicazione" model="slide.channel">
+        <field name="name">Corso Comunicazione Consapevole</field>
+        <field name="description">Tecniche di comunicazione efficace e ascolto attivo in ambito personale e professionale.</field>
+        <field name="teaser_video_url">https://www.youtube.com/embed/sXpODjvG9hY</field>
+        <field name="landing_url">https://www.mindle.me/it/comunicazione</field>
+        <field name="category_ids" eval="[(6, 0, [ref('lms_category_comunicazione'), ref('lms_category_coaching')])]"/>
+        <field name="tag_ids" eval="[(6, 0, [ref('tag_novita')])]"/>
+    </record>
+
+    <record id="slide_channel_mindfulness" model="slide.channel">
+        <field name="name">Corso Mindfulness Quotidiana</field>
+        <field name="description">Un’introduzione pratica alla mindfulness per ridurre lo stress e migliorare la qualità della vita.</field>
+        <field name="teaser_video_url">https://www.youtube.com/embed/Bk_qU7l-fcU</field>
+        <field name="landing_url">https://www.mindle.me/it/mindfulness</field>
+        <field name="category_ids" eval="[(6, 0, [ref('lms_category_mindfulness'), ref('lms_category_olistico')])]"/>
+        <field name="tag_ids" eval="[(6, 0, [ref('tag_base')])]"/>
+    </record>
+
+    <!-- Badge associati -->
+    <record id="badge_olistico" model="slide.channel.badge">
+        <field name="channel_id" ref="slide_channel_olistico_demo"/>
+        <field name="name">Novità</field>
+        <field name="color">#ffd700</field>
+        <field name="description">nuovo</field>
+    </record>
+
+    <record id="badge_vendita" model="slide.channel.badge">
+        <field name="channel_id" ref="slide_channel_coaching_vendita"/>
+        <field name="name">Best Seller</field>
+        <field name="color">#2171b3</field>
+    </record>
+
+    <record id="badge_coaching" model="slide.channel.badge">
+        <field name="channel_id" ref="slide_channel_coaching_evolutivo"/>
+        <field name="name">Percorso Evolutivo</field>
+        <field name="color">#6f42c1</field>
+    </record>
+
+    <record id="badge_comunicazione" model="slide.channel.badge">
+        <field name="channel_id" ref="slide_channel_comunicazione"/>
+        <field name="name">Nuovo 2025</field>
+        <field name="color">#28a745</field>
+    </record>
+
+    <record id="badge_mindfulness" model="slide.channel.badge">
+        <field name="channel_id" ref="slide_channel_mindfulness"/>
+        <field name="name">Relax</field>
+        <field name="color">#ff6f61</field>
+    </record>
+</odoo>

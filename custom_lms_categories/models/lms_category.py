@@ -28,14 +28,25 @@ class LMSCategory(models.Model):
     topic_ids = fields.Many2many('lms.topic', string='Related Topics')
     tag_ids = fields.Many2many('slide.channel.tag', string='Tags')
     channel_ids = fields.Many2many(
-        'slide.channel', 
-        string='Courses',
-        relation='lms_category_slide_channel_rel',
-        column1='category_id',
-        column2='channel_id',
-        domain=[('website_published', '=', True)],
-        help="Published courses in this category"
-    )
+         'slide.channel', 
+         string='Courses',
+         relation='lms_category_slide_channel_rel',
+         column1='category_id',
+         column2='channel_id',
+         domain=[('website_published', '=', True)],
+         help="Published courses in this category"
+     )
+
+#     channel_ids = fields.Many2many(
+#         'slide.channel',
+#         'slide_channel_category_rel',  # <-- usa la stessa tabella
+#         'category_id',                 # <-- deve essere il campo opposto rispetto all'altro modello
+#         'channel_id',
+#         string='Courses',
+#         domain=[('website_published', '=', True)],
+#         help="Published courses in this category"
+#     )
+
     featured_channel_ids = fields.Many2many(
         'slide.channel',
         string='Featured Courses',
@@ -95,6 +106,7 @@ class LMSCategory(models.Model):
             ('promote_on_home', '=', True)
         ], order='sequence ASC')
     
+
 
 
 class SlideChannelBadge(models.Model):
@@ -184,3 +196,11 @@ class SlideChannel(models.Model):
         for channel in self:
             if channel.teaser_video_url and not youtube_regex.match(channel.teaser_video_url):
                 raise ValidationError("L'URL del teaser deve essere un link a YouTube o Vimeo.")
+
+
+# class LmsCategoryCourseRel(models.Model):
+#     _name = 'lms.category.course.rel'
+#     _description = 'Relation between LMS Category and Course'
+
+#     category_id = fields.Many2one('lms.category', required=True)
+#     course_id = fields.Many2one('slide.channel', required=True)

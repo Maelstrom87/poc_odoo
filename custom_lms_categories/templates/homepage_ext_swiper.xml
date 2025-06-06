@@ -26,6 +26,9 @@
                 </div>
             </div>
 
+            <!-- Video Modal -->
+            <t t-call="custom_lms_categories.modal_video_v1"/>
+
             <!-- Swiper JS -->
             <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"/>
         </xpath>
