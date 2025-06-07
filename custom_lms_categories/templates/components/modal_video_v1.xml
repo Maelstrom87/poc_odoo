@@ -7,7 +7,11 @@
                     
                     <!-- Header -->
                     <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: #000000;">
-                        <button onclick="closeVideoModal()" style="background-color: red; color: white; border: none; padding: 0.5rem 1rem; font-weight: bold; font-size: 1rem; cursor: pointer;">Chiudi</button>
+             
+                        <svg onclick="closeVideoModal()" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="cursor:pointer;">
+                            <path d="M19 12H5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12 19L5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
                         <div style="background-color: #FFD700; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-weight: bold; color: black; font-size: 1.1rem;">M</div>
                     </div>
 
@@ -30,7 +34,9 @@
                         </div>
 
                         <!-- Bottone -->
-                        <button onclick="window.location.href='/slides'" style="margin-top: 1.5rem; background-color: #2563EB; color: white; padding: 0.75rem 1.5rem; font-size: 1rem; border: none; border-radius: 6px; cursor: pointer;">Scopri il Corso</button>
+                        <div style="display: flex; justify-content: flex-end; margin-top: 1.5rem;">
+                            <button onclick="window.location.href='/slides'" style="background-color: #2563EB; color: white; padding: 0.75rem 1.5rem; font-size: 1rem; border: none; border-radius: 6px; cursor: pointer;">Scopri il Corso</button>
+                        </div>
                     </div>
                 </div>
             </div>
