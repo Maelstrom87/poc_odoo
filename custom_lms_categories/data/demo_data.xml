@@ -52,7 +52,7 @@
     <record id="slide_channel_olistico_respiro" model="slide.channel">
         <field name="name">Respiro Consapevole</field>
         <field name="description">Tecniche di respirazione profonda per il riequilibrio mente-corpo.</field>
-        <field name="teaser_video_url">https://www.youtube.com/embed/abcde12345</field>
+        <field name="teaser_video_url">https://www.youtube.com/embed/wRk2exmStvk</field>
         <field name="landing_url">https://www.mindle.me/it/respiro</field>
         <field name="category_ids" eval="[(6, 0, [ref('lms_category_olistico')])]"/>
         <field name="tag_ids" eval="[(6, 0, [ref('tag_base')])]"/>
@@ -61,7 +61,7 @@
     <record id="slide_channel_olistico_energia" model="slide.channel">
         <field name="name">Energia Interiore</field>
         <field name="description">Scopri come gestire e canalizzare la tua energia vitale.</field>
-        <field name="teaser_video_url">https://www.youtube.com/embed/fghij67890</field>
+        <field name="teaser_video_url">https://www.youtube.com/embed/SmwwsQJW9ZI?si=V3iYwXVwEuc35NB9</field>
         <field name="landing_url">https://www.mindle.me/it/energia</field>
         <field name="category_ids" eval="[(6, 0, [ref('lms_category_olistico')])]"/>
         <field name="tag_ids" eval="[(6, 0, [ref('tag_novita')])]"/>
@@ -159,7 +159,7 @@
     </record>
 
     <record id="badge_coaching" model="slide.channel.badge">
-        <field name="channel_id" ref="slide_channel_coaching_leadership"/>
+        <field name="channel_id" ref="slide_channel_coaching_evolutivo"/>
         <field name="code">badge_003</field>
         <field name="name">Percorso Evolutivo</field>
         <field name="color">#6f42c1</field>
@@ -188,11 +188,11 @@
 
         <record id="rel_coaching_vendita" model="lms.category.course.rel">
             <field name="category_id" ref="lms_category_coaching"/>
-            <field name="course_id" ref="slide_channel_coaching_vendita"/>
+            <field name="course_id" ref="slide_channel_coaching_autostima"/>
         </record>
         <record id="rel_vendita_vendita" model="lms.category.course.rel">
             <field name="category_id" ref="lms_category_vendita"/>
-            <field name="course_id" ref="slide_channel_coaching_vendita"/>
+            <field name="course_id" ref="slide_channel_coaching_autostima"/>
         </record>
 
         <record id="rel_coaching_evolutivo" model="lms.category.course.rel">

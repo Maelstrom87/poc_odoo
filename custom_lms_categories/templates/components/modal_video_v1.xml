@@ -3,10 +3,20 @@
     <data>
         <template id="modal_video_v1" name="Video Modal v1">
             <div class="modal-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: black; display: none; align-items: center; justify-content: center; z-index: 10000;">
-                <div class="video-modal" style="background-color: #000000; border-radius: 12px; max-width: 800px; width: 95%; overflow: hidden; border: 4px solid #FFD700; box-shadow: 0 0 15px #FFD700, 0 0 30px #FFD70066; animation: glow 2s infinite ease-in-out;">
-                    
+                <div class="video-modal" style="
+                    background-color: #000000;
+                    border-radius: 12px;
+                    width: 90vw;
+                    max-width: 500px;
+                    height: auto;
+                    overflow-y: visible;
+                    border: 2px solid #FFD700;
+                    box-shadow: 0 0 10px #FFD700, 0 0 20px #FFD70066;
+                    animation: glow 3s infinite ease-in-out;
+                ">
+
                     <!-- Header -->
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: #000000;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 1rem; background: #000000;">
              
                         <svg onclick="closeVideoModal()" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="cursor:pointer;">
                             <path d="M19 12H5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -16,26 +26,30 @@
                     </div>
 
                     <!-- Video -->
+                    <!-- <div style="position: relative; padding-bottom: 40%; height: 0; overflow: hidden;"> -->
                     <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
                         <iframe src="" allowfullscreen="true" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"></iframe>
                     </div>
 
                     <!-- Descrizione -->
-                    <div style="padding: 1.5rem; background-color: #000000;">
-                        <h3 style="margin-top: 0; font-size: 1.5rem; font-weight: 700; color: #ffffff;">Anteprima Corso</h3>
-                        <p style="font-size: 1rem; color: #cccccc;">Scopri in anteprima i contenuti più apprezzati di questo corso. Guarda il trailer e lasciati ispirare!</p>
-
-                        <!-- Sezione Prezzo -->
-                        <div style="margin-top: 1.5rem; text-align: center; background-color: #111111; padding: 1rem; border-radius: 8px;">
-                            <div style="font-size: 0.875rem; color: #999999;">Prezzo</div>
-                            <div style="font-size: 2rem; font-weight: bold; color: #FFD700;">€499</div>
-                            <div style="font-size: 1rem; color: #888888;">CHF 479</div>
-                            <div style="font-size: 0.875rem; color: #64748B;">Accesso illimitato incluso</div>
+                    <div style="padding: 1rem; background-color: #000000;">
+                        <h3 style="margin-top: 0; font-size: 1.2rem; font-weight: 700; color: #ffffff;">Anteprima Corso</h3>
+                        <p style="font-size: 0.9rem; color: #cccccc;">Scopri in anteprima i contenuti più apprezzati di questo corso.</p>
+                        <div style="background-color: #FFD700; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-weight: bold; color: black; font-size: 1rem;">M</div>
+                   
+                        <!-- Sezione Prezzo Compattata -->
+                        <div style="margin-top: 1rem; text-align: center; background-color: #111111; padding: 0.8rem; border-radius: 8px;">
+                            <div style="font-size: 0.8rem; color: #999999;">Prezzo</div>
+                            <div style="font-size: 1.5rem; font-weight: bold; color: #FFD700;">€499</div>
+                            <div style="font-size: 0.9rem; color: #888888;">CHF 479</div>
+                            <div style="font-size: 0.75rem; color: #64748B;">Accesso illimitato incluso</div>
                         </div>
 
                         <!-- Bottone -->
                         <div style="display: flex; justify-content: flex-end; margin-top: 1.5rem;">
                             <button onclick="window.location.href='/slides'" style="background-color: #2563EB; color: white; padding: 0.75rem 1.5rem; font-size: 1rem; border: none; border-radius: 6px; cursor: pointer;">Scopri il Corso</button>
+                        <div style="margin-top: 1rem; text-align: right; background-color: #111111; padding: 0.8rem;">
+                            <button onclick="window.location.href='/slides'" style="margin-top: 1rem; background-color: #2563EB; color: white; padding: 0.6rem 1rem; font-size: 0.9rem; border: none; border-radius: 6px; cursor: pointer; width: 100%;">Scopri il Corso</button>
                         </div>
                     </div>
                 </div>

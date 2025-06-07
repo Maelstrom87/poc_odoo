@@ -157,15 +157,17 @@ class WebsiteSlidesExtended(WebsiteSlides):
         ]) > 0
         return is_subscribed
 
-    # @http.route(['/slides'], type='http', auth='user', website=True)
-    # def courses(self, **kwargs):
-    #     # Recupera tutti i canali pubblici
-    #     domain = [('website_published', '=', True)]
-    #     channels = request.env['slide.channel'].search(domain)
+    @http.route(['/slides'], type='http', auth='user', website=True)
+    def courses(self, **kwargs):
+          # Recupera tutti i canali pubblici
+         domain = [('website_published', '=', True)]
+         channels = request.env['slide.channel'].search(domain)
         
-    #     # Trasforma in lista di dizionari UI-friendly
-    #     channels_data = [self.get_course_ui_data(c) for c in channels]
+         # Trasforma in lista di dizionari UI-friendly
+         channels_data = [self.get_course_ui_data(c) for c in channels]
 
-    #     return request.render("website_slides.courses_home", {
-    #         'channels': channels_data,  # sostituisce l'originale 'channels'
-    #     })
+         return request.render("website_slides.courses_home", {
+             'channels': channels_data,  # sostituisce l'originale 'channels'
+             'user': request.env.user,
+             'is_public_user': request.env.user._is_public(),
+         })
