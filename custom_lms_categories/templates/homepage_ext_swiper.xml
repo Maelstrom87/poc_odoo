@@ -7,7 +7,7 @@
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 
             <!-- Swiper Sections -->
-            <div class="carousel-wrapper bg-gray-900 py-8">
+            <div class="carousel-wrapper bg-gray-900 py-8 overflow-x-hidden md:overflow-x-visible">
                 <div class="container mt-4 mb-4">
                     <t t-call="custom_lms_categories.slider_section_swiper"/>
                 </div>

@@ -5,7 +5,7 @@
             <t t-if="category.channel_ids and len(category.channel_ids) > 0">
                 <!-- Category Title + Link -->
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h3 class="mb-0 font-bold text-xl">
+                    <h3 class="mb-0 font-bold text-xl color-mindle">
                         <a t-att-href="'/courses/category/' + str(category.id)" class="text-white" t-esc="category.name"/>
                     </h3>
      
@@ -15,7 +15,7 @@
                 <div class="swiper overflow-visible">
                     <div class="swiper-wrapper">
                         <t t-foreach="category.channel_ids" t-as="channel">
-                            <div class="swiper-slide">
+                            <div class="swiper-slide mb-4">
                                 <t t-call="custom_lms_categories.swiper_course_card" t-channel="channel">
                                 </t>
                             </div>     
@@ -30,6 +30,9 @@
                     <div class="custom-swiper-button-next">
                         <i class="fa fa-chevron-right"></i>
                     </div>
+
+                    <!-- Paginazione -->
+                    <div class="swiper-pagination my-2"></div>
                 </div>
             </t>
         </t>

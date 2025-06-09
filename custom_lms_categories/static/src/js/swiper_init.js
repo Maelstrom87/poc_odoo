@@ -12,10 +12,12 @@ $(document).ready(function () {
       navigation: {
         nextEl: this.querySelector(".custom-swiper-button-next"),
         prevEl: this.querySelector(".custom-swiper-button-prev"),
+        // enabled: window.innerWidth >= 768, // Abilita la navigazione solo su desktop (>= 768px)
       },
       pagination: {
         el: this.querySelector(".swiper-pagination"),
         clickable: true,
+        enabled: window.innerWidth < 768, // Abilita la paginazione solo su mobile (< 768px)
       },
       breakpoints: {
         // Mobile first approach
@@ -35,12 +37,27 @@ $(document).ready(function () {
           slidesPerView: 3,
           spaceBetween: 15,
           centeredSlides: false,
+          navigation: {
+            enabled: true,
+          },
+          pagination: {
+            enabled: false,
+          },
         },
         // when window width is >= 1024px
         1024: {
           slidesPerView: 4,
           spaceBetween: 30,
           centeredSlides: false,
+        },
+        // Quando la larghezza della finestra è < 768px
+        0: {
+          navigation: {
+            enabled: false,
+          },
+          pagination: {
+            enabled: true,
+          },
         },
       },
       on: {

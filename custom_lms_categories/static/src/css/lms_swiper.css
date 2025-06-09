@@ -157,11 +157,13 @@
   flex-wrap: wrap;
   gap: 8px;
   margin-bottom: 10px;
-  /*height: 4.2em;*/ /* Fixed height for exactly 2 tags */
+  height: 4.2em; /* Fixed height for exactly 2 tags */
   overflow: hidden;
+  align-items: flex-start; /* Allinea i tag in alto, non stretch */
 }
 
 .course-tag {
+  display: inline-block; /* Assicura che il tag prenda solo lo spazio necessario */
   background-color: transparent;
   color: var(--accent-color);
   padding: 4px 8px;
@@ -174,9 +176,6 @@
   text-overflow: ellipsis;
   max-width: 100%;
 }
-
-
-
 
 .course-stats {
   display: flex;
@@ -204,12 +203,12 @@
   align-items: center;
   justify-content: center;
   opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.course-card.with-video:hover .play-icon {
+  /* transition: opacity 0.3s ease; */
   opacity: 1;
 }
+
+/* .course-card.with-video:hover .play-icon {
+} */
 
 .play-icon-triangle {
   width: 0;
@@ -414,8 +413,12 @@
   }
 }
 
-
-
+/* @media (max-width: 767px) {
+  .custom-swiper-button-next,
+  .custom-swiper-button-prev {
+    display: none !important;
+  }
+} */
 
 .swiper-slide {
   transition:

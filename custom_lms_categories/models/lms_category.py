@@ -201,6 +201,33 @@ class SlideChannel(models.Model):
         help="URL del video teaser (max 10 secondi) da mostrare come anteprima. Supporta YouTube e Vimeo."
     )
 
+    teaser_video_embed_url = fields.Char(
+        'Video Teaser Embed URL',
+        compute='_compute_teaser_video_embed_url',
+        store=True
+    )
+
+    @api.depends('teaser_video_url')
+    def _compute_teaser_video_embed_url(self):
+        for record in self:
+            if not record.teaser_video_url:
+                record.teaser_video_embed_url = False
+                continue
+                
+            # Handle Vimeo URLs
+            if 'vimeo.com/' in record.teaser_video_url:
+                video_id = record.teaser_video_url.split('vimeo.com/')[-1].split('?')[0]
+                record.teaser_video_embed_url = f'https://player.vimeo.com/video/{video_id}'
+            # Handle YouTube URLs
+            elif 'watch?v=' in record.teaser_video_url:
+                record.teaser_video_embed_url = record.teaser_video_url.replace("watch?v=", "embed/")
+            # Handle youtu.be URLs
+            elif 'youtu.be/' in record.teaser_video_url:
+                video_id = record.teaser_video_url.split('youtu.be/')[-1].split('?')[0]
+                record.teaser_video_embed_url = f'https://www.youtube.com/embed/{video_id}'
+            else:
+                record.teaser_video_embed_url = record.teaser_video_url
+
     @api.constrains('teaser_video_url')
     def _check_teaser_video_url(self):
         youtube_regex = re.compile(
@@ -209,13 +236,6 @@ class SlideChannel(models.Model):
         for channel in self:
             if channel.teaser_video_url and not youtube_regex.match(channel.teaser_video_url):
                 raise ValidationError(_("L'URL del teaser deve essere un link a YouTube o Vimeo."))
-            # solo per youtube ?
-            #self.teaser_video_url = self._get_embed_url()
-
-    def _get_embed_url(self):
-        if self.teaser_video_url and 'watch?v=' in self.teaser_video_url:
-            return self.teaser_video_url.replace("watch?v=", "embed/")
-        return self.teaser_video_url
 
     landing_url = fields.Char(
         'URL Landing Page',
@@ -223,77 +243,7 @@ class SlideChannel(models.Model):
     )
 
 
-class SlideChannel(models.Model):
-    _inherit = 'slide.channel'
 
-    # Metodi per la gestione della UI
-    #@api.model # metodo "statico" che non dipende da record specifici
-    def get_course_ui_data(self, user=None):
-        """Versione migliorata che può essere chiamata anche da contesti non-web"""
-        self.ensure_one()
-        user = user or self.env.user
-        return {
-            **self._get_course_base_data(),
-            **self._get_user_specific_data(user)
-        }
-
-    # metodo privato prefixato con "_" per indicare che è interno alla classe
-    def _get_course_base_data(self):
-        """Dati indipendenti dall'utente"""
-        self.ensure_one()
-        main_badge = self.badge_ids.filtered(lambda b: b.main_badge)
-        other_badges = self.badge_ids.filtered(lambda b: not b.main_badge)
-
-        return {
-            "id": self.id,
-            "name": self.name,
-            "image": f"/web/image/slide.channel/{self.id}/image_512" if self.image_1920 else "/path/to/placeholder.jpg",
-            "price": "€49.99",
-            "total_slides": self.total_slides,
-            "total_time_hours": int(self.total_time / 60) if self.total_time else 0,
-            "total_time_minutes": int(self.total_time % 60) if self.total_time else 0,
-            "tags": self.tag_ids.mapped('name'),
-            "rating": round(self.rating_avg or 4.7, 1),
-            "is_new": self.create_date and (fields.Datetime.now() - self.create_date).days < 30,
-            "main_badge": {
-                "name": main_badge.name,
-                "color": main_badge.color,
-                "background_color": main_badge.background_color,
-                "description": main_badge.description
-            } if main_badge else None,
-            "other_badges": [{
-                "name": b.name,
-                "color": b.color,
-                "background_color": b.background_color,
-                "description": b.description
-            } for b in other_badges],
-            "card_hover_class": "hover:border-yellow-500",
-            "icon_theme": "gold-on-black",
-        }
-
-    # metodo privato prefixato con "_" per indicare che è interno alla classe
-    def _get_user_specific_data(self, user):
-        """Dati dipendenti dall'utente"""
-        self.ensure_one()
-        return {
-            "cta": self._get_cta_label(user)
-        }
-
-    # metodo privato prefixato con "_" per indicare che è interno alla classe
-    def _get_cta_label(self, user):
-        """Genera il CTA in base allo stato dell'utente"""
-        self.ensure_one()
-        is_subscribed = self._is_user_subscribed(user)
-        
-        return {
-            "caption": _("Vai al Corso") if is_subscribed else _("Scopri il corso"),
-            "color": "text-white bg-green-600 hover:bg-green-500" if is_subscribed else "bg-blue-700 hover:bg-blue-600",
-            # "color": "text-white bg-green-600 hover:bg-green-500" if is_subscribed else "text-white bg-[var(--accent-color)] hover:bg-[var(--background-dark)]",
-            "url": f"/slides/{self.id}" if is_subscribed else (self.landing_url or "#")
-            # '/slides/' + str(channel.id)
-        }
-
-    def _is_user_subscribed(self, user):
         """Verifica se l'utente è iscritto al corso"""
         self.ensure_one()
         return bool(self.env['slide.channel.partner'].search_count([
