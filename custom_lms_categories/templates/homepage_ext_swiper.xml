@@ -1,23 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Eredita dal template principale dei corsi -->
     <template id="inherit_courses_home" inherit_id="website_slides.courses_home" name="Courses Home with Categories Sliders">
-
         <xpath expr="//div[hasclass('o_wslides_home_main')]" position="before">
+            <!-- CSS e JS esterni -->
             <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-            <!-- <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/dist/tailwind.min.css" rel="stylesheet"/> -->
-            <!-- Swiper CSS -->
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-            
-            <!-- Categories Grid -->
-            <div class="container mt-4 mb-4">
-                <h2 class="text-center mb-4">Browse by Categories</h2>
-                <div class="row">
-                    <t t-foreach="website.env['lms.category'].search([])" t-as="category">
-                        <t t-call="custom_lms_categories.category_card" t-category="category"/>
-                    </t>
-                </div>
-            </div>
 
             <!-- Swiper Sections -->
             <div class="carousel-wrapper bg-gray-900 py-8">
@@ -25,14 +12,289 @@
                     <t t-call="custom_lms_categories.slider_section_swiper"/>
                 </div>
             </div>
+                        
+            <!-- Video Modal - Layout a due colonne -->
+            <div id="global-video-modal" style="
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.95);
+                display: none;
+                align-items: center;
+                justify-content: center;
+                z-index: 99999;
+                backdrop-filter: blur(8px);
+                padding: 20px;
+                box-sizing: border-box;
+            ">
+                <div style="
+                    width: 100%;
+                    max-width: 1400px;
+                    height: 90vh;
+                    max-height: 800px;
+                    background: #000;
+                    border-radius: 12px;
+                    border: 3px solid #FFD700;
+                    box-shadow: 0 0 30px rgba(255, 215, 0, 0.7);
+                    overflow: hidden;
+                    position: relative;
+                    display: flex;
+                    flex-direction: column;
+                ">
+                    <!-- Header -->
+                    <div style="
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        padding: 12px 20px;
+                        background: #000;
+                        position: sticky;
+                        top: 0;
+                        z-index: 1;
+                    ">
+                        <button onclick="closeGlobalVideoModal()" style="
+                            background-color: #ff0000;
+                            color: white;
+                            border: none;
+                            padding: 8px 16px;
+                            font-weight: bold;
+                            border-radius: 4px;
+                            cursor: pointer;
+                        ">Chiudi</button>
+                        <div style="
+                            background-color: #FFD700;
+                            border-radius: 50%;
+                            width: 32px;
+                            height: 32px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            font-weight: bold;
+                            color: black;
+                        ">M</div>
+                    </div>
 
-            <!-- Video Modal -->
-            <t t-call="custom_lms_categories.modal_video_v1"/>
+                    <!-- Main Content - Layout a due colonne -->
+                    <div style="
+                        flex: 1;
+                        display: flex;
+                        flex-direction: row;
+                        overflow: hidden;
+                    ">
+                        <!-- Left Column - Video (2/3 width) -->
+                        <div style="
+                            flex: 2;
+                            min-width: 0;
+                            display: flex;
+                            flex-direction: column;
+                            padding: 20px;
+                            border-right: 1px solid #333;
+                        ">
+                            <div style="
+                                position: relative;
+                                padding-bottom: 56.25%;
+                                height: 0;
+                                flex: 1;
+                                min-height: 300px;
+                            ">
+                                <iframe id="global-video-iframe" allowfullscreen="true" style="
+                                    position: absolute;
+                                    top: 0;
+                                    left: 0;
+                                    width: 100%;
+                                    height: 100%;
+                                    border: none;
+                                "></iframe>
+                            </div>
+                        </div>
+
+                        <!-- Right Column - Details (1/3 width) -->
+                        <div style="
+                            flex: 1;
+                            min-width: 0;
+                            padding: 20px;
+                            overflow-y: auto;
+                            display: flex;
+                            flex-direction: column;
+                            gap: 20px;
+                        ">
+                            <!-- Course Title -->
+                            <h2 id="global-course-title" style="
+                                color: #FFD700;
+                                font-size: 1.8rem;
+                                margin: 0;
+                                line-height: 1.3;
+                            "></h2>
+
+                            <!-- Course Description -->
+                            <p id="global-course-description" style="
+                                color: #ccc;
+                                font-size: 1rem;
+                                line-height: 1.5;
+                                margin: 0;
+                                white-space: pre-wrap;
+                            "></p>
+
+                            <!-- Tags -->
+                            <div id="global-course-tags" style="
+                                display: flex;
+                                flex-wrap: wrap;
+                                gap: 8px;
+                            ">
+                                <!-- Tags will be inserted here by JavaScript -->
+                            </div>
+                            
+                            <!-- Price Section -->
+                            <div style="
+                                background: #111;
+                                padding: 15px;
+                                border-radius: 8px;
+                                margin-top: auto;
+                            ">
+                                <div style="text-align: center;">
+                                    <span style="color: #999; font-size: 0.9rem; display: block;">Prezzo</span>
+                                    <div id="global-course-price" style="
+                                        color: #FFD700;
+                                        font-size: 2rem;
+                                        font-weight: bold;
+                                        margin: 5px 0;
+                                    "></div>
+                                    <div id="global-course-price-chf" style="
+                                        color: #888;
+                                        font-size: 1rem;
+                                    "></div>
+                                    <div id="global-course-price-desc" style="
+                                        color: #64748B;
+                                        font-size: 0.85rem;
+                                        margin-top: 8px;
+                                    "></div>
+                                </div>
+                            </div>
+
+                            <!-- CTA Button -->
+                            <a id="global-course-cta" href="#" style="
+                                display: block;
+                                color: black;
+                                padding: 15px;
+                                border-radius: 8px;
+                                font-weight: bold;
+                                font-size: 1rem;
+                                text-decoration: none;
+                                text-align: center;
+                                background: linear-gradient(to right, #FFD700, #FFA500);
+                                box-shadow: 0 4px 10px rgba(255, 215, 0, 0.5);
+                                transition: all 0.3s ease;
+                                margin-top: 10px;
+                            " onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 6px 15px rgba(255, 215, 0, 0.7)'" 
+                            onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 10px rgba(255, 215, 0, 0.5)'">Scopri il Corso</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scripts -->
+            <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+            <t t-if="not 'jquery_loaded' in request.env">
+                <script src="/web/static/lib/jquery/jquery.js"/>
+                <t t-set="jquery_loaded" t-value="True"/>
+            </t>
+
+            <script>
+                // Funzione globale per aprire la modale
+                function openGlobalVideoModal(channelId, videoUrl) {
+                    // Blocca lo scrolling della pagina
+                    document.body.style.overflow = 'hidden';
+                    
+                    // Mostra la modale
+                    const modal = document.getElementById('global-video-modal');
+                    modal.style.display = 'flex';
+                    
+                    // Carica i dati del corso
+                    fetch('/lms/get_channel_data?channel_id=' + channelId)
+                        .then(response => {
+                            if (!response.ok) throw new Error('Network response was not ok');
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (data.error) throw new Error(data.error);
+                            
+                            // Aggiorna i dati nella modale
+                            document.getElementById('global-course-title').textContent = data.name;
+                            document.getElementById('global-course-description').textContent = data.description || data.short_description || '';
+                            
+                            // Aggiorna i tag del corso
+                            const tagsContainer = document.getElementById('global-course-tags');
+                            tagsContainer.innerHTML = '';
+                            if (data.tag_ids &amp;&amp; data.tag_ids.length > 0) {
+                                data.tag_ids.forEach(tag => {
+                                    const tagElement = document.createElement('span');
+                                    tagElement.style = `
+                                        display: inline-block;
+                                        background: #333;
+                                        color: #fff;
+                                        padding: 4px 10px;
+                                        border-radius: 20px;
+                                        font-size: 0.8rem;
+                                        margin-right: 5px;
+                                        margin-bottom: 5px;
+                                    `;
+                                    tagElement.textContent = tag.name;
+                                    tagsContainer.appendChild(tagElement);
+                                });
+                            }
+                            
+                            // Aggiorna i prezzi
+                            document.getElementById('global-course-price').textContent = '€ ' + (data.prezzo_in_euro || '0');
+                            document.getElementById('global-course-price-chf').textContent = 'CHF ' + (data.prezzo_in_franchi || '0');
+                            document.getElementById('global-course-price-desc').textContent = data.descrizione_prezzo || '';
+                            
+                            // Aggiorna il CTA
+                            const ctaButton = document.getElementById('global-course-cta');
+                            if (data.cta &amp;&amp; data.cta.url) {
+                                ctaButton.href = data.cta.url;
+                                ctaButton.textContent = data.cta.caption || 'Scopri il Corso';
+                                if (data.cta.color) {
+                                    ctaButton.style.background = data.cta.color;
+                                }
+                                ctaButton.style.display = 'block';
+                            } else {
+                                ctaButton.style.display = 'none';
+                            }
+                            
+                            // Imposta il video
+                            document.getElementById('global-video-iframe').src = videoUrl;
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('Errore nel caricamento dei dati: ' + error.message);
+                            closeGlobalVideoModal();
+                        });
+                }
+                
+                // Funzione per chiudere la modale
+                function closeGlobalVideoModal() {
+                    document.body.style.overflow = '';
+                    const modal = document.getElementById('global-video-modal');
+                    modal.style.display = 'none';
+                    document.getElementById('global-video-iframe').src = '';
+                }
+                
+                // Chiudi la modale cliccando sull'overlay
+                document.getElementById('global-video-modal').addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        closeGlobalVideoModal();
+                    }
+                });
+                
+                // Esponi le funzioni globalmente
+                window.openGlobalVideoModal = openGlobalVideoModal;
+                window.closeGlobalVideoModal = closeGlobalVideoModal;
+            </script>
 
             <!-- Swiper JS -->
             <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"/>
         </xpath>
     </template>
-
-
 </odoo>

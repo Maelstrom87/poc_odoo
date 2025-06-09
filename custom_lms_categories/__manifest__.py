@@ -29,7 +29,6 @@
         'templates/components/category_card.xml',
         'templates/components/slider_section_swiper.xml',
         'templates/components/swiper_course_card.xml',
-        'templates/components/modal_video.xml',
         'templates/components/modal_video_v1.xml',
     ],
     'assets': {

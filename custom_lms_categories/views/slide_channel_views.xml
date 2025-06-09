@@ -8,6 +8,7 @@
                 <field name="code"/>
                 <field name="name"/>
                 <field name="color" widget="colorpicker"/>
+                <field name="background_color" widget="colorpicker"/>
                 <field name="description"/>
                 <field name="main_badge"/>
             </list>
@@ -20,13 +21,30 @@
         <field name="inherit_id" ref="website_slides.view_slide_channel_form"/>
         <field name="arch" type="xml">
 
- <!-- Inserisce un nuovo tab dopo il tab 'description' -->
+            <!-- Inserisce un nuovo tab dopo il tab 'description' -->
             <xpath expr="//notebook/page[field[@name='description']]" position="after">
                 <page string="Mindle On Demand">
                     <group string="Categorie associate">
                         <field name="category_ids" 
                                widget="many2many_tags" 
                                options="{'color_field': 'color'}"/>
+                    </group>
+
+                    <group string="Informazioni Corso">
+                        <field name="name" placeholder="Nome del Corso"/>
+                        <!-- <field name="short_description" placeholder="Breve desc. del corso"/> -->
+                        <field name="description" placeholder="Descrizione del corso"/>
+                    </group>
+
+                 <!-- Nuova sezione Prezzi -->
+                    <group string="Prezzi" col="2">
+                        <group>
+                            <field name="prezzo_in_euro" string="Prezzo (€)"/>
+                            <field name="prezzo_in_franchi" string="Prezzo (CHF)"/>
+                        </group>
+                        <group>
+                            <field name="descrizione_prezzo" string="Note sul prezzo" colspan="2"/>
+                        </group>
                     </group>
 
                     <group string="Navigazione / Link" col="2">
@@ -40,11 +58,20 @@
                                 <field name="code"/>
                                 <field name="name"/>
                                 <field name="color" widget="colorpicker"/>
-                                <field name="description"/>
+                                <field name="background_color" widget="colorpicker"/>
                                 <field name="main_badge"/>
                             </list>
                         </field>
                     </group>
+<!-- 
+                    <group string="Impostazioni Avanzate">
+                        <field name="show_in_homepage" widget="boolean_toggle"/>
+                        <field name="show_in_search" widget="boolean_toggle"/>
+                        <field name="show_in_category" widget="boolean_toggle"/>
+                        <field name="show_in_catalog" widget="boolean_toggle"/>
+                        <field name="show_in_footer" widget="boolean_toggle"/>
+                        <field name="show_in_menu" widget="boolean_toggle"/>
+                    </group>       -->
                 </page>
             </xpath>
 

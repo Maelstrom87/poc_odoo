@@ -115,7 +115,8 @@ class SlideChannelBadge(models.Model):
 
     code = fields.Char(string='Codice', required=True)
     name = fields.Char(string='Etichetta', required=True)
-    color = fields.Char(string='Colore Sfondo', default='#FFFFFF', help="Hex color code for badge background")
+    background_color = fields.Char(string='Colore Sfondo', default='#FFFFFF', help="Hex color code for badge background")
+    color = fields.Char(string='Colore testo', default='#000000', help="Hex color code for badge text")
     #color = fields.Integer(string="Colore Sfondo", default=0)
     description = fields.Text(string='Descrizione')
     main_badge = fields.Boolean(string='Principale', default=False)
@@ -153,22 +154,6 @@ class SlideChannel(models.Model):
         help="Categories this course belongs to"
     )
 
-    short_description = fields.Char(
-        string='Short Description',
-        compute='_compute_short_description',
-        store=True
-    )
-    
-    teaser_video_url = fields.Char(
-        'Video Teaser URL',
-        help="URL del video teaser (max 10 secondi) da mostrare come anteprima. Supporta YouTube e Vimeo."
-    )
-
-    landing_url = fields.Char(
-        'URL Landing Page',
-        help="URL della landing page esterna o interna."
-    )
-
     badge_ids = fields.One2many(
         'slide.channel.badge',
         'channel_id',
@@ -176,6 +161,13 @@ class SlideChannel(models.Model):
     )
 
     tag_ids = fields.Many2many('slide.channel.tag', string='Tags')
+
+
+    short_description = fields.Char(
+        string='Short Description',
+        compute='_compute_short_description',
+        store=True
+    )
 
     @api.depends('description')
     def _compute_short_description(self):
@@ -185,6 +177,30 @@ class SlideChannel(models.Model):
             else:
                 record.short_description = ""
 
+    prezzo_in_euro = fields.Float(
+        string='Prezzo in Euro',
+        digits=(12, 2),  # 12 cifre totali, 2 decimali
+        help='Prezzo del corso in Euro'
+    )
+    
+    prezzo_in_franchi = fields.Float(
+        string='Prezzo in Franchi Svizzeri',
+        digits=(12, 2),
+        help='Prezzo del corso in Franchi Svizzeri'
+    )
+    
+    descrizione_prezzo = fields.Text(
+        string='Descrizione Prezzo',
+        help='Descrizione dettagliata del prezzo e eventuali condizioni'
+    )
+
+
+    # [sezione teaser video] ================================================
+    teaser_video_url = fields.Char(
+        'Video Teaser URL',
+        help="URL del video teaser (max 10 secondi) da mostrare come anteprima. Supporta YouTube e Vimeo."
+    )
+
     @api.constrains('teaser_video_url')
     def _check_teaser_video_url(self):
         youtube_regex = re.compile(
@@ -193,6 +209,18 @@ class SlideChannel(models.Model):
         for channel in self:
             if channel.teaser_video_url and not youtube_regex.match(channel.teaser_video_url):
                 raise ValidationError(_("L'URL del teaser deve essere un link a YouTube o Vimeo."))
+            # solo per youtube ?
+            #self.teaser_video_url = self._get_embed_url()
+
+    def _get_embed_url(self):
+        if self.teaser_video_url and 'watch?v=' in self.teaser_video_url:
+            return self.teaser_video_url.replace("watch?v=", "embed/")
+        return self.teaser_video_url
+
+    landing_url = fields.Char(
+        'URL Landing Page',
+        help="URL della landing page esterna o interna."
+    )
 
 
 class SlideChannel(models.Model):
@@ -230,11 +258,13 @@ class SlideChannel(models.Model):
             "main_badge": {
                 "name": main_badge.name,
                 "color": main_badge.color,
+                "background_color": main_badge.background_color,
                 "description": main_badge.description
             } if main_badge else None,
             "other_badges": [{
                 "name": b.name,
                 "color": b.color,
+                "background_color": b.background_color,
                 "description": b.description
             } for b in other_badges],
             "card_hover_class": "hover:border-yellow-500",
@@ -259,7 +289,7 @@ class SlideChannel(models.Model):
             "caption": _("Vai al Corso") if is_subscribed else _("Scopri il corso"),
             "color": "text-white bg-green-600 hover:bg-green-500" if is_subscribed else "bg-blue-700 hover:bg-blue-600",
             # "color": "text-white bg-green-600 hover:bg-green-500" if is_subscribed else "text-white bg-[var(--accent-color)] hover:bg-[var(--background-dark)]",
-            "url": f"/slides/channel/{self.id}" if is_subscribed else (self.landing_url or "#")
+            "url": f"/slides/{self.id}" if is_subscribed else (self.landing_url or "#")
             # '/slides/' + str(channel.id)
         }
 

@@ -1,3 +1,4 @@
+import json
 from odoo import fields
 from odoo import http
 from odoo.http import request
@@ -96,78 +97,137 @@ class LMSCategoryController(http.Controller):
 
 
 
+#metdo per la modale
+    @http.route('/lms/get_channel_data', type='http', auth="public", website=True)
+    def get_channel_data(self, channel_id, **kw):
+        channel = request.env['slide.channel'].browse(int(channel_id))
 
-class WebsiteSlidesExtended(WebsiteSlides):
+        is_subscribed = self._is_user_subscribed_to_channel(channel)
 
-    def get_course_ui_data(self, channel):
-        main_badge = channel.badge_ids.filtered(lambda b: b.main_badge)
-        other_badges = channel.badge_ids.filtered(lambda b: not b.main_badge)
+        data = {
+            'name': channel.name,
+            'description': channel.description,
+            'prezzo_in_euro': channel.prezzo_in_euro,
+            'prezzo_in_franchi': channel.prezzo_in_franchi,
+            'descrizione_prezzo': channel.descrizione_prezzo,
+            'tag_ids': [{'name': tag.name} for tag in channel.tag_ids],
+            'cta': {
+                'caption': self._get_cta_caption(channel),
+                'color': self._get_cta_color(channel, is_subscribed),
+                'url': self._get_cta_url(channel),
+            },
 
-        return {
-            "id": channel.id,
-            "name": channel.name,
-            "image": f"/web/image/slide.channel/{channel.id}/image_512" if channel.image_1920 else "/path/to/placeholder.jpg",
-            "price": "€49.99",  # eventualmente `channel.price` se esiste
-            "total_slides": channel.total_slides,
-            "total_time_hours": int(channel.total_time / 60) if channel.total_time else 0,
-            "total_time_minutes": int(channel.total_time % 60) if channel.total_time else 0,
-            "tags": channel.tag_ids.mapped('name'),
-            "rating": round(channel.rating_avg or 4.7, 1),
-            "is_new": channel.create_date and (fields.Datetime.now() - channel.create_date).days < 30,
-            "main_badge": {
-                "name": main_badge.name if main_badge else None,
-                "color": main_badge.color if main_badge else None,
-                "description": main_badge.description if main_badge else None,
-            } if main_badge else None,
-            "other_badges": [
-                {
-                    "name": b.name,
-                    "color": b.color,
-                    "description": b.description
-                } for b in other_badges
-            ],
-            "cta": self.get_cta_label(channel),
-            "card_hover_class": "hover:border-yellow-500",
-            "icon_theme": "gold-on-black",
         }
 
-    def get_cta_label(self, channel):
-        user = request.env.user
-        is_subscribed = self.is_user_subscribed_to_channel(channel)
+        return json.dumps(data)
 
-        if is_subscribed:
-            return {
-                "caption": "Continua",
-                "color": "bg-green-600 hover:bg-green-500",
-                "url": f"/slides/channel/{channel.id}"
-            }
-        else:
-            return {
-                "caption": "Vai al corso",
-                "color": "bg-red-700 hover:bg-red-600",
-                "url": channel.landing_url or "#"
-            }
+    def _is_user_subscribed_to_channel(self, channel):
+            """Verifica se l'utente è iscritto al canale"""
+            if request.env.user._is_public():
+                return False
+            return bool(request.env['slide.channel.partner'].search_count([
+                ('partner_id', '=', request.env.user.partner_id.id),
+                ('channel_id', '=', channel.id)
+            ]))
 
-    def is_user_subscribed_to_channel(self, channel):
-        user = request.env.user
-        partner_id = user.partner_id.id
-        is_subscribed = request.env['slide.channel.partner'].search_count([
-            ('partner_id', '=', partner_id),
-            ('channel_id', '=', channel.id)
-        ]) > 0
-        return is_subscribed
 
-    @http.route(['/slides'], type='http', auth='user', website=True)
-    def courses(self, **kwargs):
-          # Recupera tutti i canali pubblici
-         domain = [('website_published', '=', True)]
-         channels = request.env['slide.channel'].search(domain)
+    def _get_cta_color(self, channel, is_subscribed):
+            #TODO: Implementare la logica come parametri modificabili da backoffice
+
+            """Restituisce la classe Tailwind per lo stato del CTA"""
+            class_style_subscribed = "bg-green-600"
+            class_style_not_subscribed = "bg-blue-700"
+
+            return class_style_subscribed if is_subscribed else class_style_not_subscribed
+
+    def _get_cta_url(self, channel):
+            """Restituisce l'URL appropriato in base allo stato"""
+            if self._is_user_subscribed_to_channel(channel):
+                return f"/slides/{channel.id}"
+            return channel.landing_url or "#"
+
+    def _get_cta_caption(self, channel):
+            #TODO: Implementare la logica per le caption modificabli da backoffice
+            caption_not_subscribed = "Scopri il corso"
+            caption_subscribed = "Vai al Corso"
+
+            """Restituisce la caption appropriata in base allo stato"""
+            if self._is_user_subscribed_to_channel(channel):
+                return caption_subscribed
+            return caption_not_subscribed
+
+# class WebsiteSlidesExtended(WebsiteSlides):
+
+#     def get_course_ui_data(self, channel):
+#         main_badge = channel.badge_ids.filtered(lambda b: b.main_badge)
+#         other_badges = channel.badge_ids.filtered(lambda b: not b.main_badge)
+
+#         return {
+#             "id": channel.id,
+#             "name": channel.name,
+#             "image": f"/web/image/slide.channel/{channel.id}/image_512" if channel.image_1920 else "/path/to/placeholder.jpg",
+#             "price": "€49.99",  # eventualmente `channel.price` se esiste
+#             "total_slides": channel.total_slides,
+#             "total_time_hours": int(channel.total_time / 60) if channel.total_time else 0,
+#             "total_time_minutes": int(channel.total_time % 60) if channel.total_time else 0,
+#             "tags": channel.tag_ids.mapped('name'),
+#             "rating": round(channel.rating_avg or 4.7, 1),
+#             "is_new": channel.create_date and (fields.Datetime.now() - channel.create_date).days < 30,
+#             "main_badge": {
+#                 "name": main_badge.name if main_badge else None,
+#                 "color": main_badge.color if main_badge else None,
+#                 "description": main_badge.description if main_badge else None,
+#             } if main_badge else None,
+#             "other_badges": [
+#                 {
+#                     "name": b.name,
+#                     "color": b.color,
+#                     "description": b.description
+#                 } for b in other_badges
+#             ],
+#             "cta": self.get_cta_label(channel),
+#             "card_hover_class": "hover:border-yellow-500",
+#             "icon_theme": "gold-on-black",
+#         }
+
+#     def get_cta_label(self, channel):
+#         user = request.env.user
+#         is_subscribed = self.is_user_subscribed_to_channel(channel)
+
+#         if is_subscribed:
+#             return {
+#                 "caption": "Continua",
+#                 "color": "bg-green-600 hover:bg-green-500",
+#                 "url": f"/slides/channel/{channel.id}"
+#             }
+#         else:
+#             return {
+#                 "caption": "Vai al corso",
+#                 "color": "bg-red-700 hover:bg-red-600",
+#                 "url": channel.landing_url or "#"
+#             }
+
+#     def is_user_subscribed_to_channel(self, channel):
+#         user = request.env.user
+#         partner_id = user.partner_id.id
+#         is_subscribed = request.env['slide.channel.partner'].search_count([
+#             ('partner_id', '=', partner_id),
+#             ('channel_id', '=', channel.id)
+#         ]) > 0
+#         return is_subscribed
+
+#     # @http.route(['/slides'], type='http', auth='user', website=True)
+#     @http.route(['/slides'], type='http', auth='public', website=True)
+#     def courses(self, **kwargs):
+#           # Recupera tutti i canali pubblici
+#          domain = [('website_published', '=', True)]
+#          channels = request.env['slide.channel'].search(domain)
         
-         # Trasforma in lista di dizionari UI-friendly
-         channels_data = [self.get_course_ui_data(c) for c in channels]
+#          # Trasforma in lista di dizionari UI-friendly
+#          channels_data = [self.get_course_ui_data(c) for c in channels]
 
-         return request.render("website_slides.courses_home", {
-             'channels': channels_data,  # sostituisce l'originale 'channels'
-             'user': request.env.user,
-             'is_public_user': request.env.user._is_public(),
-         })
+#          return request.render("website_slides.courses_home", {
+#              'channels': channels_data,  # sostituisce l'originale 'channels'
+#              'user': request.env.user,
+#              'is_public_user': request.env.user._is_public(),
+#          })

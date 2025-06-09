@@ -27,13 +27,13 @@ $(document).ready(function () {
         // when window width is >= 640px
         640: {
           slidesPerView: 2,
-          spaceBetween: 20,
+          spaceBetween: 15,
           centeredSlides: false,
         },
         // when window width is >= 768px
         768: {
           slidesPerView: 3,
-          spaceBetween: 30,
+          spaceBetween: 15,
           centeredSlides: false,
         },
         // when window width is >= 1024px

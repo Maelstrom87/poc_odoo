@@ -52,3 +52,10 @@ Versione: 2 | 05/06/2025
 > nuovo xml di caricaemnto dati di test compatibile a nuovo model
 TODO
 >da sistemare relazione categorie corsi > corso categorie
+
+=============================================================
+Versione: 2.1 | 06/06/2025
+=============================================================
+mappato tutta la home page (card corso)
+badge dinamici
+cta dinamiche

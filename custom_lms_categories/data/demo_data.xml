@@ -53,7 +53,7 @@
         <field name="name">Respiro Consapevole</field>
         <field name="description">Tecniche di respirazione profonda per il riequilibrio mente-corpo.</field>
         <field name="teaser_video_url">https://www.youtube.com/embed/wRk2exmStvk</field>
-        <field name="landing_url">https://www.mindle.me/it/respiro</field>
+        <field name="landing_url">https://www.mindle.me/it/cyt</field>
         <field name="category_ids" eval="[(6, 0, [ref('lms_category_olistico')])]"/>
         <field name="tag_ids" eval="[(6, 0, [ref('tag_base')])]"/>
     </record>
@@ -62,7 +62,7 @@
         <field name="name">Energia Interiore</field>
         <field name="description">Scopri come gestire e canalizzare la tua energia vitale.</field>
         <field name="teaser_video_url">https://www.youtube.com/embed/SmwwsQJW9ZI?si=V3iYwXVwEuc35NB9</field>
-        <field name="landing_url">https://www.mindle.me/it/energia</field>
+        <field name="landing_url">https://www.mindle.me/it/cyt</field>
         <field name="category_ids" eval="[(6, 0, [ref('lms_category_olistico')])]"/>
         <field name="tag_ids" eval="[(6, 0, [ref('tag_novita')])]"/>
     </record>
@@ -72,16 +72,16 @@
         <field name="name">Leadership Autentica</field>
         <field name="description">Diventa un leader consapevole e ispiratore.</field>
         <field name="teaser_video_url">https://www.youtube.com/embed/klmno11223</field>
-        <field name="landing_url">https://www.mindle.me/it/leadership</field>
+        <field name="landing_url">https://www.mindle.me/it/cyt</field>
         <field name="category_ids" eval="[(6, 0, [ref('lms_category_coaching')])]"/>
         <field name="tag_ids" eval="[(6, 0, [ref('tag_avanzato')])]"/>
     </record>
 
     <record id="slide_channel_coaching_autostima" model="slide.channel">
-        <field name="name">Coaching per l'Autostima</field>
-        <field name="description">Allenare l'autoefficacia attraverso il coaching trasformativo.</field>
+        <field name="name">Coaching per l’Autostima</field>
+        <field name="description">Allenare l’autoefficacia attraverso il coaching trasformativo.</field>
         <field name="teaser_video_url">https://www.youtube.com/embed/stuvw44556</field>
-        <field name="landing_url">https://www.mindle.me/it/autostima</field>
+        <field name="landing_url">https://www.mindle.me/it/cyt</field>
         <field name="category_ids" eval="[(6, 0, [ref('lms_category_coaching')])]"/>
         <field name="tag_ids" eval="[(6, 0, [ref('tag_base')])]"/>
     </record>
@@ -91,7 +91,7 @@
         <field name="name">Storytelling Persuasivo</field>
         <field name="description">Tecniche narrative per migliorare le vendite.</field>
         <field name="teaser_video_url">https://www.youtube.com/embed/xyz123abc</field>
-        <field name="landing_url">https://www.mindle.me/it/storytelling</field>
+        <field name="landing_url">https://www.mindle.me/it/cyt</field>
         <field name="category_ids" eval="[(6, 0, [ref('lms_category_vendita')])]"/>
         <field name="tag_ids" eval="[(6, 0, [ref('tag_avanzato')])]"/>
     </record>
@@ -99,8 +99,8 @@
     <record id="slide_channel_vendita_empatia" model="slide.channel">
         <field name="name">Vendita Empatica</field>
         <field name="description">Connettersi con il cliente per creare fiducia e valore.</field>
-        <field name="teaser_video_url">https://www.youtube.com/embed/lmnop77889</field>
-        <field name="landing_url">https://www.mindle.me/it/empatia</field>
+        <field name="teaser_video_url">https://www.youtube.com/embed/rBgtAdgin2c</field>
+        <field name="landing_url">https://www.mindle.me/it/cyt</field>
         <field name="category_ids" eval="[(6, 0, [ref('lms_category_vendita')])]"/>
         <field name="tag_ids" eval="[(6, 0, [ref('tag_base')])]"/>
     </record>
@@ -109,8 +109,8 @@
     <record id="slide_channel_mindfulness_sonno" model="slide.channel">
         <field name="name">Mindfulness per il Sonno</field>
         <field name="description">Tecniche per migliorare la qualità del riposo notturno.</field>
-        <field name="teaser_video_url">https://www.youtube.com/embed/qrstuv99887</field>
-        <field name="landing_url">https://www.mindle.me/it/sonno</field>
+        <field name="teaser_video_url">https://www.youtube.com/embed/wRk2exmStvk</field>
+        <field name="landing_url">https://www.mindle.me/it/cyt</field>
         <field name="category_ids" eval="[(6, 0, [ref('lms_category_mindfulness')])]"/>
         <field name="tag_ids" eval="[(6, 0, [ref('tag_base')])]"/>
     </record>
@@ -118,8 +118,8 @@
     <record id="slide_channel_mindfulness_mangiare" model="slide.channel">
         <field name="name">Mindful Eating</field>
         <field name="description">Impara a mangiare con consapevolezza e ascolto del corpo.</field>
-        <field name="teaser_video_url">https://www.youtube.com/embed/eat123mindful</field>
-        <field name="landing_url">https://www.mindle.me/it/mangiare</field>
+        <field name="teaser_video_url">https://www.youtube.com/embed/69r7tcpn3fQ</field>
+        <field name="landing_url">https://www.mindle.me/it/cyt</field>
         <field name="category_ids" eval="[(6, 0, [ref('lms_category_mindfulness')])]"/>
         <field name="tag_ids" eval="[(6, 0, [ref('tag_novita')])]"/>
     </record>
@@ -128,7 +128,7 @@
     <record id="slide_channel_comunicazione_non_verbale" model="slide.channel">
         <field name="name">Linguaggio del Corpo</field>
         <field name="description">Comprendere e usare il non verbale nella comunicazione quotidiana.</field>
-        <field name="teaser_video_url">https://www.youtube.com/embed/bodylang001</field>
+        <field name="teaser_video_url">https://vimeo.com/1082285717</field>
         <field name="landing_url">https://www.mindle.me/it/corpo</field>
         <field name="category_ids" eval="[(6, 0, [ref('lms_category_comunicazione')])]"/>
         <field name="tag_ids" eval="[(6, 0, [ref('tag_base')])]"/>
@@ -159,7 +159,7 @@
     </record>
 
     <record id="badge_coaching" model="slide.channel.badge">
-        <field name="channel_id" ref="slide_channel_coaching_evolutivo"/>
+        <field name="channel_id" ref="slide_channel_coaching_autostima"/>
         <field name="code">badge_003</field>
         <field name="name">Percorso Evolutivo</field>
         <field name="color">#6f42c1</field>
