@@ -202,9 +202,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0;
   /* transition: opacity 0.3s ease; */
-  opacity: 1;
+  opacity: 0.6;
 }
 
 /* .course-card.with-video:hover .play-icon {
@@ -339,14 +338,37 @@
 }
 
 /* Swiper Pagination */
-.swiper-pagination-bullet {
-  background: #ef4444;
-  opacity: 0.5;
+.custom-swiper-pagination {
+    margin-top: 2rem;
+    position: relative;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }
 
-.swiper-pagination-bullet-active {
-  opacity: 1;
-  background: #ef4444;
+.custom-swiper-pagination-bullet {
+    width: 12px;
+    height: 12px;
+    background: #ffffff;
+    opacity: 0.5;
+    margin: 0 8px;
+    transition: all 0.3s ease;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+}
+
+.custom-swiper-pagination-bullet-active {
+    opacity: 1;
+    background: #FFD700;
+    border-color: #FFD700;
+    transform: scale(1.2);
+}
+
+.custom-swiper-pagination-bullet:hover {
+    opacity: 0.8;
+    transform: scale(1.1);
 }
 
 /* Badge "New" */
@@ -409,7 +431,35 @@
           padding: 3px 6px;
         }
 
+    .peek-container {
+        width: 85%;
+        margin: 0 auto;
+    }
 
+    .swiper-pagination {
+        margin-top: 1.5rem;
+    }
+
+    .swiper-pagination-bullet {
+        width: 10px;
+        height: 10px;
+        margin: 0 6px;
+    }
+
+    .custom-swiper-pagination {
+        margin-top: 1.5rem;
+    }
+
+    .custom-swiper-pagination-bullet {
+        width: 10px;
+        height: 10px;
+        margin: 0 6px;
+    }
+
+    .custom-swiper-button-next,
+    .custom-swiper-button-prev {
+        top: 35%;
+    }
 }
 
 @media (max-width: 480px) {

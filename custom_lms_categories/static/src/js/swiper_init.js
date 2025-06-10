@@ -12,12 +12,17 @@ $(document).ready(function () {
       navigation: {
         nextEl: this.querySelector(".custom-swiper-button-next"),
         prevEl: this.querySelector(".custom-swiper-button-prev"),
-        // enabled: window.innerWidth >= 768, // Abilita la navigazione solo su desktop (>= 768px)
+        enabled: window.innerWidth >= 768,
       },
       pagination: {
-        el: this.querySelector(".swiper-pagination"),
+        el: this.querySelector(".custom-swiper-pagination"),
+        bulletActiveClass: "custom-swiper-pagination-bullet-active",
+        bulletClass: "custom-swiper-pagination-bullet",
         clickable: true,
-        enabled: window.innerWidth < 768, // Abilita la paginazione solo su mobile (< 768px)
+        enabled: true,
+        renderBullet: function (index, className) {
+          return '<span class="' + className + '"></span>';
+        },
       },
       breakpoints: {
         // Mobile first approach
@@ -25,12 +30,20 @@ $(document).ready(function () {
           slidesPerView: 1,
           spaceBetween: 10,
           centeredSlides: true,
+          slidesPerGroup: 1,
+          navigation: {
+            enabled: false,
+          },
         },
         // when window width is >= 640px
         640: {
           slidesPerView: 2,
           spaceBetween: 15,
           centeredSlides: false,
+          slidesPerGroup: 2,
+          navigation: {
+            enabled: false,
+          },
         },
         // when window width is >= 768px
         768: {
@@ -40,15 +53,14 @@ $(document).ready(function () {
           navigation: {
             enabled: true,
           },
-          pagination: {
-            enabled: false,
-          },
+          slidesPerGroup: 3,
         },
         // when window width is >= 1024px
         1024: {
           slidesPerView: 4,
           spaceBetween: 30,
           centeredSlides: false,
+          slidesPerGroup: 4,
         },
         // Quando la larghezza della finestra è < 768px
         0: {
@@ -76,6 +88,7 @@ $(document).ready(function () {
             }
           });
         },
+
         // Apply the same logic on initialization
         init: function () {
           const activeIndex = this.activeIndex;

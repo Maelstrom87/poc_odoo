@@ -32,7 +32,7 @@
                     </div>
 
                     <!-- Paginazione -->
-                    <div class="swiper-pagination my-2"></div>
+                    <div class="custom-swiper-pagination my-2"></div>
                 </div>
             </t>
         </t>
