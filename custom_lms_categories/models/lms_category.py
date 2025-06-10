@@ -243,10 +243,80 @@ class SlideChannel(models.Model):
     )
 
 
+# Metodi per la gestione della UI
+    #@api.model # metodo "statico" che non dipende da record specifici
+    def get_course_ui_data(self, user=None):
+        """Versione migliorata che può essere chiamata anche da contesti non-web"""
+        self.ensure_one()
+        user = user or self.env.user
+        return {
+            **self._get_course_base_data(),
+            **self._get_user_specific_data(user)
+        }
 
+    # metodo privato prefixato con "_" per indicare che è interno alla classe
+    def _get_course_base_data(self):
+        """Dati indipendenti dall'utente"""
+        self.ensure_one()
+        main_badge = self.badge_ids.filtered(lambda b: b.main_badge)
+        other_badges = self.badge_ids.filtered(lambda b: not b.main_badge)
+
+        return {
+            "id": self.id,
+            "name": self.name,
+            "image": f"/web/image/slide.channel/{self.id}/image_512" if self.image_1920 else "/path/to/placeholder.jpg",
+            "price": "€49.99",
+            "total_slides": self.total_slides,
+            "total_time_hours": int(self.total_time / 60) if self.total_time else 0,
+            "total_time_minutes": int(self.total_time % 60) if self.total_time else 0,
+            "tags": self.tag_ids.mapped('name'),
+            "rating": round(self.rating_avg or 4.7, 1),
+            "is_new": self.create_date and (fields.Datetime.now() - self.create_date).days < 30,
+            "main_badge": {
+                "name": main_badge.name,
+                "color": main_badge.color,
+                "background_color": main_badge.background_color,
+                "description": main_badge.description
+            } if main_badge else None,
+            "other_badges": [{
+                "name": b.name,
+                "color": b.color,
+                "background_color": b.background_color,
+                "description": b.description
+            } for b in other_badges],
+            "card_hover_class": "hover:border-yellow-500",
+            "icon_theme": "gold-on-black",
+        }
+
+    # metodo privato prefixato con "_" per indicare che è interno alla classe
+    def _get_user_specific_data(self, user):
+        """Dati dipendenti dall'utente"""
+        self.ensure_one()
+        return {
+            "cta": self._get_cta_label(user)
+        }
+
+    # metodo privato prefixato con "_" per indicare che è interno alla classe
+    def _get_cta_label(self, user):
+        """Genera il CTA in base allo stato dell'utente"""
+        self.ensure_one()
+        is_subscribed = self._is_user_subscribed(user)
+        
+        return {
+            "caption": _("Vai al Corso") if is_subscribed else _("Scopri il corso"),
+            "color": "text-white bg-green-600 hover:bg-green-500" if is_subscribed else "bg-blue-700 hover:bg-blue-600",
+            # "color": "text-white bg-green-600 hover:bg-green-500" if is_subscribed else "text-white bg-[var(--accent-color)] hover:bg-[var(--background-dark)]",
+            "url": f"/slides/{self.id}" if is_subscribed else (self.landing_url or "#")
+            # '/slides/' + str(channel.id)
+        }
+
+    def _is_user_subscribed(self, user):
         """Verifica se l'utente è iscritto al corso"""
         self.ensure_one()
         return bool(self.env['slide.channel.partner'].search_count([
             ('partner_id', '=', user.partner_id.id),
             ('channel_id', '=', self.id)
         ]))
+    
+
+    

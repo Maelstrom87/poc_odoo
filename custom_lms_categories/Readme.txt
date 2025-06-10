@@ -59,3 +59,11 @@ Versione: 2.1 | 06/06/2025
 mappato tutta la home page (card corso)
 badge dinamici
 cta dinamiche
+
+
+=============================================================
+Versione: 3.0 | 09/06/2025
+=============================================================
+nuovo layout modale video teaser a 2 colonne (desktop)
+tuning visualizzazione mobile (overflow)
+gestione vimeo/youtube (transcode watch/embed)
