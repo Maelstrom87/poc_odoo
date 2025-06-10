@@ -40,11 +40,15 @@
                 </div>
 <!-- 
                 <div t-if="course_data.get('cta')" align-items="right" style="margin-top: 1rem; text-align: center; background-color: #111111; padding: 0.8rem; border-radius: 8px;"> -->
-                    <a t-if="course_data.get('cta')" t-att-href="course_data['cta']['url']" 
-                    t-att-class="'course-cta ' + course_data['cta']['color']">
-                        <t t-esc="course_data['cta']['caption']"/>
-                    </a>
-                <!-- </div> -->
+                <div class="course-price-action">
+                    <div class="w-full flex justify-end">
+                        <a t-if="course_data.get('cta')" t-att-href="course_data['cta']['url']" 
+                        t-att-class="'course-cta ' + course_data['cta']['color']">
+                        <!-- possono arrivare sub-cta e unsub-cta -->
+                            <t t-esc="course_data['cta']['caption']"/>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
         <script>

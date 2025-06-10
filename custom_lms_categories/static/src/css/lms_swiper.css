@@ -229,8 +229,6 @@
 
 /* Course CTA Button */
 .course-cta {
-  /* background-color: var(--accent-color);
-  color: var(--background-dark); */
   color: #ffffff;
   border: none;
   padding: 8px 20px;
@@ -242,29 +240,36 @@
   font-size: 13px;
   letter-spacing: 0.5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.course-cta:hover {
-  background-color: #e6a800;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  margin-left: auto;
+  display: inline-block;
   text-decoration: none;
-  color: #000;
-}
-/* 
-.course-cta.blue {
-  background-color: var(--blue-accent);
-  color: white;
 }
 
-.course-cta.blue:hover {
-  background-color: #2980b9;
+/* Stile per utenti iscritti (sub-cta) */
+.course-cta.sub-cta {
+  background-color: #D4AF37; /* Gold */
+  color: #000000;
 }
 
-.course-cta.green {
-  background-color: var(--accent-color);
-  color: var(--background-dark);
-} */
+.course-cta.sub-cta:hover {
+  background-color: #BFA030; /* Gold più scuro */
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3),
+              0 0 15px rgba(212, 175, 55, 0.5); /* Glow dorato */
+}
+
+/* Stile per utenti non iscritti (unsub-cta) */
+.course-cta.unsub-cta {
+  background-color: #dc2626; /* Rosso */
+  color: #ffffff;
+}
+
+.course-cta.unsub-cta:hover {
+  background-color: #b91c1c; /* Rosso più scuro */
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3),
+              0 0 15px rgba(220, 38, 38, 0.5); /* Glow rosso */
+}
 
 /* Category Section */
 .category-section {
@@ -460,4 +465,334 @@
   .custom-swiper-button-next {
     right: -28px;
   }
+}
+
+/* Video Modal Styles */
+.global-video-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+    backdrop-filter: blur(8px);
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.modal-container {
+    width: 100%;
+    height: 100%;
+    max-width: 1400px;
+    max-height: 800px;
+    background: #000;
+    border-radius: 0;
+    border: 3px solid #FFD700;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.7);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background: #000000;
+    margin-bottom: 1rem;
+}
+
+.mindle-logo-circle {
+    background-color: #FFD700;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: black;
+    font-size: 1rem;
+    margin-right: 1rem;
+}
+
+.modal-close-btn {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    font-weight: bold;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    margin-left: 1rem;
+}
+
+/* Responsive adjustments for modal header */
+@media (max-width: 768px) {
+    .modal-header {
+        padding: 8px 15px;
+        margin-bottom: 0.75rem;
+    }
+
+    .mindle-logo-circle {
+        width: 28px;
+        height: 28px;
+        font-size: 14px;
+        margin-right: 0.75rem;
+    }
+
+    .modal-close-btn {
+        padding: 6px 12px;
+        font-size: 14px;
+        margin-left: 0.75rem;
+    }
+
+    .modal-course-title {
+        font-size: 1.5rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .modal-course-description {
+        margin-bottom: 1rem;
+        max-height: 150px;
+        -webkit-line-clamp: 6;
+    }
+
+    .modal-course-tags {
+        margin-bottom: 1rem;
+    }
+
+    .modal-price-section {
+        margin-bottom: 1rem;
+    }
+}
+
+.modal-content {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+}
+
+.modal-video-column {
+    flex: 2;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-right: 1px solid #333;
+}
+
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    flex: 1;
+    min-height: 300px;
+}
+
+.video-iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.modal-details-column {
+    flex: 1;
+    min-width: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Assicura che la colonna occupi tutta l'altezza */
+}
+
+.modal-details-content {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.modal-details-footer {
+    margin-top: auto; /* Spinge il footer in basso */
+    padding-top: 20px;
+}
+
+.modal-course-title {
+    color: #FFD700;
+    font-size: 1.8rem;
+    margin: 0 0 1rem 0;
+    line-height: 1.3;
+}
+
+.modal-course-description {
+    color: #ccc;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin: 0 0 1.5rem 0;
+    white-space: pre-wrap;
+    max-height: 200px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 8;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+}
+
+.modal-course-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 1.5rem;
+}
+
+.modal-course-tags span {
+    display: inline-block;
+    background-color: transparent;
+    color: var(--accent-color);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    border: 1px solid #FFD700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+.modal-price-section {
+    background: #111;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.modal-price-label {
+    color: #999;
+    font-size: 0.9rem;
+    display: block;
+}
+
+.modal-price-value {
+    color: #FFD700;
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 5px 0;
+}
+
+.modal-price-description {
+    color: #64748B;
+    font-size: 0.85rem;
+    margin-top: 8px;
+}
+
+.modal-cta-button {
+    display: block;
+    color: black;
+    padding: 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1rem;
+    text-decoration: none;
+    text-align: center;
+    background: linear-gradient(to right, #FFD700, #FFA500);
+    box-shadow: 0 4px 10px rgba(255, 215, 0, 0.5);
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    width: 100%;
+}
+
+.modal-cta-button:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 15px rgba(255, 215, 0, 0.7);
+    text-decoration: none;
+}
+
+/* Responsive adjustments for modal */
+@media (max-width: 768px) {
+    .global-video-modal {
+        padding: 0;
+    }
+
+    .modal-container {
+        border-radius: 0;
+        max-height: none;
+        height: 100%;
+    }
+
+    .modal-content {
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .modal-video-column {
+        flex: none;
+        width: 100%;
+        padding: 10px;
+        border-right: none;
+        border-bottom: 1px solid #333;
+    }
+
+    .modal-details-column {
+        flex: 1;
+        width: 100%;
+        padding: 15px;
+        overflow-y: auto;
+    }
+
+    .video-container {
+        min-height: 200px;
+    }
+
+    .modal-course-title {
+        font-size: 1.5rem;
+    }
+
+    .modal-price-section {
+        margin-top: 20px;
+    }
+
+    .modal-cta-button {
+        margin-top: 20px;
+        width: 100%;
+    }
+
+    .modal-details-column {
+        padding: 15px;
+    }
+
+    .modal-details-footer {
+        padding-top: 15px;
+    }
+
+    .modal-price-section {
+        padding: 12px;
+    }
+
+    .modal-cta-button {
+        padding: 12px;
+        font-size: 0.9rem;
+    }
+
+    .modal-course-tags span {
+        font-size: 0.75rem;
+        padding: 3px 6px;
+    }
 }

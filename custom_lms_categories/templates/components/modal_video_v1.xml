@@ -18,8 +18,8 @@
 <!-- animation: glow 4s infinite ease-in-out; -->
                     <!-- Header -->
                     <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 1rem; background: #000000;">
-                        <button onclick="closeVideoModal()" style="background-color: red; color: white; border: none; padding: 0.4rem 0.8rem; font-weight: bold; font-size: 0.9rem; cursor: pointer;"> back</button>
                         <div style="background-color: #FFD700; border-radius: 50%;  width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-weight: bold; color: black; font-size: 1rem;">M</div> 
+                        <button onclick="closeVideoModal()" style="background-color: red; color: white; border: none; padding: 0.4rem 0.8rem; font-weight: bold; font-size: 1.2rem; cursor: pointer; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; line-height: 1;">×</button>
                     </div>
 
                     <!-- Video -->
@@ -45,9 +45,9 @@
                             <div style="font-size: 0.8rem; color: #999999;">
                                 Prezzo
                             </div>
-                            <div style="font-size: 1.5rem; font-weight: bold; color: #FFD700;">
+                            <!-- <div style="font-size: 1.5rem; font-weight: bold; color: #FFD700;">
                                  € <t t-esc="channel.prezzo_in_euro"/>
-                            </div>
+                            </div> -->
                             <div style="font-size: 0.9rem; color: #888888;">
                                 CHF <t t-esc="channel.prezzo_in_franchi"/>
                             </div>

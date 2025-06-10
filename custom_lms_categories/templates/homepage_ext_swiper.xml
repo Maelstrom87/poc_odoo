@@ -14,181 +14,53 @@
             </div>
                         
             <!-- Video Modal - Layout a due colonne -->
-            <div id="global-video-modal" style="
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0, 0, 0, 0.95);
-                display: none;
-                align-items: center;
-                justify-content: center;
-                z-index: 99999;
-                backdrop-filter: blur(8px);
-                padding: 20px;
-                box-sizing: border-box;
-            ">
-                <div style="
-                    width: 100%;
-                    max-width: 1400px;
-                    height: 90vh;
-                    max-height: 800px;
-                    background: #000;
-                    border-radius: 12px;
-                    border: 3px solid #FFD700;
-                    box-shadow: 0 0 30px rgba(255, 215, 0, 0.7);
-                    overflow: hidden;
-                    position: relative;
-                    display: flex;
-                    flex-direction: column;
-                ">
+            <div id="global-video-modal" class="global-video-modal">
+                <div class="modal-container">
                     <!-- Header -->
-                    <div style="
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-                        padding: 12px 20px;
-                        background: #000;
-                        position: sticky;
-                        top: 0;
-                        z-index: 1;
-                    ">
-                        <button onclick="closeGlobalVideoModal()" style="
-                            background-color: #ff0000;
-                            color: white;
-                            border: none;
-                            padding: 8px 16px;
-                            font-weight: bold;
-                            border-radius: 4px;
-                            cursor: pointer;
-                        ">Chiudi</button>
-                        <div style="
-                            background-color: #FFD700;
-                            border-radius: 50%;
-                            width: 32px;
-                            height: 32px;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            font-weight: bold;
-                            color: black;
-                        ">M</div>
+                    <div class="modal-header">
+                        <div class="mindle-logo-circle">M</div>
+                        <button onclick="closeGlobalVideoModal()" class="modal-close-btn">×</button>
                     </div>
 
                     <!-- Main Content - Layout a due colonne -->
-                    <div style="
-                        flex: 1;
-                        display: flex;
-                        flex-direction: row;
-                        overflow: hidden;
-                    ">
+                    <div class="modal-content">
                         <!-- Left Column - Video (2/3 width) -->
-                        <div style="
-                            flex: 2;
-                            min-width: 0;
-                            display: flex;
-                            flex-direction: column;
-                            padding: 20px;
-                            border-right: 1px solid #333;
-                        ">
-                            <div style="
-                                position: relative;
-                                padding-bottom: 56.25%;
-                                height: 0;
-                                flex: 1;
-                                min-height: 300px;
-                            ">
-                                <iframe id="global-video-iframe" allowfullscreen="true" style="
-                                    position: absolute;
-                                    top: 0;
-                                    left: 0;
-                                    width: 100%;
-                                    height: 100%;
-                                    border: none;
-                                "></iframe>
+                        <div class="modal-video-column">
+                            <div class="video-container">
+                                <iframe id="global-video-iframe" allowfullscreen="true" class="video-iframe"></iframe>
                             </div>
                         </div>
 
                         <!-- Right Column - Details (1/3 width) -->
-                        <div style="
-                            flex: 1;
-                            min-width: 0;
-                            padding: 20px;
-                            overflow-y: auto;
-                            display: flex;
-                            flex-direction: column;
-                            gap: 20px;
-                        ">
-                            <!-- Course Title -->
-                            <h2 id="global-course-title" style="
-                                color: #FFD700;
-                                font-size: 1.8rem;
-                                margin: 0;
-                                line-height: 1.3;
-                            "></h2>
+                        <div class="modal-details-column">
+                            <!-- Scrollable Content -->
+                            <div class="modal-details-content">
+                                <!-- Course Title -->
+                                <h2 id="global-course-title" class="modal-course-title"></h2>
 
-                            <!-- Course Description -->
-                            <p id="global-course-description" style="
-                                color: #ccc;
-                                font-size: 1rem;
-                                line-height: 1.5;
-                                margin: 0;
-                                white-space: pre-wrap;
-                            "></p>
+                                <!-- Course Description -->
+                                <p id="global-course-description" class="modal-course-description"></p>
 
-                            <!-- Tags -->
-                            <div id="global-course-tags" style="
-                                display: flex;
-                                flex-wrap: wrap;
-                                gap: 8px;
-                            ">
-                                <!-- Tags will be inserted here by JavaScript -->
-                            </div>
-                            
-                            <!-- Price Section -->
-                            <div style="
-                                background: #111;
-                                padding: 15px;
-                                border-radius: 8px;
-                                margin-top: auto;
-                            ">
-                                <div style="text-align: center;">
-                                    <span style="color: #999; font-size: 0.9rem; display: block;">Prezzo</span>
-                                    <div id="global-course-price" style="
-                                        color: #FFD700;
-                                        font-size: 2rem;
-                                        font-weight: bold;
-                                        margin: 5px 0;
-                                    "></div>
-                                    <!-- <div id="global-course-price-chf" style="
-                                        color: #888;
-                                        font-size: 1rem;
-                                    "></div> -->
-                                    <div id="global-course-price-desc" style="
-                                        color: #64748B;
-                                        font-size: 0.85rem;
-                                        margin-top: 8px;
-                                    "></div>
+                                <!-- Tags -->
+                                <div id="global-course-tags" class="modal-course-tags">
+                                    <!-- Tags will be inserted here by JavaScript -->
                                 </div>
                             </div>
 
-                            <!-- CTA Button -->
-                            <a id="global-course-cta" href="#" style="
-                                display: block;
-                                color: black;
-                                padding: 15px;
-                                border-radius: 8px;
-                                font-weight: bold;
-                                font-size: 1rem;
-                                text-decoration: none;
-                                text-align: center;
-                                background: linear-gradient(to right, #FFD700, #FFA500);
-                                box-shadow: 0 4px 10px rgba(255, 215, 0, 0.5);
-                                transition: all 0.3s ease;
-                                margin-top: 10px;
-                            " onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 6px 15px rgba(255, 215, 0, 0.7)'" 
-                            onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 10px rgba(255, 215, 0, 0.5)'">Scopri il Corso</a>
+                            <!-- Fixed Footer -->
+                            <div class="modal-details-footer">
+                                <!-- Price Section -->
+                                <div class="modal-price-section">
+                                    <div>
+                                        <span class="modal-price-label">Prezzo</span>
+                                        <div id="global-course-price" class="modal-price-value"></div>
+                                        <div id="global-course-price-desc" class="modal-price-description"></div>
+                                    </div>
+                                </div>
+
+                                <!-- CTA Button -->
+                                <a id="global-course-cta" href="#" class="modal-cta-button">Scopri il Corso</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -230,7 +102,7 @@
                             if (data.tag_ids &amp;&amp; data.tag_ids.length > 0) {
                                 data.tag_ids.forEach(tag => {
                                     const tagElement = document.createElement('span');
-                                    tagElement.style = `
+                                    <!-- tagElement.style = `
                                         display: inline-block;
                                         background: #333;
                                         color: #fff;
@@ -239,7 +111,7 @@
                                         font-size: 0.8rem;
                                         margin-right: 5px;
                                         margin-bottom: 5px;
-                                    `;
+                                    `; -->
                                     tagElement.textContent = tag.name;
                                     tagsContainer.appendChild(tagElement);
                                 });

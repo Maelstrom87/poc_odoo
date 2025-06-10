@@ -304,7 +304,7 @@ class SlideChannel(models.Model):
         
         return {
             "caption": _("Vai al Corso") if is_subscribed else _("Scopri il corso"),
-            "color": "text-white bg-green-600 hover:bg-green-500" if is_subscribed else "bg-blue-700 hover:bg-blue-600",
+            "color": "sub-cta" if is_subscribed else "unsub-cta",
             # "color": "text-white bg-green-600 hover:bg-green-500" if is_subscribed else "text-white bg-[var(--accent-color)] hover:bg-[var(--background-dark)]",
             "url": f"/slides/{self.id}" if is_subscribed else (self.landing_url or "#")
             # '/slides/' + str(channel.id)
