@@ -1,3 +1,4 @@
 custom_lms_categories/templates/homepage_ext_swiper_noscroll.xml
 custom_lms_categories/templates/homepage_ext_swiper_prezzo_bottone_dx.xml
 custom_lms_categories_owl/templates/test.txt
+*.pyc

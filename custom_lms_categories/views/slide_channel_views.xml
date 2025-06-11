@@ -39,8 +39,8 @@
                  <!-- Nuova sezione Prezzi -->
                     <group string="Prezzi" col="2">
                         <group>
-                            <field name="prezzo_in_euro" string="Prezzo (CHF)"/>
-                            <!-- <field name="prezzo_in_franchi" string="Prezzo (CHF)"/> -->
+                            <!-- <field name="prezzo_in_euro" string="Prezzo (EUR)"/> -->
+                            <field name="prezzo_in_franchi" string="Prezzo (CHF)"/>
                         <!-- </group>
                         <group> -->
                             <field name="descrizione_prezzo" string="Note sul prezzo" colspan="2"/>
